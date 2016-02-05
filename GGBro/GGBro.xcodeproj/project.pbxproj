@@ -7,7 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3BD845C91C6432C00022FDEA /* Neuron.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3BD845C81C6432C00022FDEA /* Neuron.cpp */; };
+		3BD845C91C6432C00022FDEA /* Neuron.h in Sources */ = {isa = PBXBuildFile; fileRef = 3BD845C81C6432C00022FDEA /* Neuron.h */; };
+		3BFC47571C643CB4001606E8 /* Layer.h in Sources */ = {isa = PBXBuildFile; fileRef = 3BFC47561C643CB4001606E8 /* Layer.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -24,7 +25,8 @@
 
 /* Begin PBXFileReference section */
 		3BD845C51C6432C00022FDEA /* GGBro */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = GGBro; sourceTree = BUILT_PRODUCTS_DIR; };
-		3BD845C81C6432C00022FDEA /* Neuron.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Neuron.cpp; sourceTree = "<group>"; };
+		3BD845C81C6432C00022FDEA /* Neuron.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Neuron.h; sourceTree = "<group>"; };
+		3BFC47561C643CB4001606E8 /* Layer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Layer.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,7 +59,8 @@
 		3BD845C71C6432C00022FDEA /* GGBro */ = {
 			isa = PBXGroup;
 			children = (
-				3BD845C81C6432C00022FDEA /* Neuron.cpp */,
+				3BD845C81C6432C00022FDEA /* Neuron.h */,
+				3BFC47561C643CB4001606E8 /* Layer.h */,
 			);
 			path = GGBro;
 			sourceTree = "<group>";
@@ -118,7 +121,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3BD845C91C6432C00022FDEA /* Neuron.cpp in Sources */,
+				3BD845C91C6432C00022FDEA /* Neuron.h in Sources */,
+				3BFC47571C643CB4001606E8 /* Layer.h in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -237,6 +241,7 @@
 				3BD845CE1C6432C10022FDEA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
