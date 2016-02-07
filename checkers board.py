@@ -17,23 +17,24 @@ def buildBoard():
 			idx.draw(win)
 
 def setPieces():
-	n = 0
 	for r in range(1,4):
 		for x in range(1,5):
-			piece = Circle(Point(((x*2)-1-(r%2))*100,(r-1)*100-50), )
-			rect.setFill('white')
-			rect.draw(win)
+			piece = Circle(Point((8-((x*2)-1-(r%2)))*100-50,(r-1)*100+50), 35)
+			piece.setWidth(20)
+			piece.setOutline('red')
+			piece.draw(win)
+	for r in range(6,9):
+		for x in range(1,5):
+			piece = Circle(Point((8-((x*2)-1-(r%2)))*100-50,(r-1)*100+50), 35)
+			piece.setWidth(20)
+			piece.setOutline('black')
+			piece.draw(win)
 	pass
-
+	
 def main():
-	# piece = Circle(Point(150,50), 40)
-	# piece.setFill('red')
-	# piece.draw(win)
-	# piece = Circle(Point(50,750), 40)
-	# piece.setFill('black')
-	# piece.draw(win)
 	win.getMouse() # Pause to view result
 	win.close()    # Close window when done
 
 buildBoard()
+setPieces()
 main()
