@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3B4460001C66BA780041F31D /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3B445FFF1C66BA780041F31D /* main.cpp */; };
 		3BD845C91C6432C00022FDEA /* Neuron.h in Sources */ = {isa = PBXBuildFile; fileRef = 3BD845C81C6432C00022FDEA /* Neuron.h */; };
 		3BFC47571C643CB4001606E8 /* Layer.h in Sources */ = {isa = PBXBuildFile; fileRef = 3BFC47561C643CB4001606E8 /* Layer.h */; };
 /* End PBXBuildFile section */
@@ -24,6 +25,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		3B445F4B1C657C170041F31D /* NeuralNetwork.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NeuralNetwork.h; sourceTree = "<group>"; };
+		3B445FFE1C66B7CF0041F31D /* Board.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Board.h; path = ../Board.h; sourceTree = "<group>"; };
+		3B445FFF1C66BA780041F31D /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		3B4460011C66C1C40041F31D /* Piece.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Piece.h; sourceTree = "<group>"; };
 		3BD845C51C6432C00022FDEA /* GGBro */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = GGBro; sourceTree = BUILT_PRODUCTS_DIR; };
 		3BD845C81C6432C00022FDEA /* Neuron.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Neuron.h; sourceTree = "<group>"; };
 		3BFC47561C643CB4001606E8 /* Layer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Layer.h; sourceTree = "<group>"; };
@@ -59,8 +64,12 @@
 		3BD845C71C6432C00022FDEA /* GGBro */ = {
 			isa = PBXGroup;
 			children = (
+				3B445FFE1C66B7CF0041F31D /* Board.h */,
+				3B4460011C66C1C40041F31D /* Piece.h */,
+				3B445FFF1C66BA780041F31D /* main.cpp */,
 				3BD845C81C6432C00022FDEA /* Neuron.h */,
 				3BFC47561C643CB4001606E8 /* Layer.h */,
+				3B445F4B1C657C170041F31D /* NeuralNetwork.h */,
 			);
 			path = GGBro;
 			sourceTree = "<group>";
@@ -123,6 +132,7 @@
 			files = (
 				3BD845C91C6432C00022FDEA /* Neuron.h in Sources */,
 				3BFC47571C643CB4001606E8 /* Layer.h in Sources */,
+				3B4460001C66BA780041F31D /* main.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
