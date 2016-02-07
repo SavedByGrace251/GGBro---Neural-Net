@@ -30,13 +30,15 @@ public:
     // Secondary ctor that takes a string for the state
     Board(string state, bool redTurn) {
         for (int i = 0; i < state.length(); i++) {
-            this->pieces[i] = Piece(i,
-                                    state[i] == 'r' || state[i] == 'R',
-                                    state[i] == 'R' || state[i] == 'B');
+            if (state[i] != '_') {
+                this->pieces[i] = Piece(i,
+                                        state[i] == 'r' || state[i] == 'R',
+                                        state[i] == 'R' || state[i] == 'B');
+            }
         }
         this->redTurn = redTurn;
     }
-    // Secondary ctor that takes a vector of chars for the state
+    // Secondary ctor that takes a vector of Piece's
     Board(vector<Piece> pieces, bool redTurn) {
         this->pieces = pieces;
         this->redTurn = redTurn;
