@@ -32,6 +32,7 @@ def setPieces():
 	pass
 	
 def main():
+	print("Default Checkers Board")
 	win.getMouse() # Pause to view result
 	win.close()    # Close window when done
 
