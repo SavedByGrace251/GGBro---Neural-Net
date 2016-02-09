@@ -9,6 +9,8 @@
 #define Board_h
 
 #include "Piece.h"
+#include <algorithm>
+using std::find;
 #include <vector>
 using std::vector;
 #include <string>
@@ -16,6 +18,11 @@ using std::string;
 
 class Board {
 public:
+
+	vector<Piece> pieces;
+	bool redTurn = true;
+	vector<int> freeSpaces{};
+
     // Default ctor
     Board() {
         for (int i = 0; i < 12; i++) {
@@ -87,12 +94,14 @@ public:
                                         { 21 },{ 20, 22 },{ 21, 23 },{ 22 } };
     
         for (auto piece = pieces.begin(); piece != pieces.end(); ++piece) {
-            vector<int> moves = piece->getPossibleMoves();
-            if (moves.size() > 0) {
-                for (auto space = moves.begin(); space != moves.end(); ++space) {
-                    
-                }
-            }
+			vector<int> moves = piece->getPossibleMoves();
+				for (auto space = moves.begin(); space != moves.end(); ++space) {
+					auto foundItem = find(freeSpaces.begin(), freeSpaces.end(), space);
+					if (foundItem != freeSpaces.end()) {
+
+					}
+
+               }
         }
         
         return possibleBoards;
@@ -118,10 +127,6 @@ public:
         string strOut(boardStr.begin(), boardStr.end());
         return strOut;
     }
-
-    vector<Piece> pieces;
-    bool redTurn = true;
-    vector<int> freeSpaces {};
 };
 
 #endif /* Board_h */

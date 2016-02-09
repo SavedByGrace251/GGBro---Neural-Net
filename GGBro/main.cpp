@@ -10,15 +10,14 @@
 #include "Board.h"
 #include "Piece.h"
 #include <iostream>
+#include <algorithm>
 using namespace std;
 
 int main() {
     Board init;
-    Piece temp(1, false, false);
+	vector<int> test{ 1,2,3,4 };
     cout << init.toString() << endl;
-    cout << sizeof(init) << endl;
-    cout << sizeof(temp) << endl;
-    cout << sizeof(init.toString()) << endl;
-    cout << sizeof(char) << endl;
+	auto foundItem = find(test.begin(), test.end(), 3);
+	cout << *foundItem << endl;
     return 0;
 }
