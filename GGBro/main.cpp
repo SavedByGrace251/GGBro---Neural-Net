@@ -9,8 +9,16 @@
 #include <stdio.h>
 #include "Board.h"
 #include "Piece.h"
+#include <iostream>
+using namespace std;
 
 int main() {
-    
+    Board init;
+    Piece temp(1, false, false);
+    cout << init.toString() << endl;
+    cout << sizeof(init) << endl;
+    cout << sizeof(temp) << endl;
+    cout << sizeof(init.toString()) << endl;
+    cout << sizeof(char) << endl;
     return 0;
 }
