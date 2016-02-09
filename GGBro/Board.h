@@ -98,7 +98,7 @@ public:
 				for (auto space = moves.begin(); space != moves.end(); ++space) {
 					auto foundItem = find(freeSpaces.begin(), freeSpaces.end(), space);
 					if (foundItem != freeSpaces.end()) {
-
+                        
 					}
 
                }
