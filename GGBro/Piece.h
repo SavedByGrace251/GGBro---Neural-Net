@@ -18,8 +18,6 @@ public:
     bool isRed;
     bool isKing = false;
     
-    
-    
     // Secondary ctor
     Piece(int position, bool isRed, bool isKing) {
         this->position = position;

@@ -15,10 +15,6 @@ using std::vector;
 using std::string;
 
 class Board {
-private:
-    vector<int> freeSpaces {};
-    
-    
 public:
     // Default ctor
     Board() {
@@ -30,6 +26,7 @@ public:
             // Last 12 indices are black pieces (not kings)
             pieces.push_back(Piece(i, false, false));
         }
+        freeSpaces = { 12, 13, 14, 15, 16, 17, 18, 19};
     }
     
     // Secondary ctor that takes a string for the state
@@ -39,6 +36,8 @@ public:
                 this->pieces[i] = Piece(i,
                                         state[i] == 'r' || state[i] == 'R',  // is it a red piece
                                         state[i] == 'R' || state[i] == 'B'); // is it a king
+            } else {
+                freeSpaces.push_back(i);
             }
         }
         this->redTurn = redTurn;
@@ -60,32 +59,44 @@ public:
         return true;
     }
     
-//    vector<Board> generateLegalMoves() {
-//            vector<vector<int>> redJumps { { 9 }, { 8, 10 }, {9, 11 }, { 10 }, // Top row legal jumps
-//                                            { 13 }, { 12, 14 }, { 13, 15 }, { 14 }, // 2nd row legal jumps
-//                                            { 17 }, { 16, 18 }, { 17, 19 }, { 18 }, // 3rd row legal jumps
-//                                            { 21 }, { 20, 22 }, { 21, 23 }, { 22 }, // 4th row legal jumps
-//                                            { 25 }, { 24, 26 }, { 25, 27 }, { 26 }, // 5th row legal jumps
-//                                            { 29 }, { 28, 30 }, { 29, 31 }, { 30 }, // 6th row legal jumps
-//                                            {}, {}, {}, {}, // 7th row legal jumps
-//                                            {}, {}, {}, {} }; // Bottom row legal jumps
-//            vector<vector<int>> blackJumps { {}, {}, {}, {}, // Top row legal jumps
-//                                            {}, {}, {}, {}, // And so on...
-//                                            { 1 }, { 0, 2 }, { 6, 7 }, { 2 },
-//                                            { 5 }, { 4, 6 }, { 5, 7 }, { 6 },
-//                                            { 9 }, { 8, 10 }, { 9, 11 }, { 10 },
-//                                            { 13 }, { 12, 14 }, { 13, 15 }, { 14 },
-//                                            { 17 }, { 16, 18 }, { 17, 19 }, { 18 },
-//                                            { 21 }, { 20, 22 }, { 21, 23 }, { 22 } };
-//            vector<vector<int>> kingJumps { { 9 },{ 8, 10 },{ 9, 11 },{ 10 },
-//                                            { 13 },{ 12, 14 },{ 13, 15 },{ 14 },
-//                                            { 1, 17 }, { 0, 2, 16, 18 }, { 1, 3, 17, 19 }, { 2, 18 },
-//                                            { 5, 21 }, { 4, 6, 20, 22 }, { 5, 7, 21, 23 }, { 6, 22 },
-//                                            { 9, 25 }, { 8, 10, 24, 26 }, { 9, 11, 25, 27 }, { 10, 26 },
-//                                            { 13, 29 }, { 12, 14, 28, 30 }, { 13, 15, 29, 31 }, { 14, 30 },
-//                                            { 17 },{ 16, 18 },{ 17, 19 },{ 18 },
-//                                            { 21 },{ 20, 22 },{ 21, 23 },{ 22 } };
-//    }
+    vector<Board> generateLegalMoves() {
+        vector<Board> possibleBoards;
+        vector<vector<int>> redJumps { { 9 }, { 8, 10 }, {9, 11 }, { 10 }, // Top row legal jumps
+                                        { 13 }, { 12, 14 }, { 13, 15 }, { 14 }, // 2nd row legal jumps
+                                        { 17 }, { 16, 18 }, { 17, 19 }, { 18 }, // 3rd row legal jumps
+                                        { 21 }, { 20, 22 }, { 21, 23 }, { 22 }, // 4th row legal jumps
+                                        { 25 }, { 24, 26 }, { 25, 27 }, { 26 }, // 5th row legal jumps
+                                        { 29 }, { 28, 30 }, { 29, 31 }, { 30 }, // 6th row legal jumps
+                                        {}, {}, {}, {}, // 7th row legal jumps
+                                        {}, {}, {}, {} }; // Bottom row legal jumps
+        vector<vector<int>> blackJumps { {}, {}, {}, {}, // Top row legal jumps
+                                        {}, {}, {}, {}, // And so on...
+                                        { 1 }, { 0, 2 }, { 6, 7 }, { 2 },
+                                        { 5 }, { 4, 6 }, { 5, 7 }, { 6 },
+                                        { 9 }, { 8, 10 }, { 9, 11 }, { 10 },
+                                        { 13 }, { 12, 14 }, { 13, 15 }, { 14 },
+                                        { 17 }, { 16, 18 }, { 17, 19 }, { 18 },
+                                        { 21 }, { 20, 22 }, { 21, 23 }, { 22 } };
+        vector<vector<int>> kingJumps { { 9 },{ 8, 10 },{ 9, 11 },{ 10 },
+                                        { 13 },{ 12, 14 },{ 13, 15 },{ 14 },
+                                        { 1, 17 }, { 0, 2, 16, 18 }, { 1, 3, 17, 19 }, { 2, 18 },
+                                        { 5, 21 }, { 4, 6, 20, 22 }, { 5, 7, 21, 23 }, { 6, 22 },
+                                        { 9, 25 }, { 8, 10, 24, 26 }, { 9, 11, 25, 27 }, { 10, 26 },
+                                        { 13, 29 }, { 12, 14, 28, 30 }, { 13, 15, 29, 31 }, { 14, 30 },
+                                        { 17 },{ 16, 18 },{ 17, 19 },{ 18 },
+                                        { 21 },{ 20, 22 },{ 21, 23 },{ 22 } };
+    
+        for (auto piece = pieces.begin(); piece != pieces.end(); ++piece) {
+            vector<int> moves = piece->getPossibleMoves();
+            if (moves.size() > 0) {
+                for (auto space = moves.begin(); space != moves.end(); ++space) {
+                    
+                }
+            }
+        }
+        
+        return possibleBoards;
+    }
 
     string toString() {
         vector<char> boardStr (32, '_');
@@ -110,6 +121,7 @@ public:
 
     vector<Piece> pieces;
     bool redTurn = true;
+    vector<int> freeSpaces {};
 };
 
 #endif /* Board_h */
