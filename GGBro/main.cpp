@@ -10,13 +10,16 @@
 #include "Piece.h"
 #include <iostream>
 #include <algorithm>
+#include <vector>
 using namespace std;
 
 int main() {
-    Board init("_B___bb__________RrR____________", false);
-    vector<Board> moves = init.generateLegalMoves();
-    for (auto move = moves.begin(); move != moves.end(); ++move){
-        cout << move->toString() << endl;
-    }
+
+	Board init("______________r__b______________", false);
+	init.redTurn = false;
+	vector<Board> newBoards = init.generateLegalMoves();
+	for (auto board : newBoards) {
+		cout << board.toString() << endl;
+	}
     return 0;
 }

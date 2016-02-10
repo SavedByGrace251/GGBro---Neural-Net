@@ -3,7 +3,7 @@ from graphics import *
 redPiece = []
 blackPiece = []
 positions = []
-boardSize = 600
+boardSize = 900
 gridSize = boardSize/8
 win = GraphWin("Checkers Board", boardSize, boardSize)
 win.setBackground('grey')
@@ -37,6 +37,8 @@ def main():
 	print("Default Checkers Board")
 	for idx in positions:
 		idx.setTextColor('blue')
+		idx.setStyle('bold')
+		idx.setSize(26)
 		idx.draw(win)
 	win.getMouse() # Pause to view result
 	win.close()    # Close window when done
