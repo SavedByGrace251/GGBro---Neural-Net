@@ -3,7 +3,7 @@ from graphics import *
 redPiece = []
 blackPiece = []
 positions = []
-boardSize = 400
+boardSize = 600
 gridSize = boardSize/8
 win = GraphWin("Checkers Board", boardSize, boardSize)
 win.setBackground('grey')

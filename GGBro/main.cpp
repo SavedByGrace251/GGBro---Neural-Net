@@ -14,7 +14,7 @@
 using namespace std;
 
 int main() {
-    Board init("_B___bb__________RrR____________", true);
+    Board init("_B___bb__________RrR____________", false);
     vector<Board> moves = init.generateLegalMoves();
     for (auto move = moves.begin(); move != moves.end(); ++move){
         cout << move->toString() << endl;
