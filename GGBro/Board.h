@@ -68,6 +68,7 @@ public:
     
     vector<Board> generateLegalMoves() {
         vector<Board> possibleBoards;
+		
         vector<vector<int>> redJumps { { 9 }, { 8, 10 }, {9, 11 }, { 10 }, // Top row legal jumps
                                         { 13 }, { 12, 14 }, { 13, 15 }, { 14 }, // 2nd row legal jumps
                                         { 17 }, { 16, 18 }, { 17, 19 }, { 18 }, // 3rd row legal jumps
@@ -93,14 +94,23 @@ public:
                                         { 17 },{ 16, 18 },{ 17, 19 },{ 18 },
                                         { 21 },{ 20, 22 },{ 21, 23 },{ 22 } };
     
+		// For each piece in pieces
         for (auto piece = pieces.begin(); piece != pieces.end(); ++piece) {
+			vector<Piece> tempPieces;
+			// get possible moves from piece
 			vector<int> moves = piece->getPossibleMoves();
+				// check if space available on board
 				for (auto space = moves.begin(); space != moves.end(); ++space) {
-					auto foundItem = find(freeSpaces.begin(), freeSpaces.end(), space);
+					auto foundItem = find(freeSpaces.begin(), freeSpaces.end(), *space);
+					// if there is an available free space
 					if (foundItem != freeSpaces.end()) {
-                        
+						// copy current board
+						tempPieces = pieces;
+						// change piece
+						piece->position = *space;
+						// add changed board
+						possibleBoards.push_back(Board(pieces, !this->redTurn));
 					}
-
                }
         }
         

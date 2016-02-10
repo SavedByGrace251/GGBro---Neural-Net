@@ -17,7 +17,9 @@ int main() {
     Board init;
 	vector<int> test{ 1,2,3,4 };
     cout << init.toString() << endl;
-	auto foundItem = find(test.begin(), test.end(), 3);
-	cout << *foundItem << endl;
+	vector<Piece> newPieces;
+	newPieces = init.pieces;
+	init.pieces[0].position = 4;
+	cout << init.pieces[0].position << endl << newPieces[0].position << endl;
     return 0;
 }
