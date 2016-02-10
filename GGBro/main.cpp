@@ -14,12 +14,10 @@
 using namespace std;
 
 int main() {
-    Board init;
-	vector<int> test{ 1,2,3,4 };
-    cout << init.toString() << endl;
-	vector<Piece> newPieces;
-	newPieces = init.pieces;
-	init.pieces[0].position = 4;
-	cout << init.pieces[0].position << endl << newPieces[0].position << endl;
+    Board init("_B___bb__________RrR____________", true);
+    vector<Board> moves = init.generateLegalMoves();
+    for (auto move = moves.begin(); move != moves.end(); ++move){
+        cout << move->toString() << endl;
+    }
     return 0;
 }

@@ -40,9 +40,8 @@ public:
     Board(string state, bool redTurn) {
         for (int i = 0; i < state.length(); i++) {
             if (state[i] != '_') {
-                this->pieces[i] = Piece(i,
-                                        state[i] == 'r' || state[i] == 'R',  // is it a red piece
-                                        state[i] == 'R' || state[i] == 'B'); // is it a king
+                this->pieces.push_back(Piece(i, state[i] == 'r' || state[i] == 'R',  // is it a red piece
+                                        state[i] == 'R' || state[i] == 'B')); // is it a king
             } else {
                 freeSpaces.push_back(i);
             }
@@ -99,19 +98,23 @@ public:
 			vector<Piece> tempPieces;
 			// get possible moves from piece
 			vector<int> moves = piece->getPossibleMoves();
-				// check if space available on board
-				for (auto space = moves.begin(); space != moves.end(); ++space) {
-					auto foundItem = find(freeSpaces.begin(), freeSpaces.end(), *space);
-					// if there is an available free space
-					if (foundItem != freeSpaces.end()) {
-						// copy current board
-						tempPieces = pieces;
-						// change piece
-						piece->position = *space;
-						// add changed board
-						possibleBoards.push_back(Board(pieces, !this->redTurn));
-					}
-               }
+            // check if space available on board
+            for (auto space = moves.begin(); space != moves.end(); ++space) {
+                if ((redTurn && piece->isRed) || (!redTurn && !piece->isRed)) {
+                    auto foundItem = find(freeSpaces.begin(), freeSpaces.end(), *space);
+                    // if there is an available free space
+                    if (foundItem != freeSpaces.end()) {
+                        // save current board
+                        tempPieces = pieces;
+                        // change piece's position
+                        piece->position = *space;
+                        // add changed board
+                        possibleBoards.push_back(Board(pieces, !this->redTurn));
+                        // replace pieces
+                        pieces = tempPieces;
+                    }
+                }
+            }
         }
         
         return possibleBoards;
