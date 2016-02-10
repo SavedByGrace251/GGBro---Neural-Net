@@ -3,7 +3,6 @@
 //  GGBro
 //
 //  Created by Jay Byam on 2/6/16.
-//  Copyright © 2016 Jay Byam. All rights reserved.
 //
 
 #ifndef Piece_h

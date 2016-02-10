@@ -64,7 +64,7 @@ public:
     bool hasNoMoves() {
         return true;
     }
-    
+    // Generate all legal boards
     vector<Board> generateLegalMoves() {
         vector<Board> possibleBoards;
 
@@ -111,20 +111,18 @@ public:
                                         { 21 },{ 20, 22 },{ 21, 23 },{ 22 } };
     
 		// For each piece in pieces
-        for (auto piece = pieces.begin(); piece != pieces.end(); ++piece) {
+        for (auto & piece : pieces) {
 			vector<Piece> tempPieces;
-			// get possible moves from piece
-			vector<int> moves = piece->getPossibleMoves();
             // check if space available on board
-            for (auto space = moves.begin(); space != moves.end(); ++space) {
-                if ((redTurn && piece->isRed) || (!redTurn && !piece->isRed)) {
-                    auto foundItem = find(freeSpaces.begin(), freeSpaces.end(), *space);
+            for (auto & space : piece.getPossibleMoves()) {
+                if ((redTurn && piece.isRed) || (!redTurn && !piece.isRed)) {
+                    auto foundItem = find(freeSpaces.begin(), freeSpaces.end(), space);
                     // if there is an available free space
                     if (foundItem != freeSpaces.end()) {
                         // save current board
                         tempPieces = pieces;
                         // change piece's position
-                        piece->position = *space;
+                        piece.position = space;
                         // add changed board
                         possibleBoards.push_back(Board(pieces, !this->redTurn));
                         // replace pieces
