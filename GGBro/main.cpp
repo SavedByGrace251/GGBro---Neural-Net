@@ -15,8 +15,8 @@ using namespace std;
 
 int main() {
 
-	Board init("______________r__b______________", false);
-	init.redTurn = false;
+	Board init("_____________bb__R___bb_________", false);
+	init.redTurn = true;
 	vector<Board> newBoards = init.generateLegalMoves();
 	for (auto board : newBoards) {
 		cout << board.toString() << endl;

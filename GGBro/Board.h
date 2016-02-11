@@ -68,6 +68,14 @@ public:
 	bool hasNoMoves() {
 		return true;
 	}
+    
+    void removePiece(int idx, bool isRedPiece) {
+        if (isRedPiece) {
+            redPieces.erase(redPieces.begin() + idx);
+        } else {
+            blackPieces.erase(blackPieces.begin() + idx);
+        }
+    }
 
 	// Generate all legal boards
 	vector<Board> generateLegalMoves() {
@@ -88,11 +96,14 @@ public:
 		}
 		
 		for (auto & piece : *ownerPieces) {
+            int n = 0;
+            int pieceToRemove = -1;
+            bool pieceToRemoveIsRed = false;
 			// check if jump available
 			// using pointer for "erase" function
-			for (auto apponent = apponentPieces->begin(); apponent != apponentPieces->end(); ++apponent) {
+            for (auto & apponent : *apponentPieces) {
 				for (auto & jump : piece.getPossibleJumps()) {
-					if (apponent->position == jump[0]) {
+					if (apponent.position == jump[0]) {
 						auto foundFreeSpace = find(freeSpaces.begin(), freeSpaces.end(), jump[1]);
 						// if there is an available free space
 						if (foundFreeSpace != freeSpaces.end()) {
@@ -100,31 +111,43 @@ public:
 							tempPieces = *ownerPieces;
 							// change piece's position
 							piece.position = jump[1];
-							// remove apponent piece
-							apponent = apponentPieces->erase(apponent);
-							// add changed board
-							possibleBoards.push_back(Board(this->redPieces, this->blackPieces, !this->redTurn));
-							// replace pieces
-							*ownerPieces = tempPieces;
+							// set piece to be removed apponent piece
+                            pieceToRemove = n;
+                            pieceToRemoveIsRed = apponent.isRed;
 						}
 					}
 				}
+                ++n;
 			}
-			// check if space available on board
-			for (auto & space : piece.getPossibleMoves()) {
-				auto foundFreeSpace = find(freeSpaces.begin(), freeSpaces.end(), space);
-				// if there is an available free space
-				if (foundFreeSpace != freeSpaces.end()) {
-					// save current board
-					tempPieces = *ownerPieces;
-					// change piece's position
-					piece.position = space;
-					// add changed board
-					possibleBoards.push_back(Board(this->redPieces, this->blackPieces, !this->redTurn));
-					// replace pieces
-					*ownerPieces = tempPieces;
-				}
-			}
+            bool foundJump = false;
+            if (pieceToRemove > -1) {
+                // remove piece
+                removePiece(pieceToRemove, pieceToRemoveIsRed);
+                // replace pieces
+                *ownerPieces = tempPieces;
+                // add changed board
+                possibleBoards.push_back(Board(this->redPieces, this->blackPieces, !this->redTurn));
+                // set found Jump
+                foundJump = true;
+            }
+            
+            if (!foundJump) {
+                // check if space available on board
+                for (auto & space : piece.getPossibleMoves()) {
+                    auto foundFreeSpace = find(freeSpaces.begin(), freeSpaces.end(), space);
+                    // if there is an available free space
+                    if (foundFreeSpace != freeSpaces.end()) {
+                        // save current board
+                        tempPieces = *ownerPieces;
+                        // change piece's position
+                        piece.position = space;
+                        // add changed board
+                        possibleBoards.push_back(Board(this->redPieces, this->blackPieces, !this->redTurn));
+                        // replace pieces
+                        *ownerPieces = tempPieces;
+                    }
+                }
+            }
 		}
 
 		return possibleBoards;
