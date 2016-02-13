@@ -1,0 +1,11 @@
+#*
+*.o
+*.pyc
+*~
+*.sln
+*.vcxproj
+*.vcxproj.filters
+extern/
+node_modules/
+tmp
+vendor/

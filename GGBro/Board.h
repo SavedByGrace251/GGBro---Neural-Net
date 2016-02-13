@@ -2,8 +2,7 @@
 //  Board.h
 //  GGBro
 //
-//  Created by Jay Byam on 2/6/16.
-//
+//  Created by Jay Byam And JonathanNeweis islnd
 
 #ifndef Board_h
 #define Board_h
@@ -109,7 +108,6 @@ public:
 		
 		for (auto & piece : *ownerPieces) {
             int n = 0;
-            vector<pair<int, bool>> piecesToRemove;
 			// check if jump available
 			// using pointer for "erase" function
             for (auto & apponent : *apponentPieces) {
@@ -124,8 +122,6 @@ public:
 							piece.position = jump[1];
                             // add changed board
                             possibleBoards.push_back(Board(this->redPieces, this->blackPieces, !this->redTurn, make_pair(n, apponent.isRed)));
-							// set piece to be removed apponent piece
-                            piecesToRemove.push_back(make_pair(n, apponent.isRed));
                             // put pieces
                             *ownerPieces = tempPieces;
                             // notify jump is found
