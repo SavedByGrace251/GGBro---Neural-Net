@@ -20,6 +20,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GGBro\Board.h" />
+    <ClInclude Include="GGBro\DataSet.h" />
+    <ClInclude Include="GGBro\EvolveNetwork.h" />
+    <ClInclude Include="GGBro\Individual.h" />
     <ClInclude Include="GGBro\Layer.h" />
     <ClInclude Include="GGBro\NeuralNetwork.h" />
     <ClInclude Include="GGBro\Neuron.h" />
