@@ -7,6 +7,10 @@
 
 #include <stdio.h>
 #include "Board.h"
+#include "NeuralNetwork.h"
+#include "EvolveNetwork.h"
+#include "Individual.h"
+#include "DataSet.h"
 #include "Piece.h"
 #include <iostream>
 #include <algorithm>
@@ -25,17 +29,19 @@ int main() {
     high_resolution_clock::time_point t2 = high_resolution_clock::now();
     
     duration<double> time_span1 = duration_cast<duration<double>>(t2 - t1);
-    cout << "board contrustion took " << time_span1.count() << " seconds." << endl;
+    cout << "Board contruction took " << time_span1.count() << " seconds." << endl;
     
 	init.redTurn = true;
     t1 = high_resolution_clock::now();
-	vector<Board> newBoards = init.generateLegalMoves();
-    t2 = high_resolution_clock::now();
+    int count = 0;
     
-    cout << "board generation took " << time_span1.count() << " seconds." << endl;
+    while (time_span1.count() < 10) {
+        vector<Board> newBoards = init.generateLegalMoves();
+        t2 = high_resolution_clock::now();
+        time_span1 = duration_cast<duration<double>>(t2 - t1);
+        count++;
+    }
     
-	for (auto board : newBoards) {
-		cout << board.toString() << endl;
-	}
+    cout << "Board generations: " << count << "." << endl;
     return 0;
 }

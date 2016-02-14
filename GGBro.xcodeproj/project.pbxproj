@@ -25,6 +25,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		3B3AE4BF1C6FE25300DE9B91 /* EvolveNetwork.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EvolveNetwork.h; sourceTree = "<group>"; };
+		3B3AE4C01C6FE31200DE9B91 /* DataSet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DataSet.h; sourceTree = "<group>"; };
+		3B3AE4C11C6FE73500DE9B91 /* Individual.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Individual.h; sourceTree = "<group>"; };
 		3B445F4B1C657C170041F31D /* NeuralNetwork.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NeuralNetwork.h; sourceTree = "<group>"; };
 		3B445FFF1C66BA780041F31D /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		3B4460011C66C1C40041F31D /* Piece.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Piece.h; sourceTree = "<group>"; };
@@ -70,6 +73,9 @@
 				3BD845C81C6432C00022FDEA /* Neuron.h */,
 				3BFC47561C643CB4001606E8 /* Layer.h */,
 				3B445F4B1C657C170041F31D /* NeuralNetwork.h */,
+				3B3AE4BF1C6FE25300DE9B91 /* EvolveNetwork.h */,
+				3B3AE4C11C6FE73500DE9B91 /* Individual.h */,
+				3B3AE4C01C6FE31200DE9B91 /* DataSet.h */,
 			);
 			path = GGBro;
 			sourceTree = "<group>";

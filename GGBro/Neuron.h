@@ -14,8 +14,10 @@ class Neuron {
 public:
     vector<double> weights;
     
+    Neuron() {}
+    
     Neuron(int numberOfWeights) {
-        this->weights = *new vector<double>(numberOfWeights);
+        weights = vector<double>(numberOfWeights);
     }
     
     double sumInputs(vector<double> inputs) {

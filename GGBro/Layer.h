@@ -8,8 +8,6 @@
 #define Layer_h
 
 #include "Neuron.h"
-#include <vector>
-using std::vector;
 #include <cmath>
 
 class Layer {
@@ -18,13 +16,22 @@ public:
     vector<double> inputs;
     
     Layer(int numberOfNeurons, int numberOfInputs) {
-        this->neurons = * new vector<Neuron>(numberOfNeurons);
-        this->inputs = * new vector<double>(numberOfInputs);
+        this->neurons = vector<Neuron>(numberOfNeurons);
+        this->inputs = vector<double>(numberOfInputs);
         int numberOfWeightsPerNeuron = numberOfInputs + 1;
         for (int i = 0; i < numberOfNeurons; i++) {
-            Neuron * newNeuron = new Neuron(numberOfWeightsPerNeuron);
-            this->neurons[i] = *newNeuron;
+            Neuron newNeuron = Neuron(numberOfWeightsPerNeuron);
+            this->neurons[i] = newNeuron;
         }
+    }
+    
+    vector<double> Activate() {
+        vector<double> output(neurons.size());
+        for (auto & neuron : neurons) {
+            double inputSum = neuron.sumInputs(inputs);
+            output.push_back(ActivationFunction(inputSum));
+        }
+        return output;
     }
     
     double ActivationFunction(double inputSum) {

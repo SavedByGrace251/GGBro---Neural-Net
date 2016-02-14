@@ -2,7 +2,7 @@
 //  Board.h
 //  GGBro
 //
-//  Created by Jay Byam And JonathanNeweis islnd
+//  Created by Jay Byam And Jonathan Newell
 
 #ifndef Board_h
 #define Board_h
