@@ -159,7 +159,43 @@ public:
         printResults();
     }
     
+    void runEvolutionStep() {
+        vector<double> childGenome(genomeLength);
+        vector<double> mumGenome = tournamentSelection();
+        uniform_real_distribution<double> uniform(0, 1);
+        default_random_engine engine;
+        if (uniform(engine) < crossoverRate) {
+            vector<double> dadGenome = tournamentSelection();
+            childGenome = crossover(mumGenome, dadGenome);
+        }
+        if (uniform(engine) < mutationRate) {
+            childGenome = mutate(childGenome);
+        }
+        
+        double childFitness = evaluateFitness(childGenome);
+        updatePopulation(childGenome, childFitness);
+    }
     
+    void updatePopulation(vector<double> childGenome, double childFitness) {
+        int bestIndividualIdx = 0;
+        int worstIndividualIdx = 0;
+        int count = 0;
+        for (auto & individual : population) {
+            if (individual.fitness > population[bestIndividualIdx].fitness) {
+                bestIndividualIdx = count;
+            }
+            if (individual.fitness < population[worstIndividualIdx].fitness) {
+                worstIndividualIdx = count;
+            }
+            ++count;
+        }
+        bestIndividualFitness = population[bestIndividualIdx].fitness;
+        
+        if (population[worstIndividualIdx].fitness <= childFitness) {
+            population[worstIndividualIdx].genome = childGenome;
+            population[worstIndividualIdx].fitness = childFitness;
+        }
+    }
 };
 
 #endif /* EvolveNetwork_h */
