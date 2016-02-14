@@ -36,18 +36,18 @@ int main() {
 
 	for (auto & weight : weights) {
 		weight = uniform(engine);
-
 	}
 	vector<double> inputs(33);
-	for (auto & weight : inputs) {
-		weight = uniform(engine);
-
+	for (auto & input : inputs) {
+		input = uniform(engine);
 	}
 
 	net.setWeights(weights);
 	net.setInput(inputs);
 
-	cout << net.Activate()[0] << endl;
+    for (auto thing : net.Activate()) {
+        cout << thing << endl;
+    }
 
     /*while (count <= 1000000) {
 		net.Activate();
