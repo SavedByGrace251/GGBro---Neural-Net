@@ -14,29 +14,29 @@ class Layer {
 public:
     vector<Neuron> neurons;
     vector<double> inputs;
+	vector<double> outputs;
     
     Layer(int numberOfNeurons, int numberOfInputs) {
-        this->neurons = vector<Neuron>(numberOfNeurons);
         this->inputs = vector<double>(numberOfInputs);
         int numberOfWeightsPerNeuron = numberOfInputs + 1;
         for (int i = 0; i < numberOfNeurons; i++) {
-            Neuron newNeuron = Neuron(numberOfWeightsPerNeuron);
-            this->neurons[i] = newNeuron;
+            this->neurons.push_back(Neuron(numberOfWeightsPerNeuron));
         }
+		outputs = vector<double>(neurons.size());
     }
     
     vector<double> Activate() {
-        vector<double> output(neurons.size());
+		int idx = 0;
         for (auto & neuron : neurons) {
             double inputSum = neuron.sumInputs(inputs);
-            output.push_back(ActivationFunction(inputSum));
+            outputs[idx++] = ActivationFunction(inputSum);
         }
-        return output;
+        return outputs;
     }
     
     double ActivationFunction(double inputSum) {
-        // Steepened Sigmoid Function
-        return 1.0 / (1.0 + exp(-3 * inputSum));
+        // Flatened Sigmoid Function
+        return 1.0 / (1.0 + exp(-0.25 * inputSum));
     }
 };
 

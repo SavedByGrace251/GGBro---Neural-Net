@@ -42,7 +42,7 @@ public:
     }
     
     vector<double> Activate() {
-        for (int i = 0; i < layers.size(); ++i) {
+        for (int i = 1; i < layers.size(); ++i) {
             layers[i].inputs = layers[i - 1].Activate();
         }
         return layers[layers.size() - 1].Activate();

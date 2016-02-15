@@ -5,7 +5,6 @@
 //  Created by Jay Byam on 2/6/16.
 //
 
-#include <stdio.h>
 #include "Board.h"
 #include "NeuralNetwork.h"
 #include "EvolveNetwork.h"
@@ -16,28 +15,34 @@
 #include <algorithm>
 #include <vector>
 #include <chrono>
+#include <random>
 using namespace std;
 
 int main() {
 
     using namespace chrono;
-    
+    // Time stuff
     high_resolution_clock::time_point t1;
     high_resolution_clock::time_point t2;
 	duration<double> timeSpan;
     
-    t1 = high_resolution_clock::now();
-    int count = 0;
-	vector<int> layers{ 32, 40, 10, 1 };
+	// random stuff
+	uniform_real_distribution<double> uniform(0, 1);
+	typedef std::chrono::high_resolution_clock myclock;
+	myclock::time_point beginning = myclock::now();
+	myclock::duration d = myclock::now() - beginning;
+	unsigned seed = d.count();
+	default_random_engine engine(seed);
+	engine.seed;
+
+	int count = 0;
+	vector<int> layers{ 50, 75, 40, 10, 1 };
 	NeuralNetwork net(layers);
 	vector<double> weights(net.numberOfWeights);
-	uniform_real_distribution<double> uniform(0, 1);
-	default_random_engine engine;
-
 	for (auto & weight : weights) {
 		weight = uniform(engine);
 	}
-	vector<double> inputs(33);
+	vector<double> inputs(layers[0]);
 	for (auto & input : inputs) {
 		input = uniform(engine);
 	}
@@ -45,17 +50,20 @@ int main() {
 	net.setWeights(weights);
 	net.setInput(inputs);
 
+	cout << "Board evaluation";
     for (auto thing : net.Activate()) {
         cout << thing << endl;
     }
 
-    /*while (count <= 1000000) {
+	count = 0;
+	t1 = high_resolution_clock::now();
+	while (timeSpan.count() <= 1) {
 		net.Activate();
-        count++;
-    }*/
-	t2 = high_resolution_clock::now();
-	timeSpan = duration_cast<duration<double>>(t2 - t1);
+		t2 = high_resolution_clock::now();
+		timeSpan = duration_cast<duration<double>>(t2 - t1);
+		++count;
+	}
     
-    cout << "Board generations: " << count << "." << endl;
-    return 0;
+    cout << "Net evaluations per second: " << count << endl;
+	return 0;
 }
