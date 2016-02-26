@@ -13,20 +13,12 @@ using std::vector;
 class Neuron {
 public:
     vector<double> weights;
+    double output;
     
     Neuron() {}
     
     Neuron(int numberOfWeights) {
         weights = vector<double>(numberOfWeights);
-    }
-    
-    double sumInputs(vector<double> inputs) {
-        double sumOfInputs = 0.0;
-        sumOfInputs += 1 * this->weights[0]; // Add bias
-        for (int i = 0; i < inputs.size(); i++) {
-            sumOfInputs += inputs[i] * this->weights[i + 1];
-        }
-        return sumOfInputs;
     }
 };
 
