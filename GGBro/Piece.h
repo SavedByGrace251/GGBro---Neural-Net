@@ -19,13 +19,15 @@ public:
     bool isRed;
     bool isKing = false;
     
-    // Secondary ctor
+    // default ctor
     Piece(int position, bool isRed, bool isKing) {
         this->position = position;
         this->isRed = isRed;
         this->isKing = isKing;
     }
 
+	// Get Possible Jumps
+	//	returns the possible jumps depending on position and type
 	vector<vector<int>> getPossibleJumps(vector<vector<vector<int>>> & redJumps,
                                          vector<vector<vector<int>>> & blackJumps,
                                          vector<vector<vector<int>>> & kingJumps) {
@@ -34,7 +36,8 @@ public:
 		return blackJumps[position];
 	}
 
-    // Return possible moves depending on position and type
+	// Get Possible Moves
+    //	Return possible moves depending on position and type
     vector<int> getPossibleMoves(vector<vector<int>> & redMoves,
                                  vector<vector<int>> & blackMoves,
                                  vector<vector<int>> & kingMoves) {

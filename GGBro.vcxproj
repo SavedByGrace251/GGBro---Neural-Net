@@ -20,16 +20,15 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GGBro\Board.h" />
-    <ClInclude Include="GGBro\DataSet.h" />
     <ClInclude Include="GGBro\EvolveNetwork.h" />
-    <ClInclude Include="GGBro\Individual.h" />
-    <ClInclude Include="GGBro\Layer.h" />
     <ClInclude Include="GGBro\NeuralNetwork.h" />
-    <ClInclude Include="GGBro\Neuron.h" />
     <ClInclude Include="GGBro\Piece.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GGBro\main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="GGBro\output.txt" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{9412FB0F-C985-4666-9EEA-7022DCB4B025}</ProjectGuid>
@@ -115,6 +114,9 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>false</SDLCheck>
       <PrecompiledHeaderFile />
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

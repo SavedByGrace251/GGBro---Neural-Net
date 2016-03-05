@@ -18,25 +18,13 @@
     <ClInclude Include="GGBro\Board.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GGBro\Layer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="GGBro\NeuralNetwork.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GGBro\Neuron.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GGBro\Piece.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GGBro\DataSet.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="GGBro\EvolveNetwork.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GGBro\Individual.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -44,5 +32,10 @@
     <ClCompile Include="GGBro\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="GGBro\output.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
   </ItemGroup>
 </Project>
