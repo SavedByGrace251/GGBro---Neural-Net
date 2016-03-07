@@ -5,10 +5,6 @@
 //  Created by Jay Byam on 2/6/16.
 //
 
-#include "Board.h"
-#include "NeuralNetwork.h"
-#include "EvolveNetwork.h"
-#include "Piece.h"
 #include <iostream>
 #include <sstream>
 #include <algorithm>
@@ -16,20 +12,30 @@
 #include <chrono>
 #include <random>
 #include <thread>
+#include "Board.h"
+#include "Piece.h"
+#include "NeuralNetwork.h"
+#include "EvolveNetwork.h"
 using namespace std;
 
 // generate boards to a given depth
-int generateBoards(int depth, int maxDepth, vector<Board> & boards, moveMap & moves, NeuralNetwork & net) {
+int generateBoards(std::chrono::high_resolution_clock::time_point start, double maxtime, vector<Board> & boards, moveMap & moves, NeuralNetwork & net, int & depthReached) {
+	++depthReached;
 	int n = boards.size();
-	if (depth < maxDepth) {
-		for (int i = 0; i < boards.size(); i++) {
+	cout << "depth: " << depthReached << " " << "Number of boards: " << n << endl;
+	vector<Board> nextLevel;
+	for (int i = 0; i < boards.size(); i++) {
+		std::chrono::high_resolution_clock::time_point current = std::chrono::high_resolution_clock::now();
+		std::chrono::duration<double> timeSpan = std::chrono::duration<double>(current - start);
+		if (timeSpan.count() < maxtime) {
 			vector<Board> newBoards = boards[i].generateLegalMoves(moves);
 			for (int i = 0; i < newBoards.size(); i++) {
 				net.Activate();
 			}
-			n += generateBoards(depth + 1, maxDepth, newBoards, moves, net);
+			nextLevel.insert(nextLevel.end(), newBoards.begin(), newBoards.end());
 		}
 	}
+	if (nextLevel.size() > 0) n += generateBoards(start, maxtime, nextLevel, moves, net, depthReached);
 	return n;
 }
 
@@ -87,12 +93,8 @@ void printGenome(NeuralNetwork net) {
 }
 
 int main() {
-
 	bool debug = false;
 	
-
-	moveMap moves;
-
 	// Time stuff
 	std::chrono::high_resolution_clock::time_point t1;
 	std::chrono::high_resolution_clock::time_point t2;
@@ -110,14 +112,14 @@ int main() {
 	NeuralNetwork net2 = makeNetwork(layers, debug);
 	NeuralNetwork child = spliceNetwork(net1, net2);
 	NeuralNetwork evolved = evolveNetwork(net1);
-
-	cout << "network 1: ";
+	
+	cout << "network 1 genome: ";
 	printGenome(net1);
-	cout << "network 2: ";
+	cout << endl << "network 2 genome: ";
 	printGenome(net2);
-	cout << "child: ";
+	cout << endl << "child genome:     ";
 	printGenome(child);
-	cout << "evolved: ";
+	cout << endl << "evolved genome:   ";
 	printGenome(evolved);
 
 	cout << "Board evaluation = ";
@@ -125,7 +127,8 @@ int main() {
 	for (double output : net1.outputs) {
 		cout << output << endl;
 	}
-
+	
+	moveMap moves;
 	t1 = std::chrono::high_resolution_clock::now();
 	Board initBoard;
 	t2 = std::chrono::high_resolution_clock::now();
@@ -133,19 +136,21 @@ int main() {
 	cout << "Board creation time: " << timeSpan.count() << endl << initBoard.toString() << endl;
 
 	vector<Board> newBoards = { initBoard };
-	int numberOfGens = 8;
+	double computeTime = 14.6;
+	int depthReached = -1;
 	t1 = std::chrono::high_resolution_clock::now();
-	int n = generateBoards(0, numberOfGens, newBoards, moves, net);
+	int n = generateBoards(t1, computeTime, newBoards, moves, net1, depthReached);
 	t2 = std::chrono::high_resolution_clock::now();
 	timeSpan = std::chrono::duration_cast<std::chrono::duration<double>>(t2 - t1);
 
 	cout << "Number of boards generated: " << n << endl;
-	cout << "Board " <<  numberOfGens << " generations: " << timeSpan.count() << endl;
+	cout << "Depth of boards reached: " << depthReached << endl;
+	cout << "Board generation time: " << timeSpan.count() << endl;
 
 	int count = 0;
 	t1 = std::chrono::high_resolution_clock::now();
 	while (count < 1000000) {
-		net.Activate();
+		net1.Activate();
 		++count;
 	}
 	t2 = std::chrono::high_resolution_clock::now();

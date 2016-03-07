@@ -32,6 +32,9 @@
     <ClCompile Include="GGBro\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="GGBro\test.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="GGBro\output.txt">

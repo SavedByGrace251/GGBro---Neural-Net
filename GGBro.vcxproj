@@ -26,6 +26,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GGBro\main.cpp" />
+    <ClCompile Include="GGBro\test.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="GGBro\output.txt" />

@@ -76,6 +76,8 @@ public:
 	vector<Piece> blackPieces;
 	bool redTurn = true;
 	vector<int> freeSpaces{};
+	double rank;
+	Board *parent;
 
 	// Default ctor
 	Board() {
@@ -114,33 +116,16 @@ public:
 		this->blackPieces = blackPieces;
 		this->redTurn = redTurn;
 		this->freeSpaces = freeSpaces;
-    }
-    
-    // Secondary ctor that takes a vector of Pieces, freespaces, a bool for the turn, and a piece to remove
-    Board(vector<Piece> redPieces, vector<Piece> blackPieces, vector<int> freeSpaces, bool redTurn, std::pair<int, bool> pieceToRemove) {
-        this->redPieces = redPieces;
-        this->blackPieces = blackPieces;
-        this->redTurn = redTurn;
-		this->freeSpaces = freeSpaces;
-        removePiece(pieceToRemove.first, pieceToRemove.second);
-    }
-
-	// Whether or not this board has no legal moves
-	bool hasNoMoves() {
-		return true;
-	}
-    
-	// remosve a piece from board
-    void removePiece(int idx, bool isRedPiece) {
-		int space;
-        if (isRedPiece) {
-			space = redPieces[idx].position;
-            redPieces.erase(redPieces.begin() + idx);
-        } else {
-			space = blackPieces[idx].position;
-            blackPieces.erase(blackPieces.begin() + idx);
-        }
-		freeSpaces.push_back(space);
+		for (int i = 0; i < redPieces.size(); i++) {
+			if (redPieces[i].position == -1) {
+				redPieces.erase(redPieces.begin() + i);
+			}
+		}
+		for (int i = 0; i < blackPieces.size(); i++) {
+			if (blackPieces[i].position == -1) {
+				blackPieces.erase(blackPieces.begin() + i);
+			}
+		}
     }
 
 	// Generate all legal boards
@@ -165,7 +150,6 @@ public:
 		}
 		
 		for (Piece & piece : *ownerPieces) {
-            int n = 0;
 			// check if jump available
 			// using pointer for "erase" function
             for (auto & apponent : *apponentPieces) {
@@ -184,8 +168,12 @@ public:
 							freeSpaces.push_back(piece.position);
 							// move piece
 							piece.position = jump[1];
+							// add apponent piece position as free space
+							freeSpaces.push_back(apponent.position);
+							// "remove" piece
+							apponent.position = -1;
                             // add changed board
-                            possibleBoards.push_back(Board(this->redPieces, this->blackPieces, this->freeSpaces, !this->redTurn, make_pair(n, apponent.isRed)));
+                            possibleBoards.push_back(Board(this->redPieces, this->blackPieces, this->freeSpaces, !this->redTurn));
                             // put pieces
                             *ownerPieces = tempPieces;
 							// put free spaces back
@@ -195,7 +183,6 @@ public:
 						}
 					}
 				}
-                ++n;
 			}
             
             if (!foundJump) {
