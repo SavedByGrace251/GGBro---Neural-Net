@@ -21,13 +21,13 @@ using std::default_random_engine;
 
 // takes a parent network and evolves the weights to make a new child network
 NeuralNetwork evolveNetwork(NeuralNetwork& parent) {
-	vector<vector<Neuron>> genome = parent.getGenome();
+	vector<vector<vector<double>>> genome = parent.getGenome();
 	normal_distribution<double> normal(0.0, 0.4);
 	default_random_engine generator(std::chrono::high_resolution_clock::now().time_since_epoch().count());
 
-	for (vector<Neuron> & layer : genome) {
-		for (Neuron & neuron : layer) {
-			for (double & weight : neuron.weights) {
+	for (vector<vector<double>> & layer : genome) {
+		for (vector<double> & neuron : layer) {
+			for (double & weight : neuron) {
 				weight += normal(generator);
 			}
 		}
@@ -37,8 +37,8 @@ NeuralNetwork evolveNetwork(NeuralNetwork& parent) {
 
 // takes two parent networks and splices them together to make a new child network
 NeuralNetwork spliceNetwork(NeuralNetwork& momNet, NeuralNetwork& dadNet) {
-	vector<vector<Neuron>> momGenome = momNet.getGenome();
-	vector<vector<Neuron>> dadGenome = dadNet.getGenome();
+	vector<vector<vector<double>>> momGenome = momNet.getGenome();
+	vector<vector<vector<double>>> dadGenome = dadNet.getGenome();
 	// validation
 	if (momGenome.size() != dadGenome.size()) throw std::invalid_argument("The two networks given are different and connot produce a child.");
 	for (int i = 0; i < momGenome.size(); i++) {
@@ -47,12 +47,12 @@ NeuralNetwork spliceNetwork(NeuralNetwork& momNet, NeuralNetwork& dadNet) {
 	// set random engines
 	uniform_int_distribution<int> flipFlop(0, 1);
 	default_random_engine generator(std::chrono::high_resolution_clock::now().time_since_epoch().count());
-	vector<vector<Neuron>> child;
+	vector<vector<vector<double>>> child;
 	// set layer 0 gene to child
 	child.push_back(momGenome[0]);
 	// start gene splicing
 	for (int i = 1; i < momGenome.size(); ++i) {
-		vector<Neuron> gene(momGenome[i].size());
+		vector<vector<double>> gene(momGenome[i].size());
 		// determin splice spot
 		uniform_int_distribution<int> splice(0, momGenome[i].size() - 1);
 		int spliceSpot = splice(generator);
@@ -79,7 +79,6 @@ NeuralNetwork spliceNetwork(NeuralNetwork& momNet, NeuralNetwork& dadNet) {
 		// add gene to child
 		child.push_back(gene);
 	}
-	
 	return NeuralNetwork(child);
 }
 

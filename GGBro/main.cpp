@@ -39,7 +39,7 @@ int generateBoards(std::chrono::high_resolution_clock::time_point start, double 
 	return n;
 }
 
-NeuralNetwork makeNetwork(vector<int> layers, bool debug) {
+NeuralNetwork makeNetwork(vector<int> layers) {
 	uniform_real_distribution<double> uniform(-1.0, 1.0);
 	default_random_engine engine(std::chrono::high_resolution_clock::now().time_since_epoch().count());
 
@@ -53,17 +53,14 @@ NeuralNetwork makeNetwork(vector<int> layers, bool debug) {
 
 
 	// initialize weights
-	first = true;
-	bool firstG = true;
 	for (int i = 1; i < layers.size(); ++i) {
-		vector<Neuron> layer(layers[i]);
+		vector<vector<double>> layer(layers[i]);
 		for (int j = 0; j < layer.size(); ++j) {
-			first = true;
 			vector<double> weights(layers[i - 1]);
 			for (int k = 0; k < weights.size(); ++k) {
 				weights[k] = uniform(engine);
 			}
-			layer[j].weights = weights;
+			layer[j] = weights;
 		}
 		// set layer's weights
 		net.setWeights(i, layer);
@@ -74,12 +71,12 @@ NeuralNetwork makeNetwork(vector<int> layers, bool debug) {
 	return net;
 }
 
-void printGenome(NeuralNetwork net) {
+void printGenome(NeuralNetwork& net) {
 	bool first = true;
 	cout << "[";
-	for (vector<Neuron> & layer : net.getGenome()) {
-		for (Neuron & neuron : layer) {
-			for (double & weight : neuron.weights) {
+	for (vector<vector<double>> & layer : net.getGenome()) {
+		for (vector<double> & neuron : layer) {
+			for (double & weight : neuron) {
 				if (first) {
 					cout << weight;
 					first = !first;
@@ -92,27 +89,12 @@ void printGenome(NeuralNetwork net) {
 	cout << "]" << endl;
 }
 
-int main() {
-	bool debug = false;
-	
-	// Time stuff
-	std::chrono::high_resolution_clock::time_point t1;
-	std::chrono::high_resolution_clock::time_point t2;
-	std::chrono::duration<double> timeSpan;
-
-	// random stuff
-	uniform_real_distribution<double> uniform(-1.0, 1.0);
-	uniform_int_distribution<int> intUniform(0, 19);
-	normal_distribution<double> normal(0.0,0.4);
-	default_random_engine engine(std::chrono::high_resolution_clock::now().time_since_epoch().count());
-	
-	
-	vector<int> layers{32, 40, 10, 1};
-	NeuralNetwork net1 = makeNetwork(layers, debug);
-	NeuralNetwork net2 = makeNetwork(layers, debug);
+void testEvolver(vector<int> layers, bool debug) {
+	NeuralNetwork net1 = makeNetwork(layers);
+	NeuralNetwork net2 = makeNetwork(layers);
 	NeuralNetwork child = spliceNetwork(net1, net2);
 	NeuralNetwork evolved = evolveNetwork(net1);
-	
+
 	cout << "network 1 genome: ";
 	printGenome(net1);
 	cout << endl << "network 2 genome: ";
@@ -121,41 +103,72 @@ int main() {
 	printGenome(child);
 	cout << endl << "evolved genome:   ";
 	printGenome(evolved);
+}
 
-	cout << "Board evaluation = ";
-	net1.Activate();
-	for (double output : net1.outputs) {
-		cout << output << endl;
-	}
-	
-	moveMap moves;
-	t1 = std::chrono::high_resolution_clock::now();
-	Board initBoard;
-	t2 = std::chrono::high_resolution_clock::now();
-	timeSpan = std::chrono::duration_cast<std::chrono::duration<double>>(t2 - t1);
-	cout << "Board creation time: " << timeSpan.count() << endl << initBoard.toString() << endl;
-
-	vector<Board> newBoards = { initBoard };
-	double computeTime = 14.6;
-	int depthReached = -1;
-	t1 = std::chrono::high_resolution_clock::now();
-	int n = generateBoards(t1, computeTime, newBoards, moves, net1, depthReached);
-	t2 = std::chrono::high_resolution_clock::now();
-	timeSpan = std::chrono::duration_cast<std::chrono::duration<double>>(t2 - t1);
-
-	cout << "Number of boards generated: " << n << endl;
-	cout << "Depth of boards reached: " << depthReached << endl;
-	cout << "Board generation time: " << timeSpan.count() << endl;
+void timeNetwork(NeuralNetwork& net) {
+	std::chrono::high_resolution_clock::time_point t1;
+	std::chrono::high_resolution_clock::time_point t2;
+	std::chrono::duration<double> timeSpan;
 
 	int count = 0;
 	t1 = std::chrono::high_resolution_clock::now();
-	while (count < 1000000) {
-		net1.Activate();
+	while (count < 250000) {
+		net.Activate();
 		++count;
 	}
 	t2 = std::chrono::high_resolution_clock::now();
 	timeSpan = std::chrono::duration_cast<std::chrono::duration<double>>(t2 - t1);
+
+	cout << "Net evaluations per second: " << count / timeSpan.count() << endl;
+}
+
+void timeBoardGenerator(NeuralNetwork& net) {
+	std::chrono::high_resolution_clock::time_point t1;
+	std::chrono::high_resolution_clock::time_point t2;
+	std::chrono::duration<double> timeSpan;
+
+	moveMap moves;
+	t1 = std::chrono::high_resolution_clock::now();
+	Board initboard;
+	t2 = std::chrono::high_resolution_clock::now();
+	timeSpan = std::chrono::duration_cast<std::chrono::duration<double>>(t2 - t1);
+	cout << "board creation time: " << timeSpan.count() << endl << initboard.toString() << endl;
+
+	vector<Board> newboards = { initboard };
+	double computetime = 14.6;
+	int depthreached = -1;
+	t1 = std::chrono::high_resolution_clock::now();
+	int n = generateBoards(t1, computetime, newboards, moves, net, depthreached);
+	t2 = std::chrono::high_resolution_clock::now();
+	timeSpan = std::chrono::duration_cast<std::chrono::duration<double>>(t2 - t1);
+
+	cout << "number of boards generated: " << n << endl;
+	cout << "depth of boards reached: " << depthreached << endl;
+	cout << "board generation time: " << timeSpan.count() << endl;
+}
+
+int main() {
+	vector<int> layers{32, 40, 10, 1};
+	NeuralNetwork net1 = makeNetwork(layers);
+	cout << "Board evaluation = ";
+	net1.Activate();
+	for (double output : net1.outputs.back()) {
+		cout << output << endl;
+	}
 	
-	cout << "Net evaluations per second: " << count/timeSpan.count() << endl;
+	//testEvolver();
+
+	//timeBoardGenerator(net1);
+
+	//timeNetwork(net1);
+	
+    Board doubleJump("______________r__bb_______b_____", true);
+    moveMap moves;
+    vector<Board> jumps = doubleJump.generateLegalMoves(moves);
+    for (Board jump : jumps) {
+        cout << jump.toString() << endl;
+    }
+    
+
 	return 0;
 }

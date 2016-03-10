@@ -9,7 +9,7 @@ int call(int& n) {
 	return n;
 }
 
-int main() {
+int test() {
 	int n = 10;
 	for (int i = 0; i < call(n); i++) {
 	}
