@@ -30,10 +30,10 @@ int searchBoards(std::chrono::high_resolution_clock::time_point start, double ma
 			std::chrono::duration<double> timeSpan(std::chrono::high_resolution_clock::now() - start);
 			if (timeSpan.count() < maxtime) {
 				vector<Board> newBoards = boards[i].generateLegalMoves(moves);
-				for (int i = 0; i < newBoards.size(); i++) {
-					net.setInput(newBoards[i].state);
-					newBoards[i].rank = net.Activate()[0];
-				}
+				//for (int i = 0; i < newBoards.size(); i++) {
+				//	net.setInput(newBoards[i].state);
+				//	newBoards[i].rank = net.Activate()[0];
+				//}
 				nextLevel.insert(nextLevel.end(), newBoards.begin(), newBoards.end());
 			}
 		}

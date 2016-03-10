@@ -76,7 +76,7 @@ public:
 	vector<Piece> redPieces;
 	vector<Piece> blackPieces;
 	bool redTurn = true;
-	vector<int> freeSpaces{};
+	vector<bool> freeSpaces;
 	vector<double> state;
 	double redValue = 1;
 	double blackValue = -1;
@@ -85,15 +85,18 @@ public:
 	
 	// Default ctor
 	Board() {
+		freeSpaces = vector<bool>(32, false);
 		for (int i = 0; i < 12; i++) {
 			// First 12 indices are red pieces (not kings)
 			redPieces.push_back(Piece(i, true, false));
+		}
+		for (int i = 12; i < 20; i++) {
+			freeSpaces[i] = true;
 		}
 		for (int i = 20; i < 32; i++) {
 			// Last 12 indices are black pieces (not kings)
 			blackPieces.push_back(Piece(i, false, false));
 		}
-		freeSpaces = { 12, 13, 14, 15, 16, 17, 18, 19 };
 		setupBoard();
 	}
 	
@@ -109,7 +112,7 @@ public:
 					this->blackPieces.push_back(Piece(i, redCheck, kingCheck));
 				}
 			} else {
-				freeSpaces.push_back(i);
+				freeSpaces[i] = true;
 			}
 		}
 		this->redTurn = redTurn;
@@ -117,7 +120,7 @@ public:
 	}
 	
 	// Secondary ctor that takes a vector of Pieces, freespaces, and a bool for the turn
-	Board(vector<Piece> redPieces_, vector<Piece> blackPieces_, vector<int> freeSpaces_, bool redTurn_) {
+	Board(vector<Piece> redPieces_, vector<Piece> blackPieces_, vector<bool> freeSpaces_, bool redTurn_) {
 		redPieces = redPieces_;
 		blackPieces = blackPieces_;
 		redTurn = redTurn_;
@@ -167,18 +170,19 @@ public:
 	// checks if more jumps are available (ex. double jumps)
 	void checkJumps(Piece& piece, moveMap& moves, vector<Piece>& enemyPieces) {
 		int numEnemies = enemyPieces.size();
+		vector<vector<int>> &pJumps = moves.blackJumps[piece.position];
+		if (piece.isKing) pJumps = moves.kingJumps[piece.position];
+		if (piece.isRed) pJumps = moves.redJumps[piece.position];
 		for (int enemy = 0; enemy < numEnemies; ++enemy) {
-			vector<vector<int>> pJumps = piece.getPossibleJumps(moves.redJumps, moves.blackJumps, moves.kingJumps);
 			int numPJumps = pJumps.size();
 			for (int i = 0; i < numPJumps; ++i) {
 				if (enemyPieces[enemy].position == pJumps[i][0]) {
-					vector<int>::iterator foundFreeSpace = find(freeSpaces.begin(), freeSpaces.end(), pJumps[i][1]);
 					// if there is an available free space
-					if (foundFreeSpace != freeSpaces.end()) {
+					if (freeSpaces[pJumps[i][1]]) {
 						// delete free space for new position
-						freeSpaces.erase(foundFreeSpace);
+						freeSpaces[pJumps[i][1]] = false;
 						// add current piece position as free space
-						freeSpaces.push_back(piece.position);
+						freeSpaces[piece.position] = true;
 						// move piece
 						piece.position = pJumps[i][1];
 						// add enemy  piece position as free space
@@ -200,7 +204,7 @@ public:
 		vector<Board> possibleBoards;
 		vector<Piece> tempOPieces;
 		vector<Piece> tempEPieces;
-		vector<int> tempFreeSpaces;
+		vector<bool> tempFreeSpaces;
 		
 		vector<Piece> * enemyPieces;
 		vector<Piece> * ownerPieces;
@@ -217,27 +221,28 @@ public:
 		
 		for (Piece & piece : *ownerPieces) {
 			// check if jump available
+			vector<vector<int>> &possibleJumps = moves.blackJumps[piece.position];
+			if (piece.isKing) possibleJumps = moves.kingJumps[piece.position];
+			if (piece.isRed) possibleJumps = moves.redJumps[piece.position];
 			// using pointer for "erase" function
 			for (auto & enemy : *enemyPieces) {
-				vector<vector<int>> possibleJumps = piece.getPossibleJumps(moves.redJumps, moves.blackJumps, moves.kingJumps);
 				for (auto & jump : possibleJumps) {
 					if (enemy.position == jump[0]) {
-						auto foundFreeSpace = find(freeSpaces.begin(), freeSpaces.end(), jump[1]);
 						// if there is an available free space
-						if (foundFreeSpace != freeSpaces.end()) {
+						if (freeSpaces[jump[1]]) {
 							// save current board
 							tempOPieces = *ownerPieces;
 							tempEPieces = *enemyPieces;
 							// save current free spaces
 							tempFreeSpaces = freeSpaces;
 							// delete free space for new position
-							freeSpaces.erase(foundFreeSpace);
+							freeSpaces[jump[1]] = false;
 							// add current piece position as free space
-							freeSpaces.push_back(piece.position);
+							freeSpaces[piece.position] = true;
 							// move piece
 							piece.position = jump[1];
 							// add enemy  piece position as free space
-							freeSpaces.push_back(enemy.position);
+							freeSpaces[enemy.position] = true;
 							// "remove" piece
 							enemy.position = -1;
 							// check for more jumps
@@ -257,19 +262,22 @@ public:
 			}
 			
 			if (!foundJump) {
+				// check possible moves
+				vector<int> &possibleMoves = moves.blackMoves[piece.position];
+				if (piece.isKing) possibleMoves = moves.kingMoves[piece.position];
+				if (piece.isRed) possibleMoves = moves.redMoves[piece.position];
 				// check if space available on board
-				for (int & space : piece.getPossibleMoves(moves.redMoves, moves.blackMoves, moves.kingMoves)) {
-					auto foundFreeSpace = find(freeSpaces.begin(), freeSpaces.end(), space);
+				for (int & space : possibleMoves) {
 					// if there is an available free space
-					if (foundFreeSpace != freeSpaces.end()) {
+					if (freeSpaces[space]) {
 						// save current board
 						tempOPieces = *ownerPieces;
 						// save current free spaces
 						tempFreeSpaces = freeSpaces;
 						// delete free space for new position
-						freeSpaces.erase(foundFreeSpace);
+						freeSpaces[space] = false;
 						// add current piece position as free space
-						freeSpaces.push_back(piece.position);
+						freeSpaces[piece.position] = true;
 						// change piece's position
 						piece.position = space;
 						// add changed board

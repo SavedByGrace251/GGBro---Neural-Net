@@ -25,26 +25,6 @@ public:
         this->isRed = isRed;
         this->isKing = isKing;
     }
-
-	// Get Possible Jumps
-	//	returns the possible jumps depending on position and type
-	vector<vector<int>> getPossibleJumps(vector<vector<vector<int>>> & redJumps,
-                                         vector<vector<vector<int>>> & blackJumps,
-                                         vector<vector<vector<int>>> & kingJumps) {
-		if (isKing) return kingJumps[position];
-		if (isRed) return redJumps[position];
-		return blackJumps[position];
-	}
-
-	// Get Possible Moves
-    //	Return possible moves depending on position and type
-    vector<int> getPossibleMoves(vector<vector<int>> & redMoves,
-                                 vector<vector<int>> & blackMoves,
-                                 vector<vector<int>> & kingMoves) {
-        if (isKing) return kingMoves[position];
-        if (isRed) return redMoves[position];
-        return blackMoves[position];
-    }
 };
 
 #endif /* Piece_h */
