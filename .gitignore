@@ -19,6 +19,7 @@
 *.pyc
 
 # Build results
+Performance Reports/
 __pycache__/
 [Dd]ebug/
 [Dd]ebugPublic/
