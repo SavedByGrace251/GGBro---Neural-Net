@@ -41,4 +41,12 @@
       <Filter>Resource Files</Filter>
     </Text>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="GGBro\checkers board.py">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="GGBro\graphics.py">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
 </Project>

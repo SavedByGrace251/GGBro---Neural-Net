@@ -85,7 +85,7 @@ public:
     
 	// Activiate
 	//	Calculates the activation value of the network
-    void Activate() {
+    vector<double> Activate() {
 		int netSize = layers.size();
 		// for each layer in the network
         for (unsigned int i = 1; i<netSize; ++i){
@@ -104,6 +104,7 @@ public:
                 outputs[i][j] = 1.0 / (1.0 + exp(-0.5 * temp));
             }
         }
+		return outputs.back();
     }
 
 	// Get Genome

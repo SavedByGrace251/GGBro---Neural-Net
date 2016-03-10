@@ -12,7 +12,14 @@
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 
+#binary files
+*.exe
+*.out
+*.stackdump
+*.pyc
+
 # Build results
+__pycache__/
 [Dd]ebug/
 [Dd]ebugPublic/
 [Rr]elease/

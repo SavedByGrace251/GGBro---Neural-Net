@@ -19,23 +19,26 @@
 using namespace std;
 
 // generate boards to a given depth
-int generateBoards(std::chrono::high_resolution_clock::time_point start, double maxtime, vector<Board> & boards, moveMap & moves, NeuralNetwork & net, int & depthReached) {
+int searchBoards(std::chrono::high_resolution_clock::time_point start, double maxtime, vector<Board> & boards, moveMap & moves, NeuralNetwork & net, int & depthReached) {
 	++depthReached;
 	int n = boards.size();
 	cout << "depth: " << depthReached << " " << "Number of boards: " << n << endl;
 	vector<Board> nextLevel;
-	for (int i = 0; i < boards.size(); i++) {
-		std::chrono::high_resolution_clock::time_point current = std::chrono::high_resolution_clock::now();
-		std::chrono::duration<double> timeSpan = std::chrono::duration<double>(current - start);
-		if (timeSpan.count() < maxtime) {
-			vector<Board> newBoards = boards[i].generateLegalMoves(moves);
-			for (int i = 0; i < newBoards.size(); i++) {
-				net.Activate();
+	std::chrono::duration<double> timeSpan(std::chrono::high_resolution_clock::now() - start);
+	if (timeSpan.count() < maxtime) {
+		for (int i = 0; i < boards.size(); i++) {
+			std::chrono::duration<double> timeSpan(std::chrono::high_resolution_clock::now() - start);
+			if (timeSpan.count() < maxtime) {
+				vector<Board> newBoards = boards[i].generateLegalMoves(moves);
+				for (int i = 0; i < newBoards.size(); i++) {
+					net.setInput(newBoards[i].state);
+					newBoards[i].rank = net.Activate()[0];
+				}
+				nextLevel.insert(nextLevel.end(), newBoards.begin(), newBoards.end());
 			}
-			nextLevel.insert(nextLevel.end(), newBoards.begin(), newBoards.end());
 		}
+		if (nextLevel.size() > 0) n += searchBoards(start, maxtime, nextLevel, moves, net, depthReached);
 	}
-	if (nextLevel.size() > 0) n += generateBoards(start, maxtime, nextLevel, moves, net, depthReached);
 	return n;
 }
 
@@ -135,10 +138,11 @@ void timeBoardGenerator(NeuralNetwork& net) {
 	cout << "board creation time: " << timeSpan.count() << endl << initboard.toString() << endl;
 
 	vector<Board> newboards = { initboard };
-	double computetime = 14.6;
+	double computetime = 15;
+	double offset = 0.5;
 	int depthreached = -1;
 	t1 = std::chrono::high_resolution_clock::now();
-	int n = generateBoards(t1, computetime, newboards, moves, net, depthreached);
+	int n = searchBoards(t1, computetime - offset, newboards, moves, net, depthreached);
 	t2 = std::chrono::high_resolution_clock::now();
 	timeSpan = std::chrono::duration_cast<std::chrono::duration<double>>(t2 - t1);
 
@@ -150,25 +154,14 @@ void timeBoardGenerator(NeuralNetwork& net) {
 int main() {
 	vector<int> layers{32, 40, 10, 1};
 	NeuralNetwork net1 = makeNetwork(layers);
-	cout << "Board evaluation = ";
-	net1.Activate();
-	for (double output : net1.outputs.back()) {
-		cout << output << endl;
-	}
 	
 	//testEvolver();
 
-	//timeBoardGenerator(net1);
+	timeBoardGenerator(net1);
 
 	//timeNetwork(net1);
-	
-    Board doubleJump("______________r__bb_______b_____", true);
-    moveMap moves;
-    vector<Board> jumps = doubleJump.generateLegalMoves(moves);
-    for (Board jump : jumps) {
-        cout << jump.toString() << endl;
-    }
-    
 
+	cout << "press ENTER to continue";
+	while (cin.get() != '\n');
 	return 0;
 }
