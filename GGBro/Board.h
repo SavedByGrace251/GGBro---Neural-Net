@@ -130,7 +130,29 @@ public:
 	
 	// checks if more jumps are available (ex. double jumps)
 	void checkJumps(Piece piece, moveMap& moves, vector<Piece>& enemyPieces) {
-		
+		for (auto & enemy  : enemyPieces) {
+			vector<vector<int>> possibleJumps = piece.getPossibleJumps(moves.redJumps, moves.blackJumps, moves.kingJumps);
+			for (auto & jump : possibleJumps) {
+				if (enemy .position == jump[0]) {
+					auto foundFreeSpace = find(freeSpaces.begin(), freeSpaces.end(), jump[1]);
+					// if there is an available free space
+					if (foundFreeSpace != freeSpaces.end()) {
+						// delete free space for new position
+						freeSpaces.erase(foundFreeSpace);
+						// add current piece position as free space
+						freeSpaces.push_back(piece.position);
+						// move piece
+						piece.position = jump[1];
+						// add enemy  piece position as free space
+						freeSpaces.push_back(enemy.position);
+						// "remove" piece
+						enemy.position = -1;
+						// check for more jumps
+						checkJumps(piece, moves, enemyPieces);
+					}
+				}
+			}
+		}
 	}
 	
 	// Generate all legal boards
