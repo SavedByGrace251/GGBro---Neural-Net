@@ -8,38 +8,44 @@
 #define NeuralNetwork_h
 
 #include <iostream>
+using std::ostream;
 #include <vector>
 using std::vector;
 #include <cmath>
 
 //struct Neuron {
-//    vector<double> weights;
+//	vector<double> weights;
 //	double output;
 //};
 
 class NeuralNetwork {
 public:
+	vector<int> structure;
     vector<vector<vector<double>>> layers;
 	vector<vector<double>> outputs;
     
 	// default ctor
 	NeuralNetwork() {}
 
-	// secondary ctor:
+	// secondary ctor
 	//	takes a vector of ints as a layer map
     NeuralNetwork(vector<int> newLayers) {
 		initialize(newLayers);
     }
 
-	// secondary ctor:
+	// secondary ctor
 	//	takes a genome and applys it to this network
 	NeuralNetwork(vector<vector<vector<double>>> genome) {
 		this->layers = genome;
+		for (vector<vector<double>> & layer : genome) {
+			structure.push_back(layer.size());
+		}
 	}
     
-	// initialize:
+	// initialize
 	//	takes a vector of ints as a layer map
 	void initialize(vector<int> newLayers) {
+		structure = newLayers;
 		// clear network
 		layers.clear();
 		// start building network
@@ -60,7 +66,7 @@ public:
 		}
 	}
 
-	// Set Weights:
+	// Set Weights
 	//	Applys the weights to the given layer
     void setWeights(int layer, vector<vector<double>> & weights) {
 		// validate
@@ -114,5 +120,25 @@ public:
 	}
 };
 
+// Print Genome
+//	prints the genome of the current network
+ostream& operator<<(ostream& os, const NeuralNetwork& net) {
+	bool first = true;
+	os << "[";
+	for (vector<vector<double>> layer : net.layers) {
+		for (vector<double>& neuron : layer) {
+			for (double & weight : neuron) {
+				if (first) {
+					os << weight;
+					first = !first;
+				} else {
+					os << "," << weight;
+				}
+			}
+		}
+	}
+	os << "]";
+	return os;
+}
 
 #endif /* NeuralNetwork_h */

@@ -7,7 +7,7 @@ boardSpot = []
 boards = []
 for i in range(32):
 	boardSpot.append([1,1])
-boardSize = 800
+boardSize = 1000
 gridSize = boardSize/8
 win = GraphWin("Checkers Board", boardSize, boardSize)
 win.setBackground('grey')

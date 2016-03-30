@@ -19,57 +19,9 @@ using std::string;
 using std::pair;
 using std::make_pair;
 #include <iostream>
-
-struct moveMap {
-	vector<vector<vector<int>>> redJumps{ { { 5, 9 } },{ { 5, 8 },{ 6, 10 } },{ { 6, 9 },{ 7, 11 } },{ { 7, 10 } }, // Top row legal jumps
-		{ { 8, 13 } },{ { 8, 12 },{ 9, 14 } },{ { 9, 13 },{ 10, 15 } },{ { 10, 14 } }, // 2nd row legal jumps
-		{ { 13, 17 } },{ { 13, 16 },{ 14, 18 } },{ { 14, 17 },{ 15, 19 } },{ { 15, 18 } }, // 3rd row legal jumps
-		{ { 16, 21 } },{ { 16, 20 },{ 17, 22 } },{ { 17, 21 },{ 18, 23 } },{ { 18, 22 } }, // 4th row legal jumps
-		{ { 21, 25 } },{ { 21, 24 },{ 22, 26 } },{ { 22, 25 },{ 23, 27 } },{ { 23, 26 } }, // 5th row legal jumps
-		{ { 24, 29 } },{ { 24, 28 },{ 25, 30 } },{ { 25, 29 },{ 26, 31 } },{ { 26, 30 } }, // 6th row legal jumps
-		{},{},{},{}, // 7th row legal jumps
-		{},{},{},{} }; // Bottom row legal jumps
-	vector<vector<vector<int>>> blackJumps{ {},{},{},{}, // Top row legal jumps
-		{},{},{},{}, // And so on...
-		{ { 5, 1 } },{ { 5, 0 },{ 6, 2 } },{ { 6, 1 },{ 7, 3 } },{ { 7, 2 } },
-		{ { 8, 5 } },{ { 8, 4 },{ 9, 6 } },{ { 9, 5 },{ 10, 7 } },{ { 10, 6 } },
-		{ { 13, 9 } },{ { 13, 8 },{ 14, 10 } },{ { 14, 9 },{ 15, 11 } },{ { 16, 10 } },
-		{ { 16, 13 } },{ { 16, 12 },{ 17, 14 } },{ { 17, 13 },{ 18, 15 } },{ { 19, 14 } },
-		{ { 21, 17 } },{ { 21, 16 },{ 22, 18 } },{ { 23, 17 },{ 24, 19 } },{ { 24, 18 } },
-		{ { 24, 21 } },{ { 24, 20 },{ 25, 22 } },{ { 25, 21 },{ 26, 23 } },{ { 26, 22 } } };
-	vector<vector<vector<int>>> kingJumps{ { { 5, 9 } },{ { 5, 8 },{ 6, 10 } },{ { 6, 9 },{ 7, 11 } },{ { 7, 10 } },
-		{ { 8, 13 } },{ { 8, 12 },{ 9, 14 } },{ { 9, 13 },{ 10, 15 } },{ { 10, 14 } },
-		{ { 5, 1 },{ 13, 17 } },{ { 5, 0 },{ 6, 2 },{ 13, 16 },{ 14, 18 } },{ { 6, 1 },{ 7, 3 },{ 14, 17 },{ 15, 19 } },{ { 7, 2 },{ 15, 18 } },
-		{ { 8, 5 },{ 16, 21 } },{ { 8, 4 },{ 9, 6 },{ 16, 20 },{ 17, 22 } },{ { 9, 5 },{ 10, 7 },{ 17, 21 },{ 18, 23 } },{ { 10, 6 },{ 18, 22 } },
-		{ { 13, 9 },{ 21, 25 } },{ { 13, 8 },{ 14, 10 },{ 21, 24 },{ 22, 26 } },{ { 14, 9 },{ 15, 11 },{ 22, 25 },{ 23, 27 } },{ { 15, 10 },{ 23, 26 } },
-		{ { 16, 13 },{ 24, 29 } },{ { 16, 12 },{ 17, 14 },{ 24, 28 },{ 25, 30 } },{ { 17, 13 },{ 18, 15 },{ 25, 29 },{ 26, 31 } },{ { 18, 14 },{ 26, 30 } },
-		{ { 21, 17 } },{ { 21, 16 },{ 22, 18 } },{ { 23, 17 },{ 24, 19 } },{ { 24, 18 } },
-		{ { 24, 21 } },{ { 24, 20 },{ 25, 22 } },{ { 25, 21 },{ 26, 23 } },{ { 26, 22 } } };
-	vector<vector<int>> redMoves{ { 4, 5 },{ 5, 6 },{ 6, 7 },{ 7 }, // Top row legal moves
-		{ 8 },{ 8, 9 },{ 9, 10 },{ 10, 11 }, // 2nd row legal moves
-		{ 12, 13 },{ 13, 14 },{ 14, 15 },{ 15 }, // 3rd row legal moves
-		{ 16 },{ 16, 17 },{ 17, 18 },{ 18, 19 }, // 4th row legal moves
-		{ 20, 21 },{ 21, 22 },{ 23, 24 },{ 24 }, // 5th row legal moves
-		{ 25 },{ 25, 26 },{ 26, 27 },{ 27, 28 }, // 6th row legal moves
-		{ 28, 29 },{ 29, 30 },{ 30, 31 },{ 31 }, // 7th row legal moves
-		{},{},{},{} }; // Bottom row legal moves
-	vector<vector<int>> blackMoves{ {},{},{},{}, // Top row legal moves
-		{ 0 },{ 0, 1 },{ 1, 2 },{ 2, 3 }, // And so on...
-		{ 4, 5 },{ 5, 6 },{ 6, 7 },{ 7 },
-		{ 8 },{ 8, 9 },{ 9, 10 },{ 10, 11 },
-		{ 12, 13 },{ 13, 14 },{ 14, 15 },{ 15 },
-		{ 16 },{ 16, 17 },{ 17, 18 },{ 18, 19 },
-		{ 20, 21 },{ 21, 22 },{ 22, 23 },{ 23 },
-		{ 24 },{ 24, 25 },{ 25, 26 },{ 26, 27 } };
-	vector<vector<int>> kingMoves{ { 4, 5 },{ 5, 6 },{ 6, 7 },{ 7 },
-		{ 0, 8 },{ 0, 1, 8, 9 },{ 1, 2, 9, 10 },{ 2, 3, 10, 11 },
-		{ 4, 5, 12, 13 },{ 5, 6, 13, 14 },{ 6, 7, 14, 15 },{ 7, 15 },
-		{ 8, 16 },{ 8, 9, 16, 17 },{ 9, 10, 17, 18 },{ 10, 11, 18, 19 },
-		{ 12, 13, 20, 21 },{ 13, 14, 21, 22 },{ 14, 15, 22, 23 },{ 15, 24 },
-		{ 16, 25 },{ 16, 17, 25, 26 },{ 17, 18, 26, 27 },{ 18, 19, 27, 28 },
-		{ 20, 21, 28, 29 },{ 21, 22, 29, 30 },{ 22, 23, 30, 31 },{ 23, 31 },
-		{ 24 },{ 24, 25 },{ 25, 26 },{ 26, 27 } };
-};
+using std::ostream;
+using std::cout;
+using std::endl;
 
 class Board {
 public:
@@ -78,10 +30,15 @@ public:
 	bool redTurn = true;
 	vector<bool> freeSpaces;
 	vector<double> state;
-	double redValue = 1;
-	double blackValue = -1;
-	double kingVal = 1.4;
 	double rank;
+	double childRank = -1;
+	double blackVal;
+	double redVal;
+	double kingVal;
+	bool redEliminated = false;
+	bool blackEliminated = false;
+	bool endState = false;
+	Board* parentBoard = nullptr;
 	
 	// Default ctor
 	Board() {
@@ -101,7 +58,10 @@ public:
 	}
 	
 	// Secondary ctor that takes a string for the state and a bool for the turn
-	Board(string state, bool redTurn) {
+	Board(string state, bool redTurn = true) {
+		if (state.length() != 32) {
+			throw std::invalid_argument("Board state must be 32 characters");
+		}
 		for (int i = 0; i < state.length(); i++) {
 			if (state[i] != '_') {
 				bool redCheck = state[i] == 'r' || state[i] == 'R';
@@ -111,8 +71,6 @@ public:
 				} else {
 					this->blackPieces.push_back(Piece(i, redCheck, kingCheck));
 				}
-			} else {
-				freeSpaces[i] = true;
 			}
 		}
 		this->redTurn = redTurn;
@@ -120,11 +78,14 @@ public:
 	}
 	
 	// Secondary ctor that takes a vector of Pieces, freespaces, and a bool for the turn
-	Board(vector<Piece> redPieces_, vector<Piece> blackPieces_, vector<bool> freeSpaces_, bool redTurn_) {
+	Board(Board& parentBoard_, vector<Piece> redPieces_, vector<Piece> blackPieces_, bool redTurn_, double redVal_, double blackVal_, double kingVal_) {
+		parentBoard = &parentBoard_;
 		redPieces = redPieces_;
 		blackPieces = blackPieces_;
 		redTurn = redTurn_;
-		freeSpaces = freeSpaces_;
+		redVal = redVal_;
+		blackVal = blackVal_;
+		kingVal = kingVal_;
 		setupBoard();
 	}
 	
@@ -132,6 +93,7 @@ public:
 	//	calculate the board state
 	void setupBoard() {
 		// blank state
+		freeSpaces = vector<bool>(32, true);
 		state = vector<double>(32, 0);
 		// for each red piece
 		for (int i = 0; i < redPieces.size(); ++i) {
@@ -142,69 +104,136 @@ public:
 			if (redPieces[i].position == -1) {
 				redPieces.erase(redPieces.begin() + i);
 				--i;
+			// else add the piece score to its position
 			} else {
-				if (!redPieces[i].isKing) {
-					state[redPieces[i].position] += redValue;
+				freeSpaces[redPieces[i].position] = false;
+				if (redPieces[i].isKing) {
+					state[redPieces[i].position] += redVal * kingVal;
 				} else {
-					state[redPieces[i].position] += redValue * kingVal;
+					state[redPieces[i].position] += redVal;
 				}
 			}
 		}
+		// for each black piece
 		for (int i = 0; i < blackPieces.size(); ++i) {
 			if (blackPieces[i].position <= 3) {
 				blackPieces[i].isKing = true;
 			}
+			// if its position = -1 it has been jumped and needs to be removed
 			if (blackPieces[i].position == -1) {
 				blackPieces.erase(blackPieces.begin() + i);
 				--i;
+			// else add the piece score to its position
 			} else {
-				if (!blackPieces[i].isKing) {
-					state[blackPieces[i].position] += blackValue;
+				freeSpaces[blackPieces[i].position] = false;
+				if (blackPieces[i].isKing) {
+					state[blackPieces[i].position] += blackVal * kingVal;
 				} else {
-					state[blackPieces[i].position] += blackValue * kingVal;
+					state[blackPieces[i].position] += blackVal;
 				}
 			}
 		}
+		// if there are no black pieces
+		if (blackPieces.size() == 0) {
+			blackEliminated = true;
+			endState = true;
+		}
+		// if there are no red pieces
+		if (redPieces.size() == 0) {
+			redEliminated = true;
+			endState = true;
+		}
+	}
+
+	// rank parent
+	//	ranks the parent according to this boards rank
+	void rateParent(double r, bool isMax) {
+		if (childRank == -1) {
+			childRank = r;
+		} else if (isMax) {
+			if (childRank < r)
+				childRank = r;
+		} else {
+			if (childRank > r)
+				childRank = r;
+		}
+		if (parentBoard == nullptr) {
+			rank = childRank;
+		} else {
+			(*parentBoard).rateParent(childRank, !isMax);
+		}
+	}
+
+	void setRank(double r, bool isMax) {
+		rank = r;
+		(*parentBoard).rateParent(r, !isMax);
 	}
 
 	// checks if more jumps are available (ex. double jumps)
-	void checkJumps(Piece& piece, moveMap& moves, vector<Piece>& enemyPieces) {
+	bool checkJumps(Piece& piece, vector<Piece>& ownerPieces, vector<Piece>& enemyPieces, vector<Board>& possibleBoards) {
+		bool foundJump = false;
+		vector<Piece> tempOPieces;
+		vector<Piece> tempEPieces;
+		// check if jump available
+		vector<vector<int>> *possibleJumps = &kingJumps[piece.position];
+		if (!piece.isKing) {
+			if (piece.isRed) {
+				possibleJumps = &redJumps[piece.position];
+			} else {
+				possibleJumps = &blackJumps[piece.position];
+			}
+		}
+		// using pointer for "erase" function
 		int numEnemies = enemyPieces.size();
-		vector<vector<int>> &pJumps = moves.blackJumps[piece.position];
-		if (piece.isKing) pJumps = moves.kingJumps[piece.position];
-		if (piece.isRed) pJumps = moves.redJumps[piece.position];
-		for (int enemy = 0; enemy < numEnemies; ++enemy) {
-			int numPJumps = pJumps.size();
-			for (int i = 0; i < numPJumps; ++i) {
-				if (enemyPieces[enemy].position == pJumps[i][0]) {
-					// if there is an available free space
-					if (freeSpaces[pJumps[i][1]]) {
-						// delete free space for new position
-						freeSpaces[pJumps[i][1]] = false;
-						// add current piece position as free space
-						freeSpaces[piece.position] = true;
-						// move piece
-						piece.position = pJumps[i][1];
-						// add enemy  piece position as free space
-						freeSpaces.push_back(enemyPieces[enemy].position);
-						// "remove" piece
-						enemyPieces[enemy].position = -1;
-						// check for more jumps
-						checkJumps(piece, moves, enemyPieces);
+		bool validRedJumps = (piece.isRed && piece.position < 24);
+		bool validBlackJumps = (!piece.isRed && piece.position > 7);
+		if (piece.isKing || validRedJumps || validBlackJumps) {
+			for (int j = 0; j < numEnemies; ++j) {
+				int numJumps = (*possibleJumps).size();
+				for (int k = 0; k < numJumps; ++k) {
+					if (enemyPieces[j].position == (*possibleJumps)[k][0]) {
+						// if there is an available free space
+						if (freeSpaces[(*possibleJumps)[k][1]]) {
+							// save current board
+							tempOPieces = ownerPieces;
+							tempEPieces = enemyPieces;
+							// move piece
+							piece.position = (*possibleJumps)[k][1];
+							// "remove" piece
+							enemyPieces[j].position = -1;
+							// check for more jumps
+							foundJump = checkJumps(piece, ownerPieces, enemyPieces, possibleBoards);
+							// add changed board
+							if (!foundJump) possibleBoards.push_back(Board(*this, this->redPieces, this->blackPieces, !this->redTurn, redVal, blackVal, kingVal));
+							// put pieces
+							ownerPieces = tempOPieces;
+							enemyPieces = tempEPieces;
+							// notify jump is found
+							foundJump = true;
+						}
 					}
 				}
 			}
 		}
+		return foundJump;
 	}
 	
 	// Generate all legal boards
-	vector<Board> generateLegalMoves(moveMap & moves) {
+	vector<Board> generateLegalMoves(double redVal_ = 1, double blackVal_ = -1, double kingVal_ = 1.4) {
+
+		if (endState) {
+			return{};
+		}
+
+		redVal = redVal_;
+		blackVal = blackVal_;
+		kingVal = kingVal_;
+
 		bool foundJump = false;
 		
 		vector<Board> possibleBoards;
 		vector<Piece> tempOPieces;
 		vector<Piece> tempEPieces;
-		vector<bool> tempFreeSpaces;
 		
 		vector<Piece> * enemyPieces;
 		vector<Piece> * ownerPieces;
@@ -219,77 +248,40 @@ public:
 			ownerPieces = &blackPieces;
 		}
 		
-		for (Piece & piece : *ownerPieces) {
+		int numPieces = (*ownerPieces).size();
+		for (int i = 0; i < numPieces; ++i) {
 			// check if jump available
-			vector<vector<int>> &possibleJumps = moves.blackJumps[piece.position];
-			if (piece.isKing) possibleJumps = moves.kingJumps[piece.position];
-			if (piece.isRed) possibleJumps = moves.redJumps[piece.position];
-			// using pointer for "erase" function
-			for (auto & enemy : *enemyPieces) {
-				for (auto & jump : possibleJumps) {
-					if (enemy.position == jump[0]) {
-						// if there is an available free space
-						if (freeSpaces[jump[1]]) {
-							// save current board
-							tempOPieces = *ownerPieces;
-							tempEPieces = *enemyPieces;
-							// save current free spaces
-							tempFreeSpaces = freeSpaces;
-							// delete free space for new position
-							freeSpaces[jump[1]] = false;
-							// add current piece position as free space
-							freeSpaces[piece.position] = true;
-							// move piece
-							piece.position = jump[1];
-							// add enemy  piece position as free space
-							freeSpaces[enemy.position] = true;
-							// "remove" piece
-							enemy.position = -1;
-							// check for more jumps
-							checkJumps(piece, moves, *enemyPieces);
-							// add changed board
-							possibleBoards.push_back(Board(this->redPieces, this->blackPieces, this->freeSpaces, !this->redTurn));
-							// put pieces
-							*ownerPieces = tempOPieces;
-							*enemyPieces = tempEPieces;
-							// put free spaces back
-							freeSpaces = tempFreeSpaces;
-							// notify jump is found
-							foundJump = true;
-						}
+			bool pieceHasJump = checkJumps((*ownerPieces)[i], *ownerPieces, *enemyPieces, possibleBoards);
+			if (pieceHasJump) foundJump = true;
+		}
+		if (!foundJump) {
+			for (int i = 0; i < numPieces; ++i) {
+				// check possible moves
+				vector<int> *possibleMoves = &kingMoves[(*ownerPieces)[i].position];
+				if (!(*ownerPieces)[i].isKing) {
+					if ((*ownerPieces)[i].isRed) {
+						possibleMoves = &redMoves[(*ownerPieces)[i].position];
+					} else {
+						possibleMoves = &blackMoves[(*ownerPieces)[i].position];
 					}
 				}
-			}
-			
-			if (!foundJump) {
-				// check possible moves
-				vector<int> &possibleMoves = moves.blackMoves[piece.position];
-				if (piece.isKing) possibleMoves = moves.kingMoves[piece.position];
-				if (piece.isRed) possibleMoves = moves.redMoves[piece.position];
 				// check if space available on board
-				for (int & space : possibleMoves) {
+				for (int & space : *possibleMoves) {
 					// if there is an available free space
 					if (freeSpaces[space]) {
 						// save current board
 						tempOPieces = *ownerPieces;
-						// save current free spaces
-						tempFreeSpaces = freeSpaces;
-						// delete free space for new position
-						freeSpaces[space] = false;
-						// add current piece position as free space
-						freeSpaces[piece.position] = true;
 						// change piece's position
-						piece.position = space;
+						(*ownerPieces)[i].position = space;
 						// add changed board
-						possibleBoards.push_back(Board(this->redPieces, this->blackPieces, this->freeSpaces, !this->redTurn));
-						// replace pieces
+						possibleBoards.push_back(Board(*this, this->redPieces, this->blackPieces, !this->redTurn, redVal, blackVal, kingVal));
+						// put pieces
 						*ownerPieces = tempOPieces;
-						// replace free spaces
-						freeSpaces = tempFreeSpaces;
 					}
 				}
 			}
 		}
+		
 		return possibleBoards;
 	}
 	
@@ -312,6 +304,23 @@ public:
 		}
 		return string(boardStr.begin(), boardStr.end());
 	}
+
+	string printFreeSpaces() {
+		vector<char> sFreeSpaces(32, ' ');
+		for (int i = 0; i < 32; ++i) if (freeSpaces[i]) sFreeSpaces[i] = 'x';
+		return string(sFreeSpaces.begin(), sFreeSpaces.end());
+	}
+
+	bool operator<(const Board& b) const {
+		return (this->rank < b.rank);
+	}
 };
+
+// Print Board
+//	prints the board to the given ostream
+ostream& operator<<(ostream& os, Board& b) {
+	os << b.toString();
+	return os;
+}
 
 #endif /* Board_h */

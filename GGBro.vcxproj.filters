@@ -24,7 +24,7 @@
     <ClInclude Include="GGBro\Piece.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GGBro\EvolveNetwork.h">
+    <ClInclude Include="GGBro\AI.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
