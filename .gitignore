@@ -10,6 +10,7 @@
 *.sln.docstates
 
 # User-specific files (MonoDevelop/Xamarin Studio)
+*.DS_Store
 *.userprefs
 
 #binary files
