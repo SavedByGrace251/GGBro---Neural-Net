@@ -28,7 +28,7 @@ public:
 	vector<Piece> redPieces;
 	vector<Piece> blackPieces;
 	bool redTurn = true;
-	vector<bool> freeSpaces;
+	vector<bool> freeSpaces = vector<bool>(32, true);
 	vector<double> state;
 	double rank;
 	double childRank = -1;
@@ -42,7 +42,6 @@ public:
 	
 	// Default ctor
 	Board() {
-		freeSpaces = vector<bool>(32, false);
 		for (int i = 0; i < 12; i++) {
 			// First 12 indices are red pieces (not kings)
 			redPieces.push_back(Piece(i, true, false));
@@ -93,7 +92,9 @@ public:
 	//	calculate the board state
 	void setupBoard() {
 		// blank state
-		freeSpaces = vector<bool>(32, true);
+		for (int i = 0; i < 32; ++i) {
+			freeSpaces[i] = true;
+		}
 		state = vector<double>(32, 0);
 		// for each red piece
 		for (int i = 0; i < redPieces.size(); ++i) {
@@ -108,9 +109,9 @@ public:
 			} else {
 				freeSpaces[redPieces[i].position] = false;
 				if (redPieces[i].isKing) {
-					state[redPieces[i].position] += redVal * kingVal;
+					state[redPieces[i].position] = redVal * kingVal;
 				} else {
-					state[redPieces[i].position] += redVal;
+					state[redPieces[i].position] = redVal;
 				}
 			}
 		}
@@ -127,9 +128,9 @@ public:
 			} else {
 				freeSpaces[blackPieces[i].position] = false;
 				if (blackPieces[i].isKing) {
-					state[blackPieces[i].position] += blackVal * kingVal;
+					state[blackPieces[i].position] = blackVal * kingVal;
 				} else {
-					state[blackPieces[i].position] += blackVal;
+					state[blackPieces[i].position] = blackVal;
 				}
 			}
 		}
@@ -166,7 +167,8 @@ public:
 
 	void setRank(double r, bool isMax) {
 		rank = r;
-		(*parentBoard).rateParent(r, !isMax);
+		if (parentBoard != nullptr)
+			(*parentBoard).rateParent(r, !isMax);
 	}
 
 	// checks if more jumps are available (ex. double jumps)
@@ -219,10 +221,10 @@ public:
 	}
 	
 	// Generate all legal boards
-	vector<Board> generateLegalMoves(double redVal_ = 1, double blackVal_ = -1, double kingVal_ = 1.4) {
+	void generateLegalMoves(vector<Board>& possibleBoards, double redVal_ = 1, double blackVal_ = -1, double kingVal_ = 1.4) {
 
 		if (endState) {
-			return{};
+			return;
 		}
 
 		redVal = redVal_;
@@ -231,7 +233,7 @@ public:
 
 		bool foundJump = false;
 		
-		vector<Board> possibleBoards;
+		possibleBoards.clear();
 		vector<Piece> tempOPieces;
 		vector<Piece> tempEPieces;
 		
@@ -281,8 +283,6 @@ public:
 				}
 			}
 		}
-		
-		return possibleBoards;
 	}
 	
 	// convert current board to string

@@ -169,9 +169,32 @@ public:
 	void evaluate(vector<Board>& boards, bool isAlpha) {
 		int bSize = boards.size();
 		for (int i = 0; i < bSize; i++) {
-			brain.setInput(boards[i].state);
-			boards[i].setRank(brain.Activate()[0], isAlpha);
+			evaluateBoard(boards[i], isAlpha);
 		}
+	}
+
+	void evaluateBoard(Board& board, bool isAlpha) {
+		if (playAsRed) {
+			if (board.blackEliminated) {
+				board.setRank(1, isAlpha);
+				return;
+			}
+			if (board.redEliminated) {
+				board.setRank(0, isAlpha);
+				return;
+			}
+		} else {
+			if (board.blackEliminated) {
+				board.setRank(0, isAlpha);
+				return;
+			}
+			if (board.redEliminated) {
+				board.setRank(1, isAlpha);
+				return;
+			}
+		}
+		brain.setInput(board.state);
+		board.setRank(brain.Activate()[0], isAlpha);
 	}
 
 	// Make Move
@@ -188,7 +211,9 @@ public:
 		if (currentBoard.endState) {
 			return{};
 		}
-		vector<Board> possibleMoves = currentBoard.generateLegalMoves(redVal, blackVal, kingVal);
+		vector<Board> possibleMoves;
+		possibleMoves.reserve(10);
+		currentBoard.generateLegalMoves(possibleMoves, redVal, blackVal, kingVal);
 		int numPossibleMoves = possibleMoves.size();
 		double greatestRank = 0;
 		if (numPossibleMoves == 0) {
@@ -216,7 +241,7 @@ public:
 		vector<Board> newBoards;
 		for (int i = 0; (i < n) && (duration<double>(high_resolution_clock::now() - time.start).count() < time.maxtime); i++) {
 			if (duration<double>(high_resolution_clock::now() - time.start).count() < time.maxtime) {
-				newBoards = boards[i].generateLegalMoves();
+				boards[i].generateLegalMoves(newBoards);
 				evaluate(newBoards, isAlpha);
 				nextLevel.insert(nextLevel.end(), newBoards.begin(), newBoards.end());
 			}

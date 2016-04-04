@@ -107,7 +107,7 @@ public:
                     temp += outputs[i-1][k] * layers[i][j][k];
                 }
 				// calculate the output for this layer
-                outputs[i][j] = 1.0 / (1.0 + exp(-0.5 * temp));
+                outputs[i][j] = (2.0 / (1.0 + exp(-0.5 * temp))) - 1.0;
             }
         }
 		return outputs.back();
