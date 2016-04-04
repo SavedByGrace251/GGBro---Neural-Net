@@ -21,9 +21,9 @@ int searchBoards(Clock& time, vector<vector<Board>>& boards, AI& player, bool is
 		for (int i = 0; (i < nBoards) && (duration<double>(high_resolution_clock::now() - time.start).count() < time.maxtime); i++) {
 			if (duration<double>(high_resolution_clock::now() - time.start).count() < time.maxtime) {
 				boards[depthReached - 1][i].generateLegalMoves(boards[depthReached]);
-				if (boards[depthReached].size() > 10) {
-					cout << "Preallocate MORE THAN 10";
-				}
+				//if (boards[depthReached].size() > 10) {
+				//	cout << "Preallocate MORE THAN 10";
+				//}
 				if (duration<double>(high_resolution_clock::now() - time.start).count() < time.maxtime) {
 					if (boards.size() > 0) {
 						n += searchBoards(time, boards, player, !isAlpha, depthReached + 1, maxDepth);
@@ -39,7 +39,7 @@ int searchBoards(Clock& time, vector<vector<Board>>& boards, AI& player, bool is
 
 int BFSBoards(Clock& time, vector<vector<Board>>& boards, AI& player, bool isAlpha, int depthReached, int maxDepth) {
 	++depthReached;
-	int n = boards.size();
+	int n = boards[depthReached].size();
 	if (depthReached == maxDepth) {
 		return n;
 	}
@@ -54,10 +54,10 @@ int BFSBoards(Clock& time, vector<vector<Board>>& boards, AI& player, bool isAlp
 	for (int i = 0; (i < n) && (duration<double>(high_resolution_clock::now() - time.start).count() < time.maxtime); i++) {
 		if (duration<double>(high_resolution_clock::now() - time.start).count() < time.maxtime) {
 			boards[depthReached][i].generateLegalMoves(newBoards);
-			if (boards[depthReached].size() > 8) {
-				cout << "Preallocate MORE THAN 8";
-			}
-			player.evaluate(boards[depthReached+1], isAlpha);
+			//if (newBoards.size() > 8) {
+			//	cout << "Preallocate MORE THAN 8";
+			//}
+			player.evaluate(newBoards, isAlpha);
 			boards[depthReached+1].insert(boards[depthReached+1].end(), newBoards.begin(), newBoards.end());
 		} else {
 			cout << "TIME EXCEEDED - " << duration<double>(high_resolution_clock::now() - time.start).count() << endl;
@@ -93,7 +93,7 @@ void timeNetwork(NeuralNetwork& net) {
 void timeBoardGenerator(AI& player) {
 	duration<double> timeSpan;
 
-	Board initboard("______B___________________R_____");
+	Board initboard;
 
 	vector<vector<Board>> newBoards(20);
 	initboard.generateLegalMoves(newBoards[0]);
@@ -101,16 +101,17 @@ void timeBoardGenerator(AI& player) {
 		b.reserve(10);
 	}
 	Clock time;
-	time.maxtime = 1500;
-	int maxDepth = 6;
+	time.maxtime = 15;
+	int maxDepth = 8;
 	int numberOfBoards;
 	time.start = high_resolution_clock::now();
-	do {
-		numberOfBoards = searchBoards(time, newBoards, player, true, 1, maxDepth);
-		sort(newBoards[0].begin(), newBoards[0].end());
-		cout << "Depth " << maxDepth << " search complete, current board selection: " << newBoards[0][0] << endl;
-		++maxDepth;
-	} while ((duration_cast<duration<double>>(high_resolution_clock::now() - time.start).count() < time.maxtime) && maxDepth < 20);
+	//do {
+	//	numberOfBoards = searchBoards(time, newBoards, player, true, 1, maxDepth);
+	//	sort(newBoards[0].begin(), newBoards[0].end());
+	//	cout << "Depth " << maxDepth << " search complete, current board selection: " << newBoards[0][0] << endl;
+	//	++maxDepth;
+	//} while ((duration_cast<duration<double>>(high_resolution_clock::now() - time.start).count() < time.maxtime) && maxDepth < 20);
+	numberOfBoards = searchBoards(time, newBoards, player, true, 1, maxDepth);
 	timeSpan = duration_cast<duration<double>>(high_resolution_clock::now() - time.start);
 
 	cout << "number of boards generated: " << numberOfBoards << endl;
@@ -134,11 +135,11 @@ void timeBFS(AI& player) {
 	initboard.generateLegalMoves(newboards[0]);
 	bool isAlpha = true;
 	Clock time;
-	time.maxtime = 10;
+	time.maxtime = 10.2;
 	int depthreached = -1;
 	int numberOfBoards = 0;
 	time.start = high_resolution_clock::now();
-	numberOfBoards = BFSBoards(time, newboards, player, isAlpha, depthreached, 14);
+	numberOfBoards = BFSBoards(time, newboards, player, isAlpha, depthreached, 15);
 	timeSpan = duration_cast<duration<double>>(high_resolution_clock::now() - time.start);
 
 	cout << "number of boards generated: " << numberOfBoards << endl;
@@ -194,8 +195,8 @@ int main() {
 	//cout << "Player 1 score: " << player1.score << endl;
 	//cout << "Player 2 score: " << player2.score << endl;
 	
-	//timeBoardGenerator(player);
-	timeBFS(player);
+	timeBoardGenerator(player);
+	//timeBFS(player);
 
 	cout << "press ENTER to continue";
 	while (cin.get() != '\n');
