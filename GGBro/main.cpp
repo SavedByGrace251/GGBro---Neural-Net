@@ -171,21 +171,17 @@ int main() {
 	//	} else {
 	//		checkers.setPlayers(player2, player1);
 	//	}
-	//	
-	//	while (!checkers.gameFinished) {
-	//		checkers.takeTurn();
-	//	}
-	//	checkers.score();
-	//	cout << checkers;
-
-	//	cout << "Game took " << times.back().count() << " seconds" << endl;
-	//	if (checkers.draw) {
-	//		cout << "Game " << i << ": Draw" << endl;
-	//	} else if (checkers.redWin) {
-	//		cout << "Game " << i << ": Red Wins" << endl;
-	//	} else {
-	//		cout << "Game " << i << ": Black Wins" << endl;
-	//	}
+	//
+	//checkers.playGame();
+	//cout << checkers << endl;
+	//cout << "Game took " << times.back().count() << " seconds" << endl;
+	//if (checkers.draw) {
+	//	cout << "Game " << i << ": Draw" << endl;
+	//} else if (checkers.redWin) {
+	//	cout << "Game " << i << ": Red Wins" << endl;
+	//} else {
+	//	cout << "Game " << i << ": Black Wins" << endl;
+	//}
 	//	player1.makeBrain();
 	//	player2.makeBrain();
 	//}

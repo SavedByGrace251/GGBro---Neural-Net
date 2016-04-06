@@ -90,6 +90,14 @@ public:
 			redsTurn = !redsTurn;
 		}
 	}
+
+	void playGame() {
+		numMoves = 0;
+		while (!gameFinished) {
+			takeTurn();
+		}
+		score();
+	}
 };
 
 // Print Checkers Game

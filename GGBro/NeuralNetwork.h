@@ -21,17 +21,17 @@ using std::vector;
 class NeuralNetwork {
 public:
 	vector<int> structure;
-    vector<vector<vector<double>>> layers;
+	vector<vector<vector<double>>> layers;
 	vector<vector<double>> outputs;
-    
+	
 	// default ctor
 	NeuralNetwork() {}
 
 	// secondary ctor
 	//	takes a vector of ints as a layer map
-    NeuralNetwork(vector<int> newLayers) {
+	NeuralNetwork(vector<int> newLayers) {
 		initialize(newLayers);
-    }
+	}
 
 	// secondary ctor
 	//	takes a genome and applys it to this network
@@ -41,7 +41,7 @@ public:
 			structure.push_back(layer.size());
 		}
 	}
-    
+	
 	// initialize
 	//	takes a vector of ints as a layer map
 	void initialize(vector<int> newLayers) {
@@ -68,50 +68,53 @@ public:
 
 	// Set Weights
 	//	Applys the weights to the given layer
-    void setWeights(int layer, vector<vector<double>> & weights) {
+	void setWeights(int layer, vector<vector<double>> & weights) {
 		// validate
-        if (layer > layers.size()) {
-            throw std::invalid_argument( "The layer given is greater than the number of layers in the network.");
-        } else if (layer < 0) {
-            throw std::invalid_argument( "received negative value for layer" );
-        } else if (layer == 0) {
-            throw std::invalid_argument( "Cannot set first layer weights. Use \"setInput()\"" );
-        }
+		if (layer > layers.size()) {
+			throw std::invalid_argument( "The layer given is greater than the number of layers in the network.");
+		} else if (layer < 0) {
+			throw std::invalid_argument( "received negative value for layer" );
+		} else if (layer == 0) {
+			throw std::invalid_argument( "Cannot set first layer weights. Use \"setInput()\"" );
+		}
 		// set weights to given layer
-        layers[layer] = weights;
-    }
-    
+		layers[layer] = weights;
+	}
+	
 	// Set Input
 	//	Sets the inputs for the network
-    void setInput(vector<double> input) {
-        for (int i = 0; i < input.size(); ++i) {
-            outputs[0][i] = input[i];
-        }
-    }
-    
+	void setInput(vector<double> input) {
+		if (input.size() != outputs[0].size()) {
+			throw std::invalid_argument("The input given has a different size than the input size of the network.");
+		}
+		for (int i = 0; i < input.size(); ++i) {
+			outputs[0][i] = input[i];
+		}
+	}
+	
 	// Activiate
 	//	Calculates the activation value of the network
-    vector<double> Activate() {
+	vector<double> Activate() {
 		int netSize = layers.size();
 		// for each layer in the network
-        for (unsigned int i = 1; i<netSize; ++i){
+		for (unsigned int i = 1; i<netSize; ++i){
 			int layerSize = layers[i].size();
 			int preLayerSize = layers[i - 1].size();
 			// for each neuron in the layer
-            for (unsigned int j = 0; j<layerSize; ++j) {
+			for (unsigned int j = 0; j<layerSize; ++j) {
 				// start summation
-                double temp = 0.0;
+				double temp = 0.0;
 				// for each neuron in the previous layer
-                for (unsigned k = 0; k<preLayerSize; ++k) {
+				for (unsigned k = 0; k<preLayerSize; ++k) {
 					// sum the weights
-                    temp += outputs[i-1][k] * layers[i][j][k];
-                }
+					temp += outputs[i-1][k] * layers[i][j][k];
+				}
 				// calculate the output for this layer
-                outputs[i][j] = (2.0 / (1.0 + exp(-0.5 * temp))) - 1.0;
-            }
-        }
+				outputs[i][j] = (2.0 / (1.0 + exp(-0.5 * temp))) - 1.0;
+			}
+		}
 		return outputs.back();
-    }
+	}
 
 	// Get Genome
 	//	return the network's genome

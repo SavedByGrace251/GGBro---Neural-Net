@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClInclude Include="GGBro\AI.h" />
     <ClInclude Include="GGBro\Board.h" />
+    <ClInclude Include="GGBro\Checkers.h" />
     <ClInclude Include="GGBro\NeuralNetwork.h" />
     <ClInclude Include="GGBro\Piece.h" />
   </ItemGroup>
