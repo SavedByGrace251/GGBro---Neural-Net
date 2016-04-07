@@ -11,9 +11,14 @@
 #include "Board.h"
 #include "AI.h"
 using namespace std;
+using std::chrono::high_resolution_clock;
+using std::chrono::duration;
+using std::chrono::duration_cast;
 
 class Game {
 public:
+	Clock time;
+	double gameLength;
 	Board currentBoard;
 	stringstream gameLog;
 	AI *playerRed;
@@ -24,12 +29,15 @@ public:
 	bool redWin = false;
 	bool draw = false;
 	
+	// default ctor
 	Game() {
 		currentBoard = Board();
 		playerRed = nullptr;
 		playerBlack = nullptr;
 	}
 
+	// secondary ctor
+	//	takes a two AIs, one as black, the other as red
 	Game(AI& playerRed_, AI& playerBlack_) {
 		playerBlack = &playerBlack_;
 		playerRed = &playerRed_;
@@ -39,6 +47,9 @@ public:
 		(*playerRed).playAsRed = true;
 	}
 	
+	// secondary ctor
+	//	takes two AIs, one as black, the other as red
+	//	also takes the initial game board
 	Game(AI& playerRed_, AI& playerBlack_, Board initial) {
 		playerBlack = &playerBlack_;
 		playerRed = &playerRed_;
@@ -55,6 +66,10 @@ public:
 		(*playerRed).playAsRed = true;
 	}
 	
+	void setBoard(Board b) {
+		currentBoard = b;
+	}
+
 	void score() {
 		if (gameFinished && !draw) {
 			if (redWin) {
@@ -93,9 +108,11 @@ public:
 
 	void playGame() {
 		numMoves = 0;
+		time.start = high_resolution_clock::now();
 		while (!gameFinished) {
 			takeTurn();
 		}
+		gameLength = duration<double>(high_resolution_clock::now() - time.start).count();
 		score();
 	}
 };

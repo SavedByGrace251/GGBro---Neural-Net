@@ -23,11 +23,12 @@ using std::chrono::duration_cast;
 
 struct Clock {
 	high_resolution_clock::time_point start;
-	double maxtime = 1.8;
+	double maxtime = 1.9;
 };
 
 class AI {
 public:
+	string AIType;
 	NeuralNetwork brain;
 	bool playAsRed = true;
 	double kingVal;
@@ -42,6 +43,7 @@ public:
 	AI(vector<int> layers) {
 		brain = NeuralNetwork(layers);
 		kingVal = 1.4;
+		AIType = "Primordial";
 		makeBrain();
 	}
 
@@ -50,6 +52,7 @@ public:
 	AI(NeuralNetwork brain_) {
 		brain = brain_;
 		kingVal = 1.4;
+		AIType = "Created";
 	}
 
 	// Secondary ctor
@@ -58,6 +61,7 @@ public:
 	AI(NeuralNetwork brain_, double kingValue_) {
 		brain = brain_;
 		kingVal = kingValue_;
+		AIType = "Evolved";
 	}
 
 	// Add Win
@@ -161,6 +165,7 @@ public:
 			child.push_back(gene);
 		}
 		AI newAI(NeuralNetwork(child), kingVal);
+		newAI.AIType = "Spliced";
 		return newAI;
 	}
 
@@ -211,10 +216,12 @@ public:
 		if (currentBoard.endState) {
 			return{};
 		}
-		vector<Board> possibleMoves;
-		possibleMoves.reserve(10);
-		currentBoard.generateLegalMoves(possibleMoves, redVal, blackVal, kingVal);
-		int numPossibleMoves = possibleMoves.size();
+		vector<vector<Board>> newBoards(20);
+		for (vector<Board>& b : newBoards) {
+			b.reserve(10);
+		}
+		currentBoard.generateLegalMoves(newBoards[0], redVal, blackVal, kingVal);
+		int numPossibleMoves = newBoards[0].size();
 		double greatestRank = 0;
 		if (numPossibleMoves == 0) {
 			if (currentBoard.redTurn) {
@@ -226,31 +233,40 @@ public:
 			return currentBoard;
 		}
 		for (int i = 0; i < numPossibleMoves; i++) {
-			possibleMoves[i].parentBoard = nullptr;
+			newBoards[0][i].parentBoard = nullptr;
 		}
+		int numberOfBoards = 0;
+		int maxDepth = 4;
 		thinker.start = high_resolution_clock::now();
-		searchBoards(thinker, possibleMoves, true);
-		sort(possibleMoves.begin(), possibleMoves.end());
-		return possibleMoves[0];
+		do {
+			numberOfBoards = searchBoards(newBoards, true, 1, maxDepth);
+			sort(newBoards[0].begin(), newBoards[0].end());
+			++maxDepth;
+		} while ((duration<double>(high_resolution_clock::now() - thinker.start).count() < thinker.maxtime) && maxDepth < 20);
+		sort(newBoards[0].begin(), newBoards[0].end());
+		return newBoards[0][0];
 	}
 
 	// Search Boards
-	int searchBoards(Clock& time, vector<Board>& boards, bool isAlpha) {
-		int n = boards.size();
-		vector<Board> nextLevel;
-		vector<Board> newBoards;
-		for (int i = 0; (i < n) && (duration<double>(high_resolution_clock::now() - time.start).count() < time.maxtime); i++) {
-			if (duration<double>(high_resolution_clock::now() - time.start).count() < time.maxtime) {
-				boards[i].generateLegalMoves(newBoards);
-				evaluate(newBoards, isAlpha);
-				nextLevel.insert(nextLevel.end(), newBoards.begin(), newBoards.end());
+	int searchBoards(vector<vector<Board>>& boards, bool isAlpha, int depthReached, int maxDepth) {
+		int nBoards = boards[depthReached - 1].size();
+		int n = nBoards;
+		if (depthReached <= maxDepth) {
+			for (int i = 0; (i < nBoards) && (duration<double>(high_resolution_clock::now() - thinker.start).count() < thinker.maxtime); i++) {
+				if (duration<double>(high_resolution_clock::now() - thinker.start).count() < thinker.maxtime) {
+					boards[depthReached - 1][i].generateLegalMoves(boards[depthReached]);
+					//if (boards[depthReached].size() > 10) {
+					//	cout << "Preallocate MORE THAN 10";
+					//}
+					if (duration<double>(high_resolution_clock::now() - thinker.start).count() < thinker.maxtime) {
+						if (boards.size() > 0) {
+							n += searchBoards(boards, !isAlpha, depthReached + 1, maxDepth);
+						}
+					}
+				}
 			}
-		}
-		sort(nextLevel.begin(), nextLevel.end());
-		if (duration<double>(high_resolution_clock::now() - time.start).count() < time.maxtime) {
-			if (nextLevel.size() > 0) {
-				n += searchBoards(time, nextLevel, !isAlpha);
-			}
+		} else {
+			evaluate(boards[depthReached], isAlpha);
 		}
 		return n;
 	}

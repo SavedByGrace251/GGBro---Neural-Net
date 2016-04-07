@@ -73,7 +73,68 @@ int BFSBoards(Clock& time, vector<vector<Board>>& boards, AI& player, bool isAlp
 	return n;
 }
 
-void timeNetwork(NeuralNetwork& net) {
+void timeBoardGenerator(AI& player) {
+	duration<double> timeSpan;
+
+	Board initboard;
+	vector<vector<Board>> newBoards(20);
+	for (vector<Board>& b : newBoards) {
+		b.reserve(10);
+	}
+	initboard.generateLegalMoves(newBoards[0]);
+	vector<double> ranks(newBoards[0].size());
+	Clock time;
+	time.maxtime = 15;
+	int maxDepth = 8;
+	int numberOfBoards;
+	time.start = high_resolution_clock::now();
+	do {
+		numberOfBoards = searchBoards(time, newBoards, player, true, 1, maxDepth);
+		cout << "Depth " << maxDepth << " search complete, current board selection: " << newBoards[0][0] << endl;
+		++maxDepth;
+	} while ((duration_cast<duration<double>>(high_resolution_clock::now() - time.start).count() < time.maxtime) && maxDepth < 20);
+	timeSpan = duration_cast<duration<double>>(high_resolution_clock::now() - time.start);
+
+	cout << "number of boards generated: " << numberOfBoards << endl;
+	cout << "depth of boards reached: " << maxDepth << endl;
+	cout << "board generation time: " << timeSpan.count() << endl << endl;
+}
+
+void testTourney(AI& player1, AI& player2) {
+	Clock time;
+	time.start = high_resolution_clock::now();
+	int numberOfGames = 5;
+	for (int i = 1; i <= numberOfGames; ++i) {
+		uniform_int_distribution<int> flipFlop(0, 1);
+		default_random_engine generator(time.start.time_since_epoch().count());
+		Game checkers;
+		if (flipFlop(generator) == 1) {
+			checkers.setPlayers(player1, player2);
+		} else {
+			checkers.setPlayers(player2, player1);
+		}
+	
+	checkers.playGame();
+	cout << checkers << endl;
+	cout << "Game took " << checkers.gameLength << " seconds" << endl;
+	if (checkers.draw) {
+		cout << "Game " << i << ": Draw" << endl;
+	} else if (checkers.redWin) {
+		cout << "Game " << i << ": Red Wins" << endl;
+	} else {
+		cout << "Game " << i << ": Black Wins" << endl;
+	}
+		player1.makeBrain();
+		player2.makeBrain();
+	}
+	duration<double> timeSpan = duration<double>(high_resolution_clock::now() - time.start);
+	cout << "Total game time: " << timeSpan.count() << endl;
+	cout << "Average game time: " << timeSpan.count() / numberOfGames << endl;
+	cout << "Player 1 score: " << player1.score << endl;
+	cout << "Player 2 score: " << player2.score << endl;
+}
+
+void timeNetwork(AI& player) {
 	high_resolution_clock::time_point t1;
 	high_resolution_clock::time_point t2;
 	duration<double> timeSpan;
@@ -81,7 +142,7 @@ void timeNetwork(NeuralNetwork& net) {
 	int count = 0;
 	t1 = high_resolution_clock::now();
 	while (count < 250000) {
-		net.Activate();
+		player.brain.Activate();
 		++count;
 	}
 	t2 = high_resolution_clock::now();
@@ -90,109 +151,14 @@ void timeNetwork(NeuralNetwork& net) {
 	cout << "Net evaluations per second: " << count / timeSpan.count() << endl;
 }
 
-void timeBoardGenerator(AI& player) {
-	duration<double> timeSpan;
-
-	Board initboard;
-
-	vector<vector<Board>> newBoards(20);
-	initboard.generateLegalMoves(newBoards[0]);
-	for (vector<Board>& b : newBoards) {
-		b.reserve(10);
-	}
-	Clock time;
-	time.maxtime = 15;
-	int maxDepth = 8;
-	int numberOfBoards;
-	time.start = high_resolution_clock::now();
-	//do {
-	//	numberOfBoards = searchBoards(time, newBoards, player, true, 1, maxDepth);
-	//	sort(newBoards[0].begin(), newBoards[0].end());
-	//	cout << "Depth " << maxDepth << " search complete, current board selection: " << newBoards[0][0] << endl;
-	//	++maxDepth;
-	//} while ((duration_cast<duration<double>>(high_resolution_clock::now() - time.start).count() < time.maxtime) && maxDepth < 20);
-	numberOfBoards = searchBoards(time, newBoards, player, true, 1, maxDepth);
-	timeSpan = duration_cast<duration<double>>(high_resolution_clock::now() - time.start);
-
-	cout << "number of boards generated: " << numberOfBoards << endl;
-	cout << "depth of boards reached: " << maxDepth << endl;
-	cout << "board generation time: " << timeSpan.count() << endl << endl;
-}
-
-void timeBFS(AI& player) {
-	duration<double> timeSpan;
-
-	Board initboard;
-	vector<vector<Board>> newboards(15);
-	for (int i = 0; i < 8; ++i) {
-		int factor = 8;
-		for (int j = 1; j <= i; ++j) {
-			factor *= factor;
-		}
-		newboards[i].reserve(factor);
-	}
-
-	initboard.generateLegalMoves(newboards[0]);
-	bool isAlpha = true;
-	Clock time;
-	time.maxtime = 10.2;
-	int depthreached = -1;
-	int numberOfBoards = 0;
-	time.start = high_resolution_clock::now();
-	numberOfBoards = BFSBoards(time, newboards, player, isAlpha, depthreached, 15);
-	timeSpan = duration_cast<duration<double>>(high_resolution_clock::now() - time.start);
-
-	cout << "number of boards generated: " << numberOfBoards << endl;
-	cout << "depth of boards reached: " << depthreached << endl;
-	cout << "board generation time: " << timeSpan.count() << endl << endl;
-}
-
 int main() {
-	vector<int> layers{32, 40, 10, 1};
-	AI player(layers);
-	player.makeBrain();
-	player.playAsRed = true;  
+	vector<int> layers{32, 40, 10, 1};	
+	AI player1(layers);
+	player1.makeBrain();
+	AI player2(layers);
+	player2.makeBrain();	
 	
-	//AI player1(layers);
-	//player1.makeBrain();
-	//AI player2(layers);
-	//player2.makeBrain();
-	//vector<duration<double>> times;
-
-	//Clock time;
-	//time.start = high_resolution_clock::now();
-	//int numberOfGames = 5;
-	//for (int i = 1; i <= numberOfGames; ++i) {
-	//	uniform_int_distribution<int> flipFlop(0, 1);
-	//	default_random_engine generator(std::chrono::high_resolution_clock::now().time_since_epoch().count());
-	//	Game checkers;
-	//	if (flipFlop(generator) == 1) {
-	//		checkers.setPlayers(player1, player2);
-	//	} else {
-	//		checkers.setPlayers(player2, player1);
-	//	}
-	//
-	//checkers.playGame();
-	//cout << checkers << endl;
-	//cout << "Game took " << times.back().count() << " seconds" << endl;
-	//if (checkers.draw) {
-	//	cout << "Game " << i << ": Draw" << endl;
-	//} else if (checkers.redWin) {
-	//	cout << "Game " << i << ": Red Wins" << endl;
-	//} else {
-	//	cout << "Game " << i << ": Black Wins" << endl;
-	//}
-	//	player1.makeBrain();
-	//	player2.makeBrain();
-	//}
-	//duration<double> timeSpan = duration<double>(high_resolution_clock::now() - time.start);
-	//cout << "Total game time: " << timeSpan.count() << endl;
-	//cout << "Average game time: " << timeSpan.count() / numberOfGames << endl;
-	//cout << "Player 1 score: " << player1.score << endl;
-	//cout << "Player 2 score: " << player2.score << endl;
-	
-	timeBoardGenerator(player);
-	//timeBFS(player);
+	timeBoardGenerator(player1);
 
 	cout << "press ENTER to continue";
 	while (cin.get() != '\n');
