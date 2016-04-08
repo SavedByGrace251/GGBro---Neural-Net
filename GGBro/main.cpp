@@ -8,6 +8,7 @@
 #include "Piece.h"
 #include "AI.h"
 #include "Checkers.h"
+#include "Tournament.h"
 using namespace std;
 using std::chrono::high_resolution_clock;
 using std::chrono::duration;
@@ -158,9 +159,10 @@ int main() {
 	AI player2(layers);
 	player2.makeBrain();	
 	
-	timeBoardGenerator(player1);
+    Tournament test(5);
+    test.commence();
 
-	cout << "press ENTER to continue";
-	while (cin.get() != '\n');
+	//cout << "press ENTER to continue";
+	//while (cin.get() != '\n');
 	return 0;
 }

@@ -24,6 +24,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		3B01A5FD1CB72941001C04C4 /* Tournament.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Tournament.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		3BD845C51C6432C00022FDEA /* GGBro */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = GGBro; sourceTree = BUILT_PRODUCTS_DIR; };
 		68B9B8F41CA21C8100E6A98F /* AI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AI.h; path = GGBro/AI.h; sourceTree = "<group>"; };
 		68B9B8F51CA21C8100E6A98F /* Board.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Board.h; path = GGBro/Board.h; sourceTree = "<group>"; };
@@ -48,6 +49,7 @@
 		3BD845BC1C6432BE0022FDEA = {
 			isa = PBXGroup;
 			children = (
+				3B01A5FD1CB72941001C04C4 /* Tournament.h */,
 				68B9B8F41CA21C8100E6A98F /* AI.h */,
 				68B9B8F51CA21C8100E6A98F /* Board.h */,
 				68B9B8F61CA21C8100E6A98F /* Checkers.h */,

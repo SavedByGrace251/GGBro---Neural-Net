@@ -23,7 +23,7 @@ using std::chrono::duration_cast;
 
 struct Clock {
 	high_resolution_clock::time_point start;
-	double maxtime = 1.9;
+	double maxtime = 0.5;
 };
 
 class AI {
@@ -32,8 +32,8 @@ public:
 	NeuralNetwork brain;
 	bool playAsRed = true;
 	double kingVal;
-	int score;
 	Clock thinker;
+    int idx;
 
 	// default ctor
 	AI() {}
@@ -62,24 +62,6 @@ public:
 		brain = brain_;
 		kingVal = kingValue_;
 		AIType = "Evolved";
-	}
-
-	// Add Win
-	//	Adds the amount of points for a win
-	void addWin() {
-		score += 2;
-	}
-
-	// Add Loss
-	//	Adds the amount of points for a loss
-	void addLoss() {
-		score -= 1;
-	}
-
-	// Reset Score
-	//	Resets the score to 0
-	void resetScore() {
-		score = 0;
 	}
 
 	// Make Brain

@@ -69,18 +69,6 @@ public:
 	void setBoard(Board b) {
 		currentBoard = b;
 	}
-
-	void score() {
-		if (gameFinished && !draw) {
-			if (redWin) {
-				(*playerRed).addWin();
-				(*playerBlack).addLoss();
-			} else {
-				(*playerRed).addLoss();
-				(*playerBlack).addWin();
-			}
-		}
-	}
 	
 	void takeTurn() {
 		if (numMoves >= 100) {
@@ -113,7 +101,6 @@ public:
 			takeTurn();
 		}
 		gameLength = duration<double>(high_resolution_clock::now() - time.start).count();
-		score();
 	}
 };
 
