@@ -24,6 +24,7 @@
     <ClInclude Include="GGBro\Checkers.h" />
     <ClInclude Include="GGBro\NeuralNetwork.h" />
     <ClInclude Include="GGBro\Piece.h" />
+    <ClInclude Include="GGBro\Tournament.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GGBro\main.cpp" />

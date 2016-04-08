@@ -23,7 +23,7 @@ using std::chrono::duration_cast;
 
 struct Clock {
 	high_resolution_clock::time_point start;
-	double maxtime = 0.5;
+	double maxtime = 0.25;
 };
 
 class AI {
@@ -62,6 +62,108 @@ public:
 		brain = brain_;
 		kingVal = kingValue_;
 		AIType = "Evolved";
+	}
+
+	// Evaluate
+	//	evaluates the given vector of Boards
+	void evaluate(vector<Board>& boards, bool isAlpha) {
+		int bSize = boards.size();
+		for (int i = 0; i < bSize; i++) {
+			evaluateBoard(boards[i], isAlpha);
+		}
+	}
+
+	void evaluateBoard(Board& board, bool isAlpha) {
+		if (playAsRed) {
+			if (board.blackEliminated) {
+				board.setRank(1, isAlpha);
+				return;
+			}
+			if (board.redEliminated) {
+				board.setRank(0, isAlpha);
+				return;
+			}
+		} else {
+			if (board.blackEliminated) {
+				board.setRank(0, isAlpha);
+				return;
+			}
+			if (board.redEliminated) {
+				board.setRank(1, isAlpha);
+				return;
+			}
+		}
+		brain.setInput(board.state);
+		board.setRank(brain.Activate()[0], isAlpha);
+	}
+
+	// Make Move
+	//	Searches the given board and makes a move by returning the desired board
+	Board makeMove(Board& currentBoard) {
+
+		double blackVal = 1;
+		double redVal = -1;
+		if (playAsRed) {
+			blackVal = -1;
+			redVal = 1;
+		}
+
+		if (currentBoard.endState) {
+			return{};
+		}
+		vector<vector<Board>> newBoards(20);
+		for (vector<Board>& b : newBoards) {
+			b.reserve(10);
+		}
+		currentBoard.generateLegalMoves(newBoards[0], redVal, blackVal, kingVal);
+		int numPossibleMoves = newBoards[0].size();
+		double greatestRank = 0;
+		if (numPossibleMoves == 0) {
+			if (currentBoard.redTurn) {
+				currentBoard.redEliminated = true;
+			} else {
+				currentBoard.blackEliminated = true;
+			}
+			currentBoard.endState = true;
+			return currentBoard;
+		}
+		for (int i = 0; i < numPossibleMoves; i++) {
+			newBoards[0][i].parentBoard = nullptr;
+		}
+		int numberOfBoards = 0;
+		int maxDepth = 2;
+		thinker.start = high_resolution_clock::now();
+		do {
+			numberOfBoards = searchBoards(newBoards, true, 1, maxDepth);
+			sort(newBoards[0].begin(), newBoards[0].end());
+			++maxDepth;
+		} while ((duration<double>(high_resolution_clock::now() - thinker.start).count() < thinker.maxtime) && maxDepth < 20);
+		sort(newBoards[0].begin(), newBoards[0].end());
+		return newBoards[0][0];
+	}
+
+	// Search Boards
+	int searchBoards(vector<vector<Board>>& boards, bool isAlpha, int depthReached, int maxDepth) {
+		int nBoards = boards[depthReached - 1].size();
+		int n = nBoards;
+		if (depthReached <= maxDepth) {
+			for (int i = 0; (i < nBoards) && (duration<double>(high_resolution_clock::now() - thinker.start).count() < thinker.maxtime); i++) {
+				if (duration<double>(high_resolution_clock::now() - thinker.start).count() < thinker.maxtime) {
+					boards[depthReached - 1][i].generateLegalMoves(boards[depthReached]);
+					//if (boards[depthReached].size() > 10) {
+					//	cout << "Preallocate MORE THAN 10";
+					//}
+					if (duration<double>(high_resolution_clock::now() - thinker.start).count() < thinker.maxtime) {
+						if (boards.size() > 0) {
+							n += searchBoards(boards, !isAlpha, depthReached + 1, maxDepth);
+						}
+					}
+				}
+			}
+		} else {
+			evaluate(boards[depthReached], isAlpha);
+		}
+		return n;
 	}
 
 	// Make Brain
@@ -149,108 +251,6 @@ public:
 		AI newAI(NeuralNetwork(child), kingVal);
 		newAI.AIType = "Spliced";
 		return newAI;
-	}
-
-	// Evaluate
-	//	evaluates the given vector of Boards
-	void evaluate(vector<Board>& boards, bool isAlpha) {
-		int bSize = boards.size();
-		for (int i = 0; i < bSize; i++) {
-			evaluateBoard(boards[i], isAlpha);
-		}
-	}
-
-	void evaluateBoard(Board& board, bool isAlpha) {
-		if (playAsRed) {
-			if (board.blackEliminated) {
-				board.setRank(1, isAlpha);
-				return;
-			}
-			if (board.redEliminated) {
-				board.setRank(0, isAlpha);
-				return;
-			}
-		} else {
-			if (board.blackEliminated) {
-				board.setRank(0, isAlpha);
-				return;
-			}
-			if (board.redEliminated) {
-				board.setRank(1, isAlpha);
-				return;
-			}
-		}
-		brain.setInput(board.state);
-		board.setRank(brain.Activate()[0], isAlpha);
-	}
-
-	// Make Move
-	//	Searches the given board and makes a move by returning the desired board
-	Board makeMove(Board& currentBoard) {
-
-		double blackVal = 1;
-		double redVal = -1;
-		if (playAsRed) {
-			blackVal = -1;
-			redVal = 1;
-		}
-
-		if (currentBoard.endState) {
-			return{};
-		}
-		vector<vector<Board>> newBoards(20);
-		for (vector<Board>& b : newBoards) {
-			b.reserve(10);
-		}
-		currentBoard.generateLegalMoves(newBoards[0], redVal, blackVal, kingVal);
-		int numPossibleMoves = newBoards[0].size();
-		double greatestRank = 0;
-		if (numPossibleMoves == 0) {
-			if (currentBoard.redTurn) {
-				currentBoard.redEliminated = true;
-			} else {
-				currentBoard.blackEliminated = true;
-			}
-			currentBoard.endState = true;
-			return currentBoard;
-		}
-		for (int i = 0; i < numPossibleMoves; i++) {
-			newBoards[0][i].parentBoard = nullptr;
-		}
-		int numberOfBoards = 0;
-		int maxDepth = 4;
-		thinker.start = high_resolution_clock::now();
-		do {
-			numberOfBoards = searchBoards(newBoards, true, 1, maxDepth);
-			sort(newBoards[0].begin(), newBoards[0].end());
-			++maxDepth;
-		} while ((duration<double>(high_resolution_clock::now() - thinker.start).count() < thinker.maxtime) && maxDepth < 20);
-		sort(newBoards[0].begin(), newBoards[0].end());
-		return newBoards[0][0];
-	}
-
-	// Search Boards
-	int searchBoards(vector<vector<Board>>& boards, bool isAlpha, int depthReached, int maxDepth) {
-		int nBoards = boards[depthReached - 1].size();
-		int n = nBoards;
-		if (depthReached <= maxDepth) {
-			for (int i = 0; (i < nBoards) && (duration<double>(high_resolution_clock::now() - thinker.start).count() < thinker.maxtime); i++) {
-				if (duration<double>(high_resolution_clock::now() - thinker.start).count() < thinker.maxtime) {
-					boards[depthReached - 1][i].generateLegalMoves(boards[depthReached]);
-					//if (boards[depthReached].size() > 10) {
-					//	cout << "Preallocate MORE THAN 10";
-					//}
-					if (duration<double>(high_resolution_clock::now() - thinker.start).count() < thinker.maxtime) {
-						if (boards.size() > 0) {
-							n += searchBoards(boards, !isAlpha, depthReached + 1, maxDepth);
-						}
-					}
-				}
-			}
-		} else {
-			evaluate(boards[depthReached], isAlpha);
-		}
-		return n;
 	}
 };
 

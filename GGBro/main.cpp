@@ -131,8 +131,6 @@ void testTourney(AI& player1, AI& player2) {
 	duration<double> timeSpan = duration<double>(high_resolution_clock::now() - time.start);
 	cout << "Total game time: " << timeSpan.count() << endl;
 	cout << "Average game time: " << timeSpan.count() / numberOfGames << endl;
-	cout << "Player 1 score: " << player1.score << endl;
-	cout << "Player 2 score: " << player2.score << endl;
 }
 
 void timeNetwork(AI& player) {
@@ -161,8 +159,9 @@ int main() {
 	
     Tournament test(5);
     test.commence();
+	test.printStats();
 
-	//cout << "press ENTER to continue";
-	//while (cin.get() != '\n');
+	cout << "press ENTER to continue";
+	while (cin.get() != '\n');
 	return 0;
 }
