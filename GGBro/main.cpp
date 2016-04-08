@@ -157,7 +157,7 @@ int main() {
 	AI player2(layers);
 	player2.makeBrain();	
 	
-    Tournament test(5);
+    Tournament test(4);
     test.commence();
 	test.printStats();
 

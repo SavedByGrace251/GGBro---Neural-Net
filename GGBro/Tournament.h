@@ -74,7 +74,7 @@ public:
 					// start game clock
 					Clock time;
 					int otherIdx = randomIdx(generator);
-					while (idx == otherIdx) randomIdx(generator);
+					while (idx == otherIdx) otherIdx = randomIdx(generator);
 					// run game
 					officiateGame(population[idx], population[otherIdx]);
 				}, i));
