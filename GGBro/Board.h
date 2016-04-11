@@ -25,6 +25,7 @@ using std::endl;
 
 class Board {
 public:
+	string boardString;
 	vector<Piece> redPieces;
 	vector<Piece> blackPieces;
 	bool redTurn = true;
@@ -144,6 +145,7 @@ public:
 			redEliminated = true;
 			endState = true;
 		}
+		boardString = toString();
 	}
 
 	// rank parent
@@ -152,11 +154,13 @@ public:
 		if (childRank == -1) {
 			childRank = r;
 		} else if (isMax) {
-			if (childRank < r)
+			if (childRank < r) {
 				childRank = r;
+			}
 		} else {
-			if (childRank > r)
+			if (childRank > r) {
 				childRank = r;
+			}
 		}
 		if (parentBoard == nullptr) {
 			rank = childRank;

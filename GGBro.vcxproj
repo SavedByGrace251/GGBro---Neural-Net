@@ -25,13 +25,11 @@
     <ClInclude Include="GGBro\NeuralNetwork.h" />
     <ClInclude Include="GGBro\Piece.h" />
     <ClInclude Include="GGBro\Tournament.h" />
+    <ClInclude Include="GGBro\Training.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GGBro\main.cpp" />
     <ClCompile Include="GGBro\test.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="GGBro\output.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="GGBro\checkers board.py" />

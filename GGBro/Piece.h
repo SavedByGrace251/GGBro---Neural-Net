@@ -68,16 +68,16 @@ extern vector<vector<int>> kingMoves
 
 class Piece {
 public:
-    int position;
-    bool isRed;
-    bool isKing = false;
-    
-    // default ctor
-    Piece(int position, bool isRed, bool isKing) {
-        this->position = position;
-        this->isRed = isRed;
-        this->isKing = isKing;
-    }
+	int position;
+	bool isRed;
+	bool isKing = false;
+	
+	// default ctor
+	Piece(int position, bool isRed, bool isKing) {
+		this->position = position;
+		this->isRed = isRed;
+		this->isKing = isKing;
+	}
 };
 
 #endif /* Piece_h */

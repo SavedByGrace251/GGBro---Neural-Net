@@ -13,28 +13,38 @@ using std::thread;
 
 class Tournament {
 public:
-    vector<AI> population;
-    vector<int> scores;
-    int gamesPerRound = 3;
-    
-    Tournament(int populationSize) {
-        vector<int> layers { 32, 40, 10, 1 };
-        for (int i = 0; i < populationSize; ++i) {
-            AI player(layers);
-            player.makeBrain();
-            player.idx = i;
-            population.push_back(player);
-        }
-        scores = vector<int>(populationSize, 0);
-    }
-    
-    Tournament(vector<AI> players) {
-        population = players;
-        scores = vector<int>(players.size(), 0);
-    }
-    
-	void officiateGame(AI player1, AI player2) {
-		cout << "playing game with players " << player1.idx << " and " << player2.idx << endl;
+	vector<AI> contestants;
+	vector<int> scores;
+	vector<int> wins;
+	vector<int> losses;
+	vector<int> gamesPlayed;
+	int gamesPerRound = 3;
+	
+	Tournament(int nContestants) {
+		vector<int> layers { 32, 40, 10, 1 };
+		contestants = vector<AI>(nContestants);
+		for (int i = 0; i < nContestants; ++i) {
+			contestants[i].idx = i;
+		}
+		scores = vector<int>(nContestants, 0);
+		wins = vector<int>(nContestants, 0);
+		losses = vector<int>(nContestants, 0);
+		gamesPlayed = vector<int>(nContestants, 0);
+	}
+	
+	Tournament(vector<AI> players) {
+		contestants = players;
+		int nContestants = contestants.size();
+		for (int i = 0; i < nContestants; ++i) {
+			contestants[i].idx = i;
+		}
+		scores = vector<int>(players.size(), 0);
+		wins = vector<int>(players.size(), 0);
+		losses = vector<int>(players.size(), 0);
+		gamesPlayed = vector<int>(players.size(), 0);
+	}
+	
+	void officiateGame(AI player1, AI player2, bool printGame = false) {
 		Game checkers;
 
 		// coin toss for player sides
@@ -48,26 +58,37 @@ public:
 
 		// play game
 		checkers.playGame();
+		if (printGame) {
+			cout << checkers << endl;
+		}
 
 		// Handle score
 		// player 1 is red and red wins, or is black and black wins
-		if ((checkers.redWin && player1.playAsRed) || (!checkers.redWin && !player1.playAsRed)) {
-			scores[player1.idx] += 2;
-			scores[player2.idx] -= 1;
-		// player 2 is red and red wins, or is black and black wins
-		} else {
-			scores[player2.idx] += 2;
-			scores[player1.idx] -= 1;
+		if (!checkers.draw) {
+			if ((checkers.redWin && player1.playAsRed) || (!checkers.redWin && !player1.playAsRed)) {
+				scores[player1.idx] += 2;
+				wins[player1.idx] += 1;
+				scores[player2.idx] -= 1;
+				losses[player2.idx] += 1;
+				// player 2 is red and red wins, or is black and black wins
+			} else {
+				scores[player2.idx] += 2;
+				wins[player2.idx] += 1;
+				scores[player1.idx] -= 1;
+				losses[player1.idx] += 1;
+			}
 		}
+		gamesPlayed[player1.idx] += 1;
+		gamesPlayed[player2.idx] += 1;
 	}
-    
-    void commence() {
-        uniform_int_distribution<int> randomIdx(0, population.size() - 1);
-        default_random_engine generator(high_resolution_clock::now().time_since_epoch().count());
+	
+	void commence() {
+		uniform_int_distribution<int> randomIdx(0, contestants.size() - 1);
+		default_random_engine generator(high_resolution_clock::now().time_since_epoch().count());
 		vector<thread> games;
-		int popSize = population.size();
+		int popSize = contestants.size();
 		// for each AI in the population
-        for (int i = 0; i < popSize; ++i) {
+		for (int i = 0; i < popSize; ++i) {
 			// play "gamesPerRound" games with random opponents
 			for (int j = 0; j < gamesPerRound; ++j) {
 				games.push_back(thread([&](int idx) {
@@ -76,18 +97,20 @@ public:
 					int otherIdx = randomIdx(generator);
 					while (idx == otherIdx) otherIdx = randomIdx(generator);
 					// run game
-					officiateGame(population[idx], population[otherIdx]);
+					officiateGame(contestants[idx], contestants[otherIdx]);
 				}, i));
 			}
-        }
+		}
 		for (thread& t : games) {
 			t.join();
 		}
-    }
+	}
 
-	void printStats() {
-		for (int i = 0; i < population.size(); ++i) {
-			cout << "Player " << i << " score: " << scores[i] << endl;
+	void printStats(ostream& os) {
+		for (int i = 0; i < contestants.size(); ++i) {
+			os << "Player " << i << " score: " << scores[i] << endl;
+			int draws = gamesPlayed[i] - wins[i] - losses[i];
+			os << "\twins: " << wins[i] << " losses: " << losses[i] << " draws: " << draws << endl;
 		}
 	}
 };

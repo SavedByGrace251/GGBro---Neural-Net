@@ -9,6 +9,7 @@
 
 #include <iostream>
 using std::ostream;
+using std::istream;
 #include <vector>
 using std::vector;
 #include <cmath>
@@ -116,6 +117,24 @@ public:
 		return outputs.back();
 	}
 
+	void print() {
+		bool first = true;
+		cout << "[";
+		for (vector<vector<double>> layer : layers) {
+			for (vector<double>& neuron : layer) {
+				for (double & weight : neuron) {
+					if (first) {
+						cout << weight;
+						first = !first;
+					} else {
+						cout << "," << weight;
+					}
+				}
+			}
+		}
+		cout << "]";
+	}
+
 	// Get Genome
 	//	return the network's genome
 	vector<vector<vector<double>>> getGenome() {
@@ -125,23 +144,26 @@ public:
 
 // Print Genome
 //	prints the genome of the current network
-ostream& operator<<(ostream& os, const NeuralNetwork& net) {
-	bool first = true;
-	os << "[";
-	for (vector<vector<double>> layer : net.layers) {
+ostream& operator<<(ostream& os, NeuralNetwork& net) {
+	for (vector<vector<double>>& layer : net.layers) {
 		for (vector<double>& neuron : layer) {
-			for (double & weight : neuron) {
-				if (first) {
-					os << weight;
-					first = !first;
-				} else {
-					os << "," << weight;
-				}
+			for (double& weight : neuron) {
+				os << weight << " ";
 			}
 		}
 	}
-	os << "]";
 	return os;
+}
+
+istream& operator>>(istream& is, NeuralNetwork& net) {
+	for (vector<vector<double>>& layer : net.layers) {
+		for (vector<double>& neuron : layer) {
+			for (double& weight : neuron) {
+				is >> weight;
+			}
+		}
+	}
+	return is;
 }
 
 #endif /* NeuralNetwork_h */

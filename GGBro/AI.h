@@ -23,7 +23,7 @@ using std::chrono::duration_cast;
 
 struct Clock {
 	high_resolution_clock::time_point start;
-	double maxtime = 0.25;
+	double maxtime = 3.00;
 };
 
 class AI {
@@ -33,10 +33,17 @@ public:
 	bool playAsRed = true;
 	double kingVal;
 	Clock thinker;
-    int idx;
+	int score;
+	int idx;
 
 	// default ctor
-	AI() {}
+	AI() {
+		vector<int> layers{ 32, 40, 10, 1 };
+		brain = NeuralNetwork(layers);
+		kingVal = 1.4;
+		AIType = "Primordial";
+		makeBrain();
+	}
 
 	// secondary ctor
 	//	Takes a vector of ints representing the sctructure for the AI's NeuralNetwork
@@ -52,7 +59,7 @@ public:
 	AI(NeuralNetwork brain_) {
 		brain = brain_;
 		kingVal = 1.4;
-		AIType = "Created";
+		AIType = "Implanted";
 	}
 
 	// Secondary ctor
@@ -100,70 +107,84 @@ public:
 	// Make Move
 	//	Searches the given board and makes a move by returning the desired board
 	Board makeMove(Board& currentBoard) {
-
+		// if playing as black
 		double blackVal = 1;
 		double redVal = -1;
+		// if playing as red
 		if (playAsRed) {
 			blackVal = -1;
 			redVal = 1;
 		}
-
+		// if the board this AI was given is an end board
+		// do not generate moves
 		if (currentBoard.endState) {
 			return{};
 		}
+		// reserve memory for board search
 		vector<vector<Board>> newBoards(20);
 		for (vector<Board>& b : newBoards) {
 			b.reserve(10);
 		}
+		// generate the possible moves
 		currentBoard.generateLegalMoves(newBoards[0], redVal, blackVal, kingVal);
 		int numPossibleMoves = newBoards[0].size();
-		double greatestRank = 0;
+		// if there are no possible moves generated
 		if (numPossibleMoves == 0) {
+			// if it's red's turn then red has been eliminated
 			if (currentBoard.redTurn) {
 				currentBoard.redEliminated = true;
+			// if it's black's turn then black has been eliminated
 			} else {
 				currentBoard.blackEliminated = true;
 			}
+			// set board is an ending board
 			currentBoard.endState = true;
 			return currentBoard;
 		}
+		// set the possible moves as parrent boards
 		for (int i = 0; i < numPossibleMoves; i++) {
 			newBoards[0][i].parentBoard = nullptr;
 		}
-		int numberOfBoards = 0;
-		int maxDepth = 2;
+		// set the first search depth and ultimate max search depth
+		int searchDepth = 7;
+		int maxDepth = 8;
+		// start searching boards
 		thinker.start = high_resolution_clock::now();
 		do {
-			numberOfBoards = searchBoards(newBoards, true, 1, maxDepth);
+			// search to given depth
+			searchBoards(newBoards, true, 1, searchDepth);
+			// sort boards based on ranking
 			sort(newBoards[0].begin(), newBoards[0].end());
-			++maxDepth;
-		} while ((duration<double>(high_resolution_clock::now() - thinker.start).count() < thinker.maxtime) && maxDepth < 20);
+			// setup increased for next search
+			++searchDepth;
+			// if the time hasn't expired, and the search depth
+			// is less than the max search depth, search again
+		} while ((duration<double>(high_resolution_clock::now() - thinker.start).count() < thinker.maxtime) && searchDepth < maxDepth);
+		// final board sort
 		sort(newBoards[0].begin(), newBoards[0].end());
+		reverse(newBoards[0].begin(), newBoards[0].end());
+		// return best ranked board
 		return newBoards[0][0];
 	}
 
 	// Search Boards
-	int searchBoards(vector<vector<Board>>& boards, bool isAlpha, int depthReached, int maxDepth) {
+	//	search boards and rank the parent boards
+	void searchBoards(vector<vector<Board>>& boards, bool isAlpha, int depthReached, int maxDepth) {
 		int nBoards = boards[depthReached - 1].size();
-		int n = nBoards;
 		if (depthReached <= maxDepth) {
 			for (int i = 0; (i < nBoards) && (duration<double>(high_resolution_clock::now() - thinker.start).count() < thinker.maxtime); i++) {
 				if (duration<double>(high_resolution_clock::now() - thinker.start).count() < thinker.maxtime) {
 					boards[depthReached - 1][i].generateLegalMoves(boards[depthReached]);
-					//if (boards[depthReached].size() > 10) {
-					//	cout << "Preallocate MORE THAN 10";
-					//}
 					if (duration<double>(high_resolution_clock::now() - thinker.start).count() < thinker.maxtime) {
 						if (boards.size() > 0) {
-							n += searchBoards(boards, !isAlpha, depthReached + 1, maxDepth);
+							searchBoards(boards, !isAlpha, depthReached + 1, maxDepth);
 						}
 					}
 				}
 			}
-		} else {
-			evaluate(boards[depthReached], isAlpha);
 		}
-		return n;
+		if (depthReached == maxDepth)
+			evaluate(boards[depthReached], isAlpha);
 	}
 
 	// Make Brain
@@ -188,7 +209,7 @@ public:
 
 	// Evolve
 	//	Evolve this AI to produce a child AI
-	AI& evolve() {
+	AI evolve() {
 		vector<vector<vector<double>>> genome = brain.getGenome();
 		normal_distribution<double> normal(0.0, 0.4);
 		default_random_engine generator(std::chrono::high_resolution_clock::now().time_since_epoch().count());
@@ -205,7 +226,7 @@ public:
 
 	// Merge
 	//	takes in a given AI and merges it with the current AI to form a new child AI
-	AI& operator+(AI& other) {
+	AI operator+(AI& other) {
 		vector<vector<vector<double>>> momGenome = this->brain.getGenome();
 		vector<vector<vector<double>>> dadGenome = other.brain.getGenome();
 		// validation
@@ -252,6 +273,22 @@ public:
 		newAI.AIType = "Spliced";
 		return newAI;
 	}
+
+	// Operator less-then
+	bool operator<(const AI& other) const {
+		return (this->score < other.score);
+	}
 };
+
+ostream& operator<<(ostream& os, AI& player) {
+	os << player.AIType << endl;
+	os << player.kingVal << endl;
+	os << player.brain << endl;
+	return os;
+}
+istream& operator>>(istream& is, AI& player) {
+	is >> player.AIType >> player.kingVal >> player.brain;
+	return is;
+}
 
 #endif // !AI
