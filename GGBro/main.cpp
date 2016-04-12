@@ -16,7 +16,9 @@ using namespace std;
 
 int main() {
 
-	Training training(10);
+	Training training(96);
+	//                  weeks days hours minutes seconds
+	training.setMaxTime(0,    3,   23,   45,     0);
 	training.train();
 
 	return 0;

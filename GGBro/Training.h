@@ -9,6 +9,7 @@
 
 #include "Tournament.h"
 #include <fstream>
+#include <string>
 using namespace std;
 
 class Training {
@@ -17,7 +18,7 @@ public:
 	Clock trainTimer;
 	int generation = 1;
 	string saveLocation;
-	int saveInterval = 1;
+	int saveInterval = 50;
 
 	//default ctor
 	Training() {
@@ -43,6 +44,14 @@ public:
 		population = vector<AI>(populationSize);
 	}
 
+	void setMaxTime(int week, int day, int hour, int minute, int seconds) {
+		int minutes = 60 * minute;
+		int hours = 3600 * hour;
+		int days = 86400 * day;
+		int weeks = 604800 * week;
+		trainTimer.maxtime = weeks + days + hours + minutes + seconds;
+	}
+
 	// Train
 	//	Commence training
 	void train() {
@@ -56,9 +65,11 @@ public:
 			if (generation % saveInterval == 0) {
 				save();
 			}
-			Tournament tourney(population);
-			tourney.commence();
-			ratePopulation(tourney);
+			high_resolution_clock::time_point t = high_resolution_clock::now();
+			while (duration<double>(high_resolution_clock::now() - t).count() <= 0.1);
+			//Tournament tourney(population);
+			//tourney.commence();
+			//ratePopulation(tourney);
 			evolve();
 			++generation;
 		}
@@ -110,8 +121,8 @@ public:
 	//	loads the last saved generation
 	void resume() {
 		int populationSize;
-		ifstream inFile("lastSave.data");
-		inFile >> generation >> populationSize;
+		ifstream saveFile("lastSave.data");
+		saveFile >> generation >> populationSize;
 		ifstream AIFile("generation_" + to_string(generation) + ".data");
 		for (int i = 0; i < populationSize; ++i) {
 			AI inputAI;
@@ -123,14 +134,14 @@ public:
 	// Save to file
 	//	Saves the current generation to file
 	void save() {
-		ofstream outFile("generation_" + to_string(generation) + ".data");
+		ofstream AIFile("generation_" + to_string(generation) + ".data");
 		for (AI& ai : population) {
-			outFile << ai << endl;
+			AIFile << ai << endl;
 		}
-		outFile.close();
-		outFile.open("lastSave.data");
-		outFile << generation << endl << population.size();
-		outFile.close();
+		AIFile.close();
+		AIFile.open("lastSave.data");
+		AIFile << generation << endl << population.size();
+		AIFile.close();
 	}
 };
 
