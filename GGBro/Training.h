@@ -65,11 +65,9 @@ public:
 			if (generation % saveInterval == 0) {
 				save();
 			}
-			high_resolution_clock::time_point t = high_resolution_clock::now();
-			while (duration<double>(high_resolution_clock::now() - t).count() <= 0.1);
-			//Tournament tourney(population);
-			//tourney.commence();
-			//ratePopulation(tourney);
+			Tournament tourney(population);
+			tourney.commence();
+			ratePopulation(tourney);
 			evolve();
 			++generation;
 		}
