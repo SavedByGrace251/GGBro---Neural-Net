@@ -71,6 +71,7 @@ public:
 			evolve();
 			++generation;
 		}
+		save();
 	}
 
 	// Rate Population

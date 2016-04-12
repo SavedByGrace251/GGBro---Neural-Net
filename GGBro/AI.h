@@ -23,7 +23,7 @@ using std::chrono::duration_cast;
 
 struct Clock {
 	high_resolution_clock::time_point start;
-	double maxtime = 3.00;
+	double maxtime = 2.50;
 };
 
 class AI {

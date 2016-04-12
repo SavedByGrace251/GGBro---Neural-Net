@@ -1,6 +1,5 @@
 // testing file for cpp things
 
-#include <iostream>
 #include "Board.h"
 #include "Piece.h"
 #include "AI.h"
@@ -10,9 +9,6 @@
 #include <fstream>
 #include <iterator>
 using namespace std;
-using std::chrono::high_resolution_clock;
-using std::chrono::duration;
-using std::chrono::duration_cast;
 
 // search boards for a given time
 int searchBoards(Clock& time, vector<vector<Board>>& boards, AI& player, bool isAlpha, int depthReached, int maxDepth) {
@@ -90,4 +86,14 @@ void timeNetwork(AI& player) {
 	timeSpan = duration_cast<duration<double>>(t2 - t1);
 
 	cout << "Net evaluations per second: " << count / timeSpan.count() << endl;
+}
+
+int main() {
+
+	Training training(96);
+	// set train time   weeks days hours minutes seconds
+	training.setMaxTime(0,    3,   23,   45,     0);
+	training.train();
+
+	return 0;
 }
