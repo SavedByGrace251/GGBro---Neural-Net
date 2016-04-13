@@ -19,7 +19,7 @@ public:
 	vector<int> losses;
 	vector<int> gamesPlayed;
 	vector<duration<double>> gameTimes;
-	int gamesPerRound = 2;
+	int gamesPerRound = 5;
 	
 	Tournament(int nContestants) {
 		vector<int> layers { 32, 40, 10, 1 };
