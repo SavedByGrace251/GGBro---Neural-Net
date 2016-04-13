@@ -23,7 +23,7 @@ using std::chrono::duration_cast;
 
 struct Clock {
 	high_resolution_clock::time_point start;
-	double maxtime = 2.50;
+	double maxtime = 0.5;
 };
 
 class AI {
@@ -123,7 +123,7 @@ public:
 		// reserve memory for board search
 		vector<vector<Board>> newBoards(20);
 		for (vector<Board>& b : newBoards) {
-			b.reserve(10);
+			b.reserve(14);
 		}
 		// generate the possible moves
 		currentBoard.generateLegalMoves(newBoards[0], redVal, blackVal, kingVal);
@@ -146,8 +146,8 @@ public:
 			newBoards[0][i].parentBoard = nullptr;
 		}
 		// set the first search depth and ultimate max search depth
-		int searchDepth = 7;
-		int maxDepth = 8;
+		int searchDepth = 4;
+		int maxDepth = 10;
 		// start searching boards
 		thinker.start = high_resolution_clock::now();
 		do {

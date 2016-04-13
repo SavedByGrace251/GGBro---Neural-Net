@@ -18,7 +18,8 @@ public:
 	vector<int> wins;
 	vector<int> losses;
 	vector<int> gamesPlayed;
-	int gamesPerRound = 3;
+	vector<duration<double>> gameTimes;
+	int gamesPerRound = 2;
 	
 	Tournament(int nContestants) {
 		vector<int> layers { 32, 40, 10, 1 };
@@ -91,26 +92,36 @@ public:
 		for (int i = 0; i < popSize; ++i) {
 			// play "gamesPerRound" games with random opponents
 			for (int j = 0; j < gamesPerRound; ++j) {
+				//cout << "AI " << i << " game " << j << endl;
 				games.push_back(thread([&](int idx) {
 					// start game clock
 					Clock time;
 					int otherIdx = randomIdx(generator);
 					while (idx == otherIdx) otherIdx = randomIdx(generator);
 					// run game
+					time.start = high_resolution_clock::now();
 					officiateGame(contestants[idx], contestants[otherIdx]);
+					gameTimes.push_back(duration<double>(high_resolution_clock::now() - time.start));
 				}, i));
 			}
 		}
 		for (thread& t : games) {
 			t.join();
 		}
+		printStats(cout);
 	}
 
 	void printStats(ostream& os) {
+		double totalTimes = 0;
+		for (duration<double> d : gameTimes) {
+			totalTimes += d.count();
+		}
+		double averageTime = totalTimes / gameTimes.size();
+		cout << "Average Game Time: " << averageTime << endl;
 		for (int i = 0; i < contestants.size(); ++i) {
-			os << "Player " << i << " score: " << scores[i] << endl;
+			os << "Player " << i << " score: " << scores[i] << " ** Stats ";
 			int draws = gamesPlayed[i] - wins[i] - losses[i];
-			os << "\twins: " << wins[i] << " losses: " << losses[i] << " draws: " << draws << endl;
+			os << " wins: " << wins[i] << " losses: " << losses[i] << " draws: " << draws << endl;
 		}
 	}
 };

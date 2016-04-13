@@ -122,7 +122,9 @@ public:
 		int populationSize;
 		ifstream saveFile("lastSave.data");
 		saveFile >> generation >> populationSize;
-		ifstream AIFile("generation_" + to_string(generation) + ".data");
+		stringstream gen;
+		gen << generation;
+		ifstream AIFile("generation_" + gen.str() + ".data");
 		for (int i = 0; i < populationSize; ++i) {
 			AI inputAI;
 			AIFile >> inputAI;
@@ -133,14 +135,16 @@ public:
 	// Save to file
 	//	Saves the current generation to file
 	void save() {
-		//AIFile.open("lastSave.data");
+		ofstream AIFile("Last_Save.data");
 		cout << "*** Saved Generation and Population Size***" << endl << generation << " " << population.size() << endl;
-		//AIFile.close();
-		//ofstream AIFile("generation_" + to_string(generation) + ".data");
+		AIFile.close();
+		stringstream gen;
+		gen << generation;
+		AIFile.open("generation_" + gen.str() + ".data");
 		for (AI& ai : population) {
 			cout << ai << endl;
 		}
-		//AIFile.close();
+		AIFile.close();
 	}
 };
 

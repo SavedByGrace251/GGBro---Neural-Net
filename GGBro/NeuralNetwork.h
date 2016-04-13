@@ -37,9 +37,15 @@ public:
 	// secondary ctor
 	//	takes a genome and applys it to this network
 	NeuralNetwork(vector<vector<vector<double>>> genome) {
-		this->layers = genome;
+		layers = genome;
 		for (vector<vector<double>> & layer : genome) {
 			structure.push_back(layer.size());
+		}
+		int structureLength = structure.size();
+		// build outputs vector
+		outputs.clear();
+		for (int i = 0; i < structureLength; i++) {
+			outputs.push_back(vector<double>(structure[i]));
 		}
 	}
 	
@@ -47,12 +53,13 @@ public:
 	//	takes a vector of ints as a layer map
 	void initialize(vector<int> newLayers) {
 		structure = newLayers;
+		int structureLength = structure.size();
 		// clear network
 		layers.clear();
 		// start building network
 		layers.push_back(vector<vector<double>>(newLayers[0]));
 		// count number of layers
-		for (int i = 1; i<newLayers.size(); ++i) {
+		for (int i = 1; i < structureLength; ++i) {
 			// count number of nuerons in layer
 			layers.push_back(vector<vector<double>>(newLayers[i]));
 			for (vector<double> & neuron : this->layers.back()) {
@@ -62,7 +69,7 @@ public:
 		}
 		// build outputs vector
 		outputs.clear();
-		for (int i = 0; i < newLayers.size(); i++) {
+		for (int i = 0; i < structureLength; i++) {
 			outputs.push_back(vector<double>(newLayers[i]));
 		}
 	}
