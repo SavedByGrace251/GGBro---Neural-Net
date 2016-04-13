@@ -34,7 +34,8 @@ int searchBoards(Clock& time, vector<vector<Board>>& boards, AI& player, bool is
 	return n;
 }
 
-void timeBoardGenerator(AI& player) {
+void timeBoardGenerator() {
+	AI player;
 	duration<double> timeSpan;
 
 	Board initboard;
@@ -71,14 +72,16 @@ void testTourney() {
 	test.printStats(cout);
 }
 
-void timeNetwork(AI& player) {
+void timeNetwork() {
+	AI player;
+
 	high_resolution_clock::time_point t1;
 	high_resolution_clock::time_point t2;
 	duration<double> timeSpan;
 
 	int count = 0;
 	t1 = high_resolution_clock::now();
-	while (count < 250000) {
+	while (count < 1000000) {
 		player.brain.Activate();
 		++count;
 	}
@@ -89,11 +92,8 @@ void timeNetwork(AI& player) {
 }
 
 int main() {
-
-	Training training(96);
-	// set train time   weeks days hours minutes seconds
-	training.setMaxTime(0,    3,   23,   45,     0);
-	training.train();
+	
+	timeNetwork();
 
 	return 0;
 }

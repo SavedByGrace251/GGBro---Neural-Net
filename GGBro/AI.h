@@ -282,12 +282,13 @@ public:
 
 ostream& operator<<(ostream& os, AI& player) {
 	os << player.AIType << endl;
+	os << player.score << endl;
 	os << player.kingVal << endl;
 	os << player.brain << endl;
 	return os;
 }
 istream& operator>>(istream& is, AI& player) {
-	is >> player.AIType >> player.kingVal >> player.brain;
+	is >> player.AIType >> player.score >> player.kingVal >> player.brain;
 	return is;
 }
 

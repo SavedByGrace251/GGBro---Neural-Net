@@ -133,14 +133,14 @@ public:
 	// Save to file
 	//	Saves the current generation to file
 	void save() {
-		ofstream AIFile("generation_" + to_string(generation) + ".data");
+		//AIFile.open("lastSave.data");
+		cout << "*** Saved Generation and Population Size***" << endl << generation << " " << population.size() << endl;
+		//AIFile.close();
+		//ofstream AIFile("generation_" + to_string(generation) + ".data");
 		for (AI& ai : population) {
-			AIFile << ai << endl;
+			cout << ai << endl;
 		}
-		AIFile.close();
-		AIFile.open("lastSave.data");
-		AIFile << generation << endl << population.size();
-		AIFile.close();
+		//AIFile.close();
 	}
 };
 
