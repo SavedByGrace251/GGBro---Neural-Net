@@ -28,10 +28,7 @@ public:
 		for (int i = 0; i < nContestants; ++i) {
 			contestants[i].idx = i;
 		}
-		scores = vector<int>(nContestants, 0);
-		wins = vector<int>(nContestants, 0);
-		losses = vector<int>(nContestants, 0);
-		gamesPlayed = vector<int>(nContestants, 0);
+		setup(nContestants);
 	}
 	
 	Tournament(vector<AI> players) {
@@ -40,12 +37,18 @@ public:
 		for (int i = 0; i < nContestants; ++i) {
 			contestants[i].idx = i;
 		}
-		scores = vector<int>(players.size(), 0);
-		wins = vector<int>(players.size(), 0);
-		losses = vector<int>(players.size(), 0);
-		gamesPlayed = vector<int>(players.size(), 0);
+		setup(nContestants);
 	}
 	
+	void setup(int nContestants) {
+		scores = vector<int>(nContestants, 0);
+		wins = vector<int>(nContestants, 0);
+		losses = vector<int>(nContestants, 0);
+		gamesPlayed = vector<int>(nContestants, 0);
+		gamesAsRed = vector<int>(nContestants, 0);
+		gamesAsBlack = vector<int>(nContestants, 0);
+	}
+
 	void officiateGame(AI player1, AI player2, bool printGame = false) {
 		Game checkers;
 
