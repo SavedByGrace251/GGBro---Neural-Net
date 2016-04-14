@@ -96,7 +96,6 @@ public:
 
 	void playGame() {
 		numMoves = 0;
-		cout << playerRed.kingVal << endl << playerBlack.kingVal << endl;
 		if (playerRed.AIType.compare("blank") == 0 || playerBlack.AIType.compare("blank") == 0) {
 			throw std::logic_error("You must set Players for the game.");
 		}

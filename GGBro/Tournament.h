@@ -21,7 +21,7 @@ public:
 	vector<int> gamesAsRed;
 	vector<int> gamesAsBlack;
 	vector<duration<double>> gameTimes;
-	int gamesPerRound = 1;
+	int gamesPerRound = 5;
 	
 	Tournament(int nContestants) {
 		contestants = vector<AI>(nContestants);
@@ -53,8 +53,12 @@ public:
 		uniform_int_distribution<int> flipFlop(0, 1);
 		default_random_engine generator(high_resolution_clock::now().time_since_epoch().count());
 		if (flipFlop(generator) == 1) {
+			gamesAsRed[player1.idx] += 1;
+			gamesAsBlack[player2.idx] += 1;
 			checkers.setPlayers(player1, player2);
 		} else {
+			gamesPlayed[player1.idx] += 1;
+			gamesAsBlack[player2.idx] += 1;
 			checkers.setPlayers(player2, player1);
 		}
 
@@ -111,9 +115,10 @@ public:
 	void printStats(ostream& os) {
 		double totalTimes = 0;
 		for (int i = 0; i < contestants.size(); ++i) {
-			os << "Player " << i << " score: " << scores[i] << " ** Stats ";
+			os << "Player " << i << " - score: " << scores[i] << endl;
 			int draws = gamesPlayed[i] - wins[i] - losses[i];
-			os << " wins: " << wins[i] << " losses: " << losses[i] << " draws: " << draws << endl;
+			os << "\t** W: " << wins[i] << " L: " << losses[i] << " D: " << draws << endl;
+			os << "\t** R: " << gamesAsRed[i] << " B: " << gamesAsBlack[i] << " T: " << gamesPlayed[i] << endl;
 		}
 	}
 };

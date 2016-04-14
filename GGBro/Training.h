@@ -63,6 +63,7 @@ public:
 		// start training
 		trainTimer.start = high_resolution_clock::now();
 		while (duration<double>(high_resolution_clock::now() - trainTimer.start).count() < trainTimer.maxtime) {
+			cout << "Training generation " << generation << endl;
 			if (generation % saveInterval == 0 && !saveGen) {
 				save();
 			} else {
