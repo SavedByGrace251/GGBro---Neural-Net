@@ -140,7 +140,7 @@ public:
 	//	Saves the current generation to file
 	void save() {
 		ofstream AIFile("Last_Save.data");
-		AIFile << "*** Saved Generation and Population Size***" << endl << generation << " " << population.size() << endl;
+		AIFile << generation << " " << population.size() << endl;
 		AIFile.close();
 		stringstream gen;
 		gen << generation;
