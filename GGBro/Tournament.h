@@ -18,6 +18,8 @@ public:
 	vector<int> wins;
 	vector<int> losses;
 	vector<int> gamesPlayed;
+	vector<int> gamesAsRed;
+	vector<int> gamesAsBlack;
 	vector<duration<double>> gameTimes;
 	int gamesPerRound = 1;
 	

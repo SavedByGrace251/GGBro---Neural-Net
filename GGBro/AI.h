@@ -35,6 +35,7 @@ public:
 	Clock thinker;
 	int score;
 	int idx;
+	int generation;
 
 	// default ctor
 	AI() {
@@ -100,6 +101,8 @@ public:
 				return;
 			}
 		}
+		if (!playAsRed)
+			reverse(board.state.begin(), board.state.end());
 		brain.setInput(board.state);
 		board.setRank(brain.Activate()[0], isAlpha);
 	}
@@ -282,13 +285,14 @@ public:
 
 ostream& operator<<(ostream& os, AI& player) {
 	os << player.AIType << endl;
+	os << player.generation << endl;
 	os << player.score << endl;
 	os << player.kingVal << endl;
 	os << player.brain << endl;
 	return os;
 }
 istream& operator>>(istream& is, AI& player) {
-	is >> player.AIType >> player.score >> player.kingVal >> player.brain;
+	is >> player.AIType >> player.generation >> player.score >> player.kingVal >> player.brain;
 	return is;
 }
 

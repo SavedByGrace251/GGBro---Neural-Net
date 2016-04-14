@@ -21,8 +21,8 @@ public:
 	double gameLength;
 	Board currentBoard;
 	stringstream gameLog;
-	AI *playerRed;
-	AI *playerBlack;
+	AI playerRed;
+	AI playerBlack;
 	bool redsTurn = true;
 	int numMoves = 0;
 	bool gameFinished = false;
@@ -32,38 +32,38 @@ public:
 	// default ctor
 	Game() {
 		currentBoard = Board();
-		playerRed = nullptr;
-		playerBlack = nullptr;
+		playerRed.AIType = "blank";
+		playerBlack.AIType = "blank";
 	}
 
 	// secondary ctor
 	//	takes a two AIs, one as black, the other as red
 	Game(AI& playerRed_, AI& playerBlack_) {
-		playerBlack = &playerBlack_;
-		playerRed = &playerRed_;
+		playerBlack = playerBlack_;
+		playerRed = playerRed_;
 		currentBoard = Board();
 		
-		(*playerBlack).playAsRed = false;
-		(*playerRed).playAsRed = true;
+		(playerBlack).playAsRed = false;
+		(playerRed).playAsRed = true;
 	}
 	
 	// secondary ctor
 	//	takes two AIs, one as black, the other as red
 	//	also takes the initial game board
 	Game(AI& playerRed_, AI& playerBlack_, Board initial) {
-		playerBlack = &playerBlack_;
-		playerRed = &playerRed_;
+		playerBlack = playerBlack_;
+		playerRed = playerRed_;
 		currentBoard = initial;
 
-		(*playerBlack).playAsRed = false;
-		(*playerRed).playAsRed = true;
+		playerBlack.playAsRed = false;
+		playerRed.playAsRed = true;
 	}
 
 	void setPlayers(AI& playerRed_, AI& playerBlack_) {
-		playerBlack = &playerBlack_;
-		playerRed = &playerRed_;
-		(*playerBlack).playAsRed = false;
-		(*playerRed).playAsRed = true;
+		playerBlack = playerBlack_;
+		playerRed = playerRed_;
+		playerBlack.playAsRed = false;
+		playerRed.playAsRed = true;
 	}
 	
 	void setBoard(Board b) {
@@ -86,16 +86,20 @@ public:
 			redWin = true;
 		}
 		if (redsTurn) {
-			currentBoard = (*playerRed).makeMove(currentBoard);
+			currentBoard = playerRed.makeMove(currentBoard);
 			redsTurn = !redsTurn;
 		} else {
-			currentBoard = (*playerBlack).makeMove(currentBoard);
+			currentBoard = playerBlack.makeMove(currentBoard);
 			redsTurn = !redsTurn;
 		}
 	}
 
 	void playGame() {
 		numMoves = 0;
+		cout << playerRed.kingVal << endl << playerBlack.kingVal << endl;
+		if (playerRed.AIType.compare("blank") == 0 || playerBlack.AIType.compare("blank") == 0) {
+			throw std::logic_error("You must set Players for the game.");
+		}
 		time.start = high_resolution_clock::now();
 		while (!gameFinished) {
 			takeTurn();
