@@ -19,6 +19,7 @@ public:
 	int generation = 1;
 	string saveLocation;
 	int saveInterval = 50;
+	bool saveGen = false;
 
 	//default ctor
 	Training() {
@@ -62,8 +63,10 @@ public:
 		// start training
 		trainTimer.start = high_resolution_clock::now();
 		while (duration<double>(high_resolution_clock::now() - trainTimer.start).count() < trainTimer.maxtime) {
-			if (generation % saveInterval == 0) {
+			if (generation % saveInterval == 0 && !saveGen) {
 				save();
+			} else {
+				saveGen = false;
 			}
 			Tournament tourney(population);
 			tourney.commence();
@@ -120,7 +123,7 @@ public:
 	//	loads the last saved generation
 	void resume() {
 		int populationSize;
-		ifstream saveFile("lastSave.data");
+		ifstream saveFile("Last_Save.data");
 		saveFile >> generation >> populationSize;
 		stringstream gen;
 		gen << generation;
@@ -130,21 +133,23 @@ public:
 			AIFile >> inputAI;
 			population.push_back(inputAI);
 		}
+		saveGen = true;
 	}
 
 	// Save to file
 	//	Saves the current generation to file
 	void save() {
 		ofstream AIFile("Last_Save.data");
-		cout << "*** Saved Generation and Population Size***" << endl << generation << " " << population.size() << endl;
+		AIFile << "*** Saved Generation and Population Size***" << endl << generation << " " << population.size() << endl;
 		AIFile.close();
 		stringstream gen;
 		gen << generation;
 		AIFile.open("generation_" + gen.str() + ".data");
 		for (AI& ai : population) {
-			cout << ai << endl;
+			AIFile << ai << endl;
 		}
 		AIFile.close();
+		saveGen = true;
 	}
 };
 

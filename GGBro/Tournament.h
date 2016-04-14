@@ -19,10 +19,9 @@ public:
 	vector<int> losses;
 	vector<int> gamesPlayed;
 	vector<duration<double>> gameTimes;
-	int gamesPerRound = 5;
+	int gamesPerRound = 1;
 	
 	Tournament(int nContestants) {
-		vector<int> layers { 32, 40, 10, 1 };
 		contestants = vector<AI>(nContestants);
 		for (int i = 0; i < nContestants; ++i) {
 			contestants[i].idx = i;
@@ -94,14 +93,10 @@ public:
 			for (int j = 0; j < gamesPerRound; ++j) {
 				//cout << "AI " << i << " game " << j << endl;
 				games.push_back(thread([&](int idx) {
-					// start game clock
-					Clock time;
 					int otherIdx = randomIdx(generator);
 					while (idx == otherIdx) otherIdx = randomIdx(generator);
 					// run game
-					time.start = high_resolution_clock::now();
 					officiateGame(contestants[idx], contestants[otherIdx]);
-					gameTimes.push_back(duration<double>(high_resolution_clock::now() - time.start));
 				}, i));
 			}
 		}
@@ -113,11 +108,6 @@ public:
 
 	void printStats(ostream& os) {
 		double totalTimes = 0;
-		for (duration<double> d : gameTimes) {
-			totalTimes += d.count();
-		}
-		double averageTime = totalTimes / gameTimes.size();
-		cout << "Average Game Time: " << averageTime << endl;
 		for (int i = 0; i < contestants.size(); ++i) {
 			os << "Player " << i << " score: " << scores[i] << " ** Stats ";
 			int draws = gamesPlayed[i] - wins[i] - losses[i];

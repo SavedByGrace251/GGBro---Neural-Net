@@ -15,10 +15,11 @@
 using namespace std;
 
 int main() {
+
 	cout << "Training Started" << endl;
-	Training training(50);
-	// set train time: weeks, days, hours, minutes, seconds
-	training.setMaxTime(0, 0, 5, 45, 0);
+	Training training;
+	training.setMaxTime(0, 0, 8, 0, 0);
+	training.resume();
 	training.train();
 	cout << "Training Ended" << endl;
 
