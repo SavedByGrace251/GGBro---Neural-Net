@@ -107,13 +107,17 @@ public:
 			int dadIdx = randomIdx(generator);
 			while (mumIdx == dadIdx) dadIdx = randomIdx(generator);
 			// splice networks
-			newAI.push_back(population[mumIdx] + population[dadIdx]);
+			AI child = population[mumIdx] + population[dadIdx];
+			child.generation = generation;
+			newAI.push_back(child);
 		}
 		// evolve networks
 		for (int i = 0; i < nEvolve; i++) {
-			newAI.push_back(population[i].evolve());
+			AI child = population[i].evolve();
+			child.generation = generation;
+			newAI.push_back(child);
 		}
-
+		// resize and add new AIs
 		population.resize(halfIdx);
 		population.insert(population.end(), newAI.begin(), newAI.end());
 
