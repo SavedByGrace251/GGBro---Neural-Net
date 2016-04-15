@@ -4,11 +4,10 @@ import json
 import sys
 import subprocess
 
-gameEnded = False
 gameName = sys.argv[1] # Ignore file name
 side = sys.argv[2] # Your color
 
-while (true):
+while (True):
     process = subprocess.Popen(["curl http://skynet.cs.uaf.edu/?info_game=true -d '{\"name\":\"" + gameName + "\"}'"], stdout=subprocess.PIPE, shell=True)
     (out, err) = process.communicate()
     gameInfo = json.loads(out)
