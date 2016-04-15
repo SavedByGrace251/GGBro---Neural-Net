@@ -1,8 +1,8 @@
+//	Authors: Jay Byam, Jonathan Newell
 //
 //  Tournament.h
 //  GGBro
 //
-//  Created by Jay Byam And Jonathan Newell
 
 #ifndef Tournament_h
 #define Tournament_h
@@ -19,7 +19,9 @@ public:
 	vector<int> losses;
 	vector<int> gamesPlayed;
 	vector<int> gamesAsRed;
+	vector<int> winsAsRed;
 	vector<int> gamesAsBlack;
+	vector<int> winsAsBlack;
 	vector<duration<double>> gameTimes;
 	int gamesPerRound = 5;
 	
@@ -47,6 +49,8 @@ public:
 		gamesPlayed = vector<int>(nContestants, 0);
 		gamesAsRed = vector<int>(nContestants, 0);
 		gamesAsBlack = vector<int>(nContestants, 0);
+		winsAsRed = vector<int>(nContestants, 0);
+		winsAsBlack = vector<int>(nContestants, 0);
 	}
 
 	void officiateGame(AI player1, AI player2, bool printGame = false) {
@@ -74,17 +78,34 @@ public:
 		// Handle score
 		// player 1 is red and red wins, or is black and black wins
 		if (!checkers.draw) {
-			if ((checkers.redWin && player1.playAsRed) || (!checkers.redWin && !player1.playAsRed)) {
-				scores[player1.idx] += 2;
-				wins[player1.idx] += 1;
-				scores[player2.idx] -= 1;
-				losses[player2.idx] += 1;
-				// player 2 is red and red wins, or is black and black wins
-			} else {
-				scores[player2.idx] += 2;
-				wins[player2.idx] += 1;
-				scores[player1.idx] -= 1;
-				losses[player1.idx] += 1;
+			if (checkers.redWin) { // if red won the game
+				if (player1.playAsRed) { // if player 1 is red
+					scores[player1.idx] += 2;
+					wins[player1.idx] += 1;
+					winsAsRed[player1.idx] += 1;
+					scores[player2.idx] -= 1;
+					losses[player2.idx] += 1;
+				} else { // if player 2 is red
+					scores[player2.idx] += 2;
+					wins[player2.idx] += 1;
+					winsAsRed[player2.idx] += 1;
+					scores[player1.idx] -= 1;
+					losses[player1.idx] += 1;
+				}
+			} else { // if black won the game
+				if (player1.playAsRed) { // if player 2 is black
+					scores[player2.idx] += 2;
+					wins[player2.idx] += 1;
+					winsAsBlack[player2.idx] += 1;
+					scores[player1.idx] -= 1;
+					losses[player1.idx] += 1;
+				} else { // if player 1 is black
+					scores[player1.idx] += 2;
+					wins[player1.idx] += 1;
+					winsAsBlack[player1.idx] += 1;
+					scores[player2.idx] -= 1;
+					losses[player2.idx] += 1;
+				}
 			}
 		}
 		gamesPlayed[player1.idx] += 1;
@@ -112,7 +133,6 @@ public:
 		for (thread& t : games) {
 			t.join();
 		}
-		printStats(cout);
 	}
 
 	void printStats(ostream& os) {
@@ -122,6 +142,7 @@ public:
 			int draws = gamesPlayed[i] - wins[i] - losses[i];
 			os << "\t** W: " << wins[i] << " L: " << losses[i] << " D: " << draws << endl;
 			os << "\t** R: " << gamesAsRed[i] << " B: " << gamesAsBlack[i] << " T: " << gamesPlayed[i] << endl;
+			os << "\t** wR: " << winsAsRed[i] << " wB: " << winsAsBlack[i] << endl;
 		}
 	}
 };

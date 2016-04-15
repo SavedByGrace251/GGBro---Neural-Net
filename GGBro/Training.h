@@ -1,8 +1,8 @@
+//	Authors: Jay Byam, Jonathan Newell
 //
 //  Training.h
 //  GGBro
 //
-//  Created by Jay Byam And Jonathan Newell
 
 #ifndef Training_h
 #define Training_h
@@ -69,9 +69,24 @@ public:
 			} else {
 				saveGen = false;
 			}
+			// setup tournament
 			Tournament tourney(population);
+
+			// run and time tourney
+			high_resolution_clock::time_point t1 = high_resolution_clock::now();
 			tourney.commence();
+			double tourneyLength = duration<double>(high_resolution_clock::now() - t1).count();
+			cout << "\t| Tournamnet length: " << tourneyLength << endl;
+
+			// Save Tourney information 
+			stringstream gen;
+			gen << generation;
+			ofstream outFile("tournament_info\tourney_" + gen.str() + "_info.data");
+			tourney.printStats(outFile);
+
+			// rate the population based on the last tounament
 			ratePopulation(tourney);
+			// evolve the population
 			evolve();
 			++generation;
 		}

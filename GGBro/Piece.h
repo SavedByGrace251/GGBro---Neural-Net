@@ -1,8 +1,7 @@
+//	Authors: Jay Byam, Jonathan Newell
 //
 //  Piece.h
 //  GGBro
-//
-//  Created by Jay Byam on 2/6/16.
 //
 
 #ifndef Piece_h

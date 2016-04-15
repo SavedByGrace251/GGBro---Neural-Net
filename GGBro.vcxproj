@@ -36,6 +36,8 @@
   <ItemGroup>
     <None Include="GGBro\checkers board.py" />
     <None Include="GGBro\graphics.py" />
+    <None Include="GGBro\playGame.py" />
+    <None Include="JobSubmission" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{9412FB0F-C985-4666-9EEA-7022DCB4B025}</ProjectGuid>

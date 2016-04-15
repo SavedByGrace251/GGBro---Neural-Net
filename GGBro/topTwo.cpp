@@ -1,6 +1,6 @@
 //	Authors: Jay Byam, Jonathan Newell
 //
-//  main.cpp
+//  topTwo.cpp
 //  GGBro
 //
 

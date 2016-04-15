@@ -1,4 +1,8 @@
-// testing file for cpp things
+//	Authors: Jay Byam, Jonathan Newell
+//
+//  testing.cpp
+//  GGBro
+//
 
 #include "Board.h"
 #include "Piece.h"

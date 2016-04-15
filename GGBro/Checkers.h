@@ -1,8 +1,7 @@
+//	Authors: Jay Byam, Jonathan Newell
 //
 //  Checkers.h
 //  GGBro
-//
-//  Created by Jonathan Newell and Jay Byam.
 //
 
 #ifndef Checkers_h

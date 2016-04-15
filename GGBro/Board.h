@@ -1,8 +1,8 @@
+//	Authors: Jay Byam, Jonathan Newell
 //
 //  Board.h
 //  GGBro
 //
-//  Created by Jay Byam And Jonathan Newell
 
 #ifndef Board_h
 #define Board_h

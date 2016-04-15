@@ -1,6 +1,6 @@
 //	Authors: Jay Byam, Jonathan Newell
 //
-//  TopCompete.cpp
+//  makeMove.cpp
 //  GGBro
 //
 

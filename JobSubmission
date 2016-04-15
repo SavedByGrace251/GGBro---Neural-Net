@@ -1,0 +1,26 @@
+#!/bin/sh
+ 
+#SBATCH --partition=t1standard
+#SBATCH --ntasks=1
+#SBATCH --mail-user=jtnewell2@alaska.edu
+#SBATCH --mail-type=BEGIN
+#SBATCH --mail-type=END
+#SBATCH --mail-type=FAIL
+#SBATCH --job-name=GGBro-Neural-Network
+#SBATCH --time=96:00:00
+#SBATCH --output=training_info.data
+ 
+. /usr/share/Modules/init/sh
+module purge
+module load slurm
+module load PrgEnv-intel/2016
+module load netcdf/4.3.0.intel-2016
+module load gcc/5.2.0
+module list
+ 
+cd ~/Github/GGbro-Neural-Network
+ 
+./trainAI
+ 
+#EOF
+

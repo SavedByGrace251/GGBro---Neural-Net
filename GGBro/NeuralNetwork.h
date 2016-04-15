@@ -1,7 +1,7 @@
+//	Authors: Jay Byam, Jonathan Newell
+//
 //  NeuralNetwork.h
 //  GGBro
-//
-//  Created by Jay Byam on 2/5/16.
 //
 
 #ifndef NeuralNetwork_h

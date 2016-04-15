@@ -1,8 +1,8 @@
+//	Authors: Jay Byam, Jonathan Newell
 //
-//  Board.h
+//  AI.h
 //  GGBro
 //
-//  Created by Jay Byam And Jonathan Newell
 
 #ifndef AI_h
 #define AI_h
@@ -81,6 +81,8 @@ public:
 		}
 	}
 
+	// Evaluate Board
+	//	evaluate the given board
 	void evaluateBoard(Board& board, bool isAlpha) {
 		if (playAsRed) {
 			if (board.blackEliminated) {
