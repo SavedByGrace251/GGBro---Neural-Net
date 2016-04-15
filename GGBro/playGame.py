@@ -17,4 +17,5 @@ while (True):
         lastBoardString = gameInfo["boards"][-1]
         boardProcess = subprocess.Popen(["./makeMove " + lastBoardString + " " + side], stdout=subprocess.PIPE, shell=True)
         (moveChosen, err) = boardProcess.communicate()
-        subprocess.call(["curl http://skynet.cs.uaf.edu/?play_game=true -d '{\"name\":\"" + gameName + "\",\"board\":\"" + moveChosen + "\"}'"])
+        playProcess = subprocess.Popen(["curl http://skynet.cs.uaf.edu/?play_game=true -d '{\"name\":\"" + gameName + "\",\"board\":\"" + moveChosen + "\"}'"], stdout=subprocess.PIPE, shell=True)
+        (notUsed, err) = playProcess.communicate()
