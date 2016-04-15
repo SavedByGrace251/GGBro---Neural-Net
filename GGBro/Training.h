@@ -83,7 +83,7 @@ public:
 	void ratePopulation(Tournament& t) {
 		int popSize = population.size();
 		for (int i = 0; i < popSize; i++) {
-			population[i].score = t.scores[i];
+			population[i].score = (double) t.scores[i] / t.gamesPlayed[i];
 		}
 	}
 

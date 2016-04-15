@@ -29,6 +29,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GGBro\main.cpp" />
+    <ClCompile Include="GGBro\makeMove.cpp" />
+    <ClCompile Include="GGBro\testing.cpp" />
+    <ClCompile Include="GGBro\topTwo.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="GGBro\checkers board.py" />

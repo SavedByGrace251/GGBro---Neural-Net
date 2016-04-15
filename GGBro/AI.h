@@ -23,7 +23,7 @@ using std::chrono::duration_cast;
 
 struct Clock {
 	high_resolution_clock::time_point start;
-	double maxtime = 0.5;
+	double maxtime = 1;
 };
 
 class AI {
@@ -33,7 +33,7 @@ public:
 	bool playAsRed = true;
 	double kingVal;
 	Clock thinker;
-	int score;
+	double score;
 	int idx;
 	int generation;
 
@@ -144,13 +144,17 @@ public:
 			currentBoard.endState = true;
 			return currentBoard;
 		}
+		// if there is only 1 option, just make move
+		if (numPossibleMoves == 1) {
+			return newBoards[0][0];
+		}
 		// set the possible moves as parrent boards
 		for (int i = 0; i < numPossibleMoves; i++) {
 			newBoards[0][i].parentBoard = nullptr;
 		}
 		// set the first search depth and ultimate max search depth
 		int searchDepth = 4;
-		int maxDepth = 10;
+		int maxDepth = 20;
 		// start searching boards
 		thinker.start = high_resolution_clock::now();
 		do {

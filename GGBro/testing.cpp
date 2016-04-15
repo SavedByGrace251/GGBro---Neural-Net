@@ -93,7 +93,7 @@ void timeNetwork() {
 
 int main() {
 	
-	timeNetwork();
+
 
 	return 0;
 }

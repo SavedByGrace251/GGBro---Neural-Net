@@ -15,11 +15,16 @@
 using namespace std;
 
 int main() {
-	cout << "Training Started" << endl;
-	Training t;
-	t.setMaxTime(0, 0, 95, 45, 0);
-	t.resume();
-	t.train();
-	cout << "Training Ended" << endl;
+
+	AI ike;
+	AI mike;
+	ifstream inf("players.data");
+	inf >> ike >> mike;
+	Game game1(ike, mike);
+	Game game2(mike, ike);
+	game1.playGame();
+	game2.playGame();
+	cout << game1 << endl << game2 << endl;
+
 	return 0;
 }
