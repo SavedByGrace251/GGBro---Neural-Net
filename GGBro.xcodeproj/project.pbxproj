@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		684906DF1CC074DA00009F7D /* makeMove.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 684906DE1CC074DA00009F7D /* makeMove.cpp */; };
 		68B9B8FB1CA21C8100E6A98F /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 68B9B8F91CA21C8100E6A98F /* main.cpp */; };
 		68B9B8FC1CA21C8100E6A98F /* test.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 68B9B8FA1CA21C8100E6A98F /* test.cpp */; };
 /* End PBXBuildFile section */
@@ -25,6 +26,7 @@
 
 /* Begin PBXFileReference section */
 		3BD845C51C6432C00022FDEA /* GGBro */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = GGBro; sourceTree = BUILT_PRODUCTS_DIR; };
+		684906DE1CC074DA00009F7D /* makeMove.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = makeMove.cpp; path = GGBro/makeMove.cpp; sourceTree = "<group>"; };
 		687513B81CB7AC08008B27F0 /* Tournament.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Tournament.h; path = GGBro/Tournament.h; sourceTree = "<group>"; };
 		68B9B8F41CA21C8100E6A98F /* AI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AI.h; path = GGBro/AI.h; sourceTree = "<group>"; };
 		68B9B8F51CA21C8100E6A98F /* Board.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Board.h; path = GGBro/Board.h; sourceTree = "<group>"; };
@@ -56,6 +58,7 @@
 				68B9B8F71CA21C8100E6A98F /* NeuralNetwork.h */,
 				68B9B8F81CA21C8100E6A98F /* Piece.h */,
 				68B9B8F91CA21C8100E6A98F /* main.cpp */,
+				684906DE1CC074DA00009F7D /* makeMove.cpp */,
 				68B9B8FA1CA21C8100E6A98F /* test.cpp */,
 				3BD845C61C6432C00022FDEA /* Products */,
 			);
@@ -126,6 +129,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				68B9B8FB1CA21C8100E6A98F /* main.cpp in Sources */,
+				684906DF1CC074DA00009F7D /* makeMove.cpp in Sources */,
 				68B9B8FC1CA21C8100E6A98F /* test.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
