@@ -22,6 +22,8 @@ int main() {
 	t.resume();
 	t.train();
 	cout << "Training Ended" << endl;
+    
+    
 
 	return 0;
 }

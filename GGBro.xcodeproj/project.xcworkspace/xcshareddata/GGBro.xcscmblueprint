@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "A71F9AE60FA19D39228CF8D131EA8B34D84C86C8",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "A71F9AE60FA19D39228CF8D131EA8B34D84C86C8" : 0,
+    "55446821BAB34DCB8C84088338CB85B5493C84C0" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "FD6CD2A0-117C-4BB5-97D3-5F84244B27ED",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "A71F9AE60FA19D39228CF8D131EA8B34D84C86C8" : "GGBro-Neural-Net\/",
+    "55446821BAB34DCB8C84088338CB85B5493C84C0" : "skynet\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "GGBro",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "GGBro.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/uafcs600\/skynet.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "55446821BAB34DCB8C84088338CB85B5493C84C0"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/SavedByGrace251\/GGBro-Neural-Net.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "A71F9AE60FA19D39228CF8D131EA8B34D84C86C8"
+    }
+  ]
+}
