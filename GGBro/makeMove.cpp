@@ -31,6 +31,6 @@ int main(int nArgs, char* args[]) {
 	AI player;
 	playerFile >> player;
 	player.playAsRed = isRed;
-	cout << player.makeMove(b).toString() << endl;
+	cout << player.makeMove(b).toString();
 	
 }
