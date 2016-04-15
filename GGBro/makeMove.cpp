@@ -23,14 +23,16 @@ int main(int nArgs, char* args[]) {
 	string fileLoc = "player.data";
 	string board = args[1];
 	string team = args[2];
-	bool isRed  = team.compare("red");
+	bool isRed = (team.compare("red") == 0);
 	
 	ifstream playerFile("fileLoc");
 	
 	Board b(board);
+	b.redTurn = isRed;
 	AI player;
 	playerFile >> player;
 	player.playAsRed = isRed;
+
 	cout << player.makeMove(b).toString();
 	
 }
