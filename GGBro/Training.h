@@ -81,7 +81,7 @@ public:
 			// Save Tourney information 
 			stringstream gen;
 			gen << generation;
-			ofstream outFile("tournament_info\tourney_" + gen.str() + "_info.data");
+			ofstream outFile("tournament_info/tourney_" + gen.str() + "_info.data");
 			tourney.printStats(outFile);
 
 			// rate the population based on the last tounament
