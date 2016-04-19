@@ -32,7 +32,7 @@ public:
 	vector<bool> freeSpaces = vector<bool>(32, true);
 	vector<double> state;
 	double rank;
-	double childRank = -1;
+	double childRank = -99;
 	double blackVal;
 	double redVal;
 	double kingVal;
@@ -151,7 +151,7 @@ public:
 	// rank parent
 	//	ranks the parent according to this boards rank
 	void rateParent(double r, bool isMax) {
-		if (childRank == -1) {
+		if (childRank == -99) {
 			childRank = r;
 		} else if (isMax) {
 			if (childRank < r) {

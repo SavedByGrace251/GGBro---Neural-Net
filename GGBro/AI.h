@@ -90,12 +90,12 @@ public:
 				return;
 			}
 			if (board.redEliminated) {
-				board.setRank(0, isAlpha);
+				board.setRank(-1, isAlpha);
 				return;
 			}
 		} else {
 			if (board.blackEliminated) {
-				board.setRank(0, isAlpha);
+				board.setRank(-1, isAlpha);
 				return;
 			}
 			if (board.redEliminated) {
@@ -220,16 +220,17 @@ public:
 	//	Evolve this AI to produce a child AI
 	AI evolve() {
 		vector<vector<vector<double>>> genome = brain.getGenome();
-		normal_distribution<double> normal(0.0, 0.4);
 		default_random_engine generator(std::chrono::high_resolution_clock::now().time_since_epoch().count());
 		for (vector<vector<double>> & layer : genome) {
 			for (vector<double> & neuron : layer) {
 				for (double & weight : neuron) {
-					weight += normal(generator);
+					normal_distribution<double> normal(weight,1.5);
+					weight = normal(generator);
 				}
 			}
 		}
-		AI childAI(NeuralNetwork(genome), kingVal + normal(generator));
+		normal_distribution<double> normal(kingVal, 0.4);
+		AI childAI(NeuralNetwork(genome), normal(generator));
 		return childAI;
 	}
 
