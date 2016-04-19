@@ -21,21 +21,11 @@ public:
 	int saveInterval = 50;
 	bool saveGen = false;
 
-	//default ctor
-	Training() {
-		int minute = 60;
-		int hour = 60 * minute;
-		int day = 24 * hour;
-		int week = 7 * day;
-		trainTimer.maxtime = 3 * day + 23 * hour + 45 * minute;
-	}
+	// default ctor
+	Training() {}
 
+	// secondary ctor
 	Training(int populationSize) {
-		int minute = 60;
-		int hour = 60 * minute;
-		int day = 24 * hour;
-		int week = 7 * day;
-		trainTimer.maxtime = 5 * minute;
 		setupTraining(populationSize);
 	}
 
@@ -59,6 +49,9 @@ public:
 		// validate training can begin
 		if (population.size() < 2) {
 			throw std::logic_error("The population size is not sufficient to start training.");
+		}
+		if (trainTimer.maxtime < 1) {
+			throw std::logic_error("The training timer is not set.");
 		}
 		// start training
 		trainTimer.start = high_resolution_clock::now();

@@ -38,7 +38,16 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="GGBro\main.cpp">
+    <ClCompile Include="GGBro\main6.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GGBro\main96.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GGBro\mainResume6.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GGBro\mainResume96.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

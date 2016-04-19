@@ -28,7 +28,10 @@
     <ClInclude Include="GGBro\Training.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="GGBro\main.cpp" />
+    <ClCompile Include="GGBro\main6.cpp" />
+    <ClCompile Include="GGBro\main96.cpp" />
+    <ClCompile Include="GGBro\mainResume6.cpp" />
+    <ClCompile Include="GGBro\mainResume96.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="GGBro\checkers board.py" />
