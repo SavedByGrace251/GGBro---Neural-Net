@@ -23,7 +23,7 @@ using std::chrono::duration_cast;
 
 struct Clock {
 	high_resolution_clock::time_point start;
-	double maxtime = 1;
+	double maxtime = 0.5;
 };
 
 class AI {
@@ -155,17 +155,17 @@ public:
 			newBoards[0][i].parentBoard = nullptr;
 		}
 		// set the first search depth and ultimate max search depth
-		int searchDepth = 4;
+		int searchDepth = 3;
 		int maxDepth = 20;
 		// start searching boards
 		thinker.start = high_resolution_clock::now();
 		do {
+			// setup increased for next search
+			++searchDepth;
 			// search to given depth
 			searchBoards(newBoards, true, 1, searchDepth);
 			// sort boards based on ranking
 			sort(newBoards[0].begin(), newBoards[0].end());
-			// setup increased for next search
-			++searchDepth;
 			// if the time hasn't expired, and the search depth
 			// is less than the max search depth, search again
 		} while ((duration<double>(high_resolution_clock::now() - thinker.start).count() < thinker.maxtime) && searchDepth < maxDepth);
