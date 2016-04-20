@@ -38,16 +38,16 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="GGBro\main6.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="GGBro\main96.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GGBro\mainResume6.cpp">
+    <ClCompile Include="GGBro\mainResume96.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GGBro\mainResume96.cpp">
+    <ClCompile Include="GGBro\main12.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GGBro\mainResume12.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -58,10 +58,13 @@
     <None Include="GGBro\graphics.py">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="JobSubmission">
+    <None Include="GGBro\playGame.py">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="GGBro\playGame.py">
+    <None Include="JobSubmission12">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="JobSubmission96">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>

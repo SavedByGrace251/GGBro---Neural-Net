@@ -28,16 +28,17 @@
     <ClInclude Include="GGBro\Training.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="GGBro\main6.cpp" />
+    <ClCompile Include="GGBro\main12.cpp" />
     <ClCompile Include="GGBro\main96.cpp" />
-    <ClCompile Include="GGBro\mainResume6.cpp" />
+    <ClCompile Include="GGBro\mainResume12.cpp" />
     <ClCompile Include="GGBro\mainResume96.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="GGBro\checkers board.py" />
     <None Include="GGBro\graphics.py" />
     <None Include="GGBro\playGame.py" />
-    <None Include="JobSubmission" />
+    <None Include="JobSubmission12" />
+    <None Include="JobSubmission96" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{9412FB0F-C985-4666-9EEA-7022DCB4B025}</ProjectGuid>
