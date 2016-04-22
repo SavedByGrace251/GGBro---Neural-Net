@@ -32,6 +32,7 @@ int main(int nArgs, char* args[]) {
 	AI player;
 	playerFile >> player;
 	player.playAsRed = isRed;
+	player.thinker.maxtime = 14.0;
 
 	cout << player.makeMove(b).toString();
 	
