@@ -224,7 +224,7 @@ public:
 		for (vector<vector<double>> & layer : genome) {
 			for (vector<double> & neuron : layer) {
 				for (double & weight : neuron) {
-					normal_distribution<double> normal(weight,1.5);
+					normal_distribution<double> normal(weight,0.01);
 					weight = normal(generator);
 				}
 			}
