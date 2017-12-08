@@ -20,9 +20,9 @@ int main(int nArgs, char* args[]) {
 		return 666;
 	}
 	
-	string fileLoc = "player.data";
 	string board = args[1];
 	string team = args[2];
+	string fileLoc = "player"+team+".data";
 	bool isRed = (team.compare("red") == 0);
 	
 	ifstream playerFile("fileLoc");
@@ -32,7 +32,7 @@ int main(int nArgs, char* args[]) {
 	AI player;
 	playerFile >> player;
 	player.playAsRed = isRed;
-	player.thinker.maxtime = 14.0;
+	player.thinker.maxtime = 5.0;
 
 	cout << player.makeMove(b).toString();
 	
