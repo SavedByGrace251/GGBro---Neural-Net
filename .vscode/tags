@@ -1,0 +1,185 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+AITesting.py	../GGBro/AITesting.py	1;"	kind:file	line:1
+BAD_OPTION	../GGBro/graphics.py	/^BAD_OPTION = "Illegal option value"$/;"	kind:variable	line:173
+Circle	../GGBro/graphics.py	/^class Circle(Oval):$/;"	kind:class	line:596
+DEAD_THREAD	../GGBro/graphics.py	/^DEAD_THREAD = "Graphics thread quit unexpectedly"$/;"	kind:variable	line:174
+DEFAULT_CONFIG	../GGBro/graphics.py	/^DEFAULT_CONFIG = {"fill":"",$/;"	kind:variable	line:398
+Entry	../GGBro/graphics.py	/^class Entry(GraphicsObject):$/;"	kind:class	line:723
+GraphWin	../GGBro/graphics.py	/^class GraphWin(tk.Canvas):$/;"	kind:class	line:185
+GraphicsError	../GGBro/graphics.py	/^class GraphicsError(Exception):$/;"	kind:class	line:167
+GraphicsObject	../GGBro/graphics.py	/^class GraphicsObject:$/;"	kind:class	line:406
+Image	../GGBro/graphics.py	/^class Image(GraphicsObject):$/;"	kind:class	line:810
+Line	../GGBro/graphics.py	/^class Line(_BBox):$/;"	kind:class	line:612
+OBJ_ALREADY_DRAWN	../GGBro/graphics.py	/^OBJ_ALREADY_DRAWN = "Object currently drawn"$/;"	kind:variable	line:171
+Oval	../GGBro/graphics.py	/^class Oval(_BBox):$/;"	kind:class	line:579
+Point	../GGBro/graphics.py	/^class Point(GraphicsObject):$/;"	kind:class	line:515
+Polygon	../GGBro/graphics.py	/^class Polygon(GraphicsObject):$/;"	kind:class	line:637
+Rectangle	../GGBro/graphics.py	/^class Rectangle(_BBox):$/;"	kind:class	line:562
+Text	../GGBro/graphics.py	/^class Text(GraphicsObject):$/;"	kind:class	line:667
+Transform	../GGBro/graphics.py	/^class Transform:$/;"	kind:class	line:368
+UNSUPPORTED_METHOD	../GGBro/graphics.py	/^UNSUPPORTED_METHOD = "Object doesn't support operation"$/;"	kind:variable	line:172
+_BBox	../GGBro/graphics.py	/^class _BBox(GraphicsObject):$/;"	kind:class	line:538
+__autoflush	../GGBro/graphics.py	/^    def __autoflush(self):$/;"	kind:member	line:250
+__checkOpen	../GGBro/graphics.py	/^    def __checkOpen(self):$/;"	kind:member	line:213
+__init__	../GGBro/graphics.py	/^    def __init__(self, *points):$/;"	kind:member	line:639
+__init__	../GGBro/graphics.py	/^    def __init__(self, center, radius):$/;"	kind:member	line:598
+__init__	../GGBro/graphics.py	/^    def __init__(self, options):$/;"	kind:member	line:412
+__init__	../GGBro/graphics.py	/^    def __init__(self, p, *pixmap):$/;"	kind:member	line:815
+__init__	../GGBro/graphics.py	/^    def __init__(self, p, text):$/;"	kind:member	line:669
+__init__	../GGBro/graphics.py	/^    def __init__(self, p, width):$/;"	kind:member	line:725
+__init__	../GGBro/graphics.py	/^    def __init__(self, p1, p2):$/;"	kind:member	line:564
+__init__	../GGBro/graphics.py	/^    def __init__(self, p1, p2):$/;"	kind:member	line:581
+__init__	../GGBro/graphics.py	/^    def __init__(self, p1, p2):$/;"	kind:member	line:614
+__init__	../GGBro/graphics.py	/^    def __init__(self, p1, p2, options=["outline","width","fill"]):$/;"	kind:member	line:542
+__init__	../GGBro/graphics.py	/^    def __init__(self, title="Graphics Window",$/;"	kind:member	line:189
+__init__	../GGBro/graphics.py	/^    def __init__(self, w, h, xlow, ylow, xhigh, yhigh):$/;"	kind:member	line:372
+__init__	../GGBro/graphics.py	/^    def __init__(self, x, y):$/;"	kind:member	line:516
+__version__	../GGBro/graphics.py	/^__version__ = "4.3"$/;"	kind:variable	line:63
+_draw	../GGBro/graphics.py	/^    def _draw(self, canvas, options):$/;"	kind:member	line:504
+_draw	../GGBro/graphics.py	/^    def _draw(self, canvas, options):$/;"	kind:member	line:522
+_draw	../GGBro/graphics.py	/^    def _draw(self, canvas, options):$/;"	kind:member	line:567
+_draw	../GGBro/graphics.py	/^    def _draw(self, canvas, options):$/;"	kind:member	line:589
+_draw	../GGBro/graphics.py	/^    def _draw(self, canvas, options):$/;"	kind:member	line:624
+_draw	../GGBro/graphics.py	/^    def _draw(self, canvas, options):$/;"	kind:member	line:658
+_draw	../GGBro/graphics.py	/^    def _draw(self, canvas, options):$/;"	kind:member	line:676
+_draw	../GGBro/graphics.py	/^    def _draw(self, canvas, options):$/;"	kind:member	line:737
+_draw	../GGBro/graphics.py	/^    def _draw(self, canvas, options):$/;"	kind:member	line:826
+_move	../GGBro/graphics.py	/^    def _move(self, dx, dy):$/;"	kind:member	line:510
+_move	../GGBro/graphics.py	/^    def _move(self, dx, dy):$/;"	kind:member	line:526
+_move	../GGBro/graphics.py	/^    def _move(self, dx, dy):$/;"	kind:member	line:547
+_move	../GGBro/graphics.py	/^    def _move(self, dx, dy):$/;"	kind:member	line:654
+_move	../GGBro/graphics.py	/^    def _move(self, dx, dy):$/;"	kind:member	line:681
+_move	../GGBro/graphics.py	/^    def _move(self, dx, dy):$/;"	kind:member	line:754
+_move	../GGBro/graphics.py	/^    def _move(self, dx, dy):$/;"	kind:member	line:832
+_onClick	../GGBro/graphics.py	/^    def _onClick(self, e):$/;"	kind:member	line:349
+_onKey	../GGBro/graphics.py	/^    def _onKey(self, evnt):$/;"	kind:member	line:217
+_reconfig	../GGBro/graphics.py	/^    def _reconfig(self, option, setting):$/;"	kind:member	line:490
+_root	../GGBro/graphics.py	/^_root = tk.Tk()$/;"	kind:variable	line:176
+_setFontComponent	../GGBro/graphics.py	/^    def _setFontComponent(self, which, value):$/;"	kind:member	line:778
+addItem	../GGBro/graphics.py	/^    def addItem(self, item):$/;"	kind:member	line:355
+appropriate	../GGBro/graphics.py	/^try:  # import as appropriate for 2.x vs. 3.x$/;"	kind:namespace	line:158
+blackPieces	../GGBro/checkers board.py	/^blackPieces = []$/;"	kind:variable	line:4
+boardProcess	../GGBro/AITesting.py	/^    boardProcess = subprocess.Popen([".\/makeMove "+ lastBoardString + " " + side], stdout=subprocess.PIPE, shell=True)$/;"	kind:variable	line:22
+boardProcess	../GGBro/playGame.py	/^        boardProcess = subprocess.Popen([".\/makeMove "+ lastBoardString + " " + side], stdout=subprocess.PIPE, shell=True)$/;"	kind:variable	line:18
+boardSize	../GGBro/checkers board.py	/^boardSize = 1000$/;"	kind:variable	line:10
+boardSpot	../GGBro/checkers board.py	/^boardSpot = []$/;"	kind:variable	line:6
+boards	../GGBro/checkers board.py	/^boards = []$/;"	kind:variable	line:7
+buildBlackPiece	../GGBro/checkers board.py	/^def buildBlackPiece(position):$/;"	kind:function	line:36
+buildBoard	../GGBro/checkers board.py	/^def buildBoard():$/;"	kind:function	line:21
+buildRedPiece	../GGBro/checkers board.py	/^def buildRedPiece(position):$/;"	kind:function	line:42
+checkKey	../GGBro/graphics.py	/^    def checkKey(self):$/;"	kind:member	line:315
+checkMouse	../GGBro/graphics.py	/^    def checkMouse(self):$/;"	kind:member	line:289
+checkers board.py	../GGBro/checkers board.py	1;"	kind:file	line:1
+clone	../GGBro/graphics.py	/^    def clone(self):$/;"	kind:member	line:530
+clone	../GGBro/graphics.py	/^    def clone(self):$/;"	kind:member	line:574
+clone	../GGBro/graphics.py	/^    def clone(self):$/;"	kind:member	line:584
+clone	../GGBro/graphics.py	/^    def clone(self):$/;"	kind:member	line:604
+clone	../GGBro/graphics.py	/^    def clone(self):$/;"	kind:member	line:619
+clone	../GGBro/graphics.py	/^    def clone(self):$/;"	kind:member	line:646
+clone	../GGBro/graphics.py	/^    def clone(self):$/;"	kind:member	line:684
+clone	../GGBro/graphics.py	/^    def clone(self):$/;"	kind:member	line:760
+clone	../GGBro/graphics.py	/^    def clone(self):$/;"	kind:member	line:845
+close	../GGBro/graphics.py	/^    def close(self):$/;"	kind:member	line:233
+color_rgb	../GGBro/graphics.py	/^def color_rgb(r,g,b):$/;"	kind:function	line:892
+delItem	../GGBro/graphics.py	/^    def delItem(self, item):$/;"	kind:member	line:358
+draw	../GGBro/graphics.py	/^    def draw(self, graphwin):$/;"	kind:member	line:440
+flush	../GGBro/graphics.py	/^    def flush(self):$/;"	kind:member	line:269
+for	../GGBro/graphics.py	/^try:  # import as appropriate for 2.x vs. 3.x$/;"	kind:namespace	line:158
+gameInfo	../GGBro/AITesting.py	/^    gameInfo = json.loads(out)$/;"	kind:variable	line:14
+gameInfo	../GGBro/playGame.py	/^    gameInfo = json.loads(out)$/;"	kind:variable	line:13
+gameName	../GGBro/AITesting.py	/^gameName = sys.argv[1] # Ignore file name$/;"	kind:variable	line:10
+gameName	../GGBro/playGame.py	/^gameName = sys.argv[1] # Ignore file name$/;"	kind:variable	line:8
+get	../GGBro/AITesting.py	/^from requests import get$/;"	kind:namespace	line:6
+get	../GGBro/playGame.py	/^from requests import get$/;"	kind:namespace	line:6
+getAnchor	../GGBro/graphics.py	/^    def getAnchor(self):$/;"	kind:member	line:695
+getAnchor	../GGBro/graphics.py	/^    def getAnchor(self):$/;"	kind:member	line:757
+getAnchor	../GGBro/graphics.py	/^    def getAnchor(self):$/;"	kind:member	line:842
+getCenter	../GGBro/graphics.py	/^    def getCenter(self):$/;"	kind:member	line:557
+getHeight	../GGBro/graphics.py	/^    def getHeight(self):$/;"	kind:member	line:324
+getHeight	../GGBro/graphics.py	/^    def getHeight(self):$/;"	kind:member	line:856
+getKey	../GGBro/graphics.py	/^    def getKey(self):$/;"	kind:member	line:303
+getMouse	../GGBro/graphics.py	/^    def getMouse(self):$/;"	kind:member	line:274
+getP1	../GGBro/graphics.py	/^    def getP1(self): return self.p1.clone()$/;"	kind:member	line:553
+getP2	../GGBro/graphics.py	/^    def getP2(self): return self.p2.clone()$/;"	kind:member	line:555
+getPixel	../GGBro/graphics.py	/^    def getPixel(self, x, y):$/;"	kind:member	line:860
+getPoints	../GGBro/graphics.py	/^    def getPoints(self):$/;"	kind:member	line:651
+getRadius	../GGBro/graphics.py	/^    def getRadius(self):$/;"	kind:member	line:609
+getText	../GGBro/graphics.py	/^    def getText(self):$/;"	kind:member	line:692
+getText	../GGBro/graphics.py	/^    def getText(self):$/;"	kind:member	line:751
+getWidth	../GGBro/graphics.py	/^    def getWidth(self):$/;"	kind:member	line:328
+getWidth	../GGBro/graphics.py	/^    def getWidth(self):$/;"	kind:member	line:852
+getX	../GGBro/graphics.py	/^    def getX(self): return self.x$/;"	kind:member	line:535
+getY	../GGBro/graphics.py	/^    def getY(self): return self.y$/;"	kind:member	line:536
+graphics.py	../GGBro/graphics.py	1;"	kind:file	line:1
+gridSize	../GGBro/checkers board.py	/^gridSize = boardSize\/8$/;"	kind:variable	line:11
+idCount	../GGBro/graphics.py	/^    idCount = 0$/;"	kind:variable	line:812
+imageCache	../GGBro/graphics.py	/^    imageCache = {} # tk photoimages go here to avoid GC while drawn $/;"	kind:variable	line:813
+isClosed	../GGBro/graphics.py	/^    def isClosed(self):$/;"	kind:member	line:242
+isOpen	../GGBro/graphics.py	/^    def isOpen(self):$/;"	kind:member	line:246
+iterateBoards	../GGBro/checkers board.py	/^def iterateBoards():$/;"	kind:function	line:57
+json	../GGBro/AITesting.py	/^import json$/;"	kind:namespace	line:3
+json	../GGBro/playGame.py	/^import json$/;"	kind:namespace	line:3
+lastBoardString	../GGBro/AITesting.py	/^    lastBoardString = gameInfo["boards"][-1]$/;"	kind:variable	line:21
+lastBoardString	../GGBro/playGame.py	/^        lastBoardString = gameInfo["boards"][-1]$/;"	kind:variable	line:17
+loadBoards	../GGBro/checkers board.py	/^def loadBoards():$/;"	kind:function	line:15
+main	../GGBro/checkers board.py	/^def main():$/;"	kind:function	line:73
+move	../GGBro/graphics.py	/^    def move(self, dx, dy):$/;"	kind:member	line:471
+os	../GGBro/graphics.py	/^import time, os, sys$/;"	kind:namespace	line:156
+out	../GGBro/AITesting.py	/^    out = get("http:\/\/skynet.cs.uaf.edu\/?info_game=true", data='{"name":"' + gameName + '"}').text$/;"	kind:variable	line:13
+out	../GGBro/playGame.py	/^    out = get("http:\/\/skynet.cs.uaf.edu\/?info_game=true", data='{"name":"' + gameName + '"}').text$/;"	kind:variable	line:12
+playGame.py	../GGBro/playGame.py	1;"	kind:file	line:1
+playProcess	../GGBro/AITesting.py	/^    playProcess = get("http:\/\/skynet.cs.uaf.edu\/?play_game=true", data='{"name":"' + gameName + '","board":"' + moveChosen + '"}')$/;"	kind:variable	line:25
+playProcess	../GGBro/playGame.py	/^        playProcess = get("http:\/\/skynet.cs.uaf.edu\/?play_game=true", data='{"name":"' + gameName + '","board":"' + moveChosen + '"}')/;"	kind:variable	line:22
+plot	../GGBro/graphics.py	/^    def plot(self, x, y, color="black"):$/;"	kind:member	line:255
+plotPixel	../GGBro/graphics.py	/^    def plotPixel(self, x, y, color="black"):$/;"	kind:member	line:262
+positions	../GGBro/checkers board.py	/^positions = []$/;"	kind:variable	line:5
+printBoard	../GGBro/checkers board.py	/^def printBoard(board):$/;"	kind:function	line:48
+redPieces	../GGBro/checkers board.py	/^redPieces = []$/;"	kind:variable	line:3
+redraw	../GGBro/graphics.py	/^    def redraw(self):$/;"	kind:member	line:361
+save	../GGBro/graphics.py	/^    def save(self, filename):$/;"	kind:member	line:881
+screen	../GGBro/graphics.py	/^    def screen(self,x,y):$/;"	kind:member	line:383
+setArrow	../GGBro/graphics.py	/^    def setArrow(self, option):$/;"	kind:member	line:631
+setBackground	../GGBro/graphics.py	/^    def setBackground(self, color):$/;"	kind:member	line:221
+setCoords	../GGBro/graphics.py	/^    def setCoords(self, x1, y1, x2, y2):$/;"	kind:member	line:227
+setFace	../GGBro/graphics.py	/^    def setFace(self, face):$/;"	kind:member	line:698
+setFace	../GGBro/graphics.py	/^    def setFace(self, face):$/;"	kind:member	line:786
+setFill	../GGBro/graphics.py	/^    def setFill(self, color):$/;"	kind:member	line:428
+setFill	../GGBro/graphics.py	/^    def setFill(self, color):$/;"	kind:member	line:772
+setMouseHandler	../GGBro/graphics.py	/^    def setMouseHandler(self, func):$/;"	kind:member	line:346
+setOutline	../GGBro/graphics.py	/^    def setOutline(self, color):$/;"	kind:member	line:432
+setPixel	../GGBro/graphics.py	/^    def setPixel(self, x, y, color):$/;"	kind:member	line:874
+setSize	../GGBro/graphics.py	/^    def setSize(self, size):$/;"	kind:member	line:705
+setSize	../GGBro/graphics.py	/^    def setSize(self, size):$/;"	kind:member	line:792
+setStyle	../GGBro/graphics.py	/^    def setStyle(self, style):$/;"	kind:member	line:712
+setStyle	../GGBro/graphics.py	/^    def setStyle(self, style):$/;"	kind:member	line:798
+setText	../GGBro/graphics.py	/^    def setText(self, t):$/;"	kind:member	line:768
+setText	../GGBro/graphics.py	/^    def setText(self,text):$/;"	kind:member	line:689
+setTextColor	../GGBro/graphics.py	/^    def setTextColor(self, color):$/;"	kind:member	line:719
+setTextColor	../GGBro/graphics.py	/^    def setTextColor(self, color):$/;"	kind:member	line:804
+setWidth	../GGBro/graphics.py	/^    def setWidth(self, width):$/;"	kind:member	line:436
+side	../GGBro/AITesting.py	/^        side = "black"$/;"	kind:variable	line:20
+side	../GGBro/AITesting.py	/^        side = "red"$/;"	kind:variable	line:18
+side	../GGBro/playGame.py	/^side = sys.argv[2] # Your color$/;"	kind:variable	line:9
+subprocess	../GGBro/AITesting.py	/^import subprocess$/;"	kind:namespace	line:5
+subprocess	../GGBro/playGame.py	/^import subprocess$/;"	kind:namespace	line:5
+sys	../GGBro/AITesting.py	/^import sys$/;"	kind:namespace	line:4
+sys	../GGBro/graphics.py	/^import time, os, sys$/;"	kind:namespace	line:156
+sys	../GGBro/playGame.py	/^import sys$/;"	kind:namespace	line:4
+test	../GGBro/graphics.py	/^def test():$/;"	kind:function	line:897
+time	../GGBro/graphics.py	/^import time, os, sys$/;"	kind:namespace	line:156
+tk	../GGBro/graphics.py	/^   import Tkinter as tk$/;"	kind:namespace	line:161
+tk	../GGBro/graphics.py	/^   import tkinter as tk$/;"	kind:namespace	line:159
+toScreen	../GGBro/graphics.py	/^    def toScreen(self, x, y):$/;"	kind:member	line:332
+toWorld	../GGBro/graphics.py	/^    def toWorld(self, x, y):$/;"	kind:member	line:339
+undraw	../GGBro/graphics.py	/^    def undraw(self):$/;"	kind:member	line:456
+undraw	../GGBro/graphics.py	/^    def undraw(self):$/;"	kind:member	line:835
+update	../GGBro/graphics.py	/^def update():$/;"	kind:function	line:179
+vs	../GGBro/graphics.py	/^try:  # import as appropriate for 2.x vs. 3.x$/;"	kind:namespace	line:158
+win	../GGBro/checkers board.py	/^win = GraphWin("Checkers Board", boardSize, boardSize)$/;"	kind:variable	line:12
+world	../GGBro/graphics.py	/^    def world(self,xs,ys):$/;"	kind:member	line:389
+x	../GGBro/graphics.py	/^try:  # import as appropriate for 2.x vs. 3.x$/;"	kind:namespace	line:158
