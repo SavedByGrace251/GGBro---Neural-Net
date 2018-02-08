@@ -15,7 +15,6 @@
 using namespace std;
 
 int main() {
-
 	AI ike;
 	AI mike;
 	ike.AIType = "test";
@@ -33,6 +32,5 @@ int main() {
 	game1.playGame();
 	game2.playGame();
 	cout << game1 << endl << game2 << endl;
-
 	return 0;
 }

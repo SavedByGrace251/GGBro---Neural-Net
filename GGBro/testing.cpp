@@ -85,7 +85,7 @@ void timeNetwork() {
 
 	int count = 0;
 	t1 = high_resolution_clock::now();
-	while (count < 1000000) {
+	while (count < 10000) {
 		player.brain.Activate();
 		++count;
 	}
@@ -97,7 +97,7 @@ void timeNetwork() {
 
 int main() {
 	
-
+	timeNetwork();
 
 	return 0;
 }

@@ -28,10 +28,7 @@
     <ClInclude Include="GGBro\Training.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="GGBro\main12.cpp" />
-    <ClCompile Include="GGBro\main96.cpp" />
-    <ClCompile Include="GGBro\mainResume12.cpp" />
-    <ClCompile Include="GGBro\mainResume96.cpp" />
+    <ClCompile Include="GGBro\testing.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="GGBro\checkers board.py" />
@@ -44,7 +41,6 @@
     <ProjectGuid>{9412FB0F-C985-4666-9EEA-7022DCB4B025}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>GGBro</RootNamespace>
-    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
